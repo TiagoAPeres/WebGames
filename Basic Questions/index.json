@@ -1,0 +1,15 @@
+{
+    "days": [
+      {
+        "date": "2024-10-16",
+        "question": "Top 10 Croatian Champions League scorers?",
+        "answers": ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7", "Player8", "Player9", "Player10"]
+      },
+      {
+        "date": "2024-10-17",
+        "question": "Top 10 English Premier League scorers?",
+        "answers": ["PlayerA", "PlayerB", "PlayerC", "PlayerD", "PlayerE", "PlayerF", "PlayerG", "PlayerH", "PlayerI", "PlayerJ"]
+      }
+    ]
+}
+  
