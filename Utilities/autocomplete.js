@@ -44,12 +44,12 @@ function SetAutoCompleteToElement(InputId, ResultId)
         if (input.length)
         {
             result = words.filter(word => {
-                return word.toLowerCase().includes(input); // Check if the string contains the input
+                return word.toLowerCase().includes(input.toLowerCase()); // Check if the string contains the input
             });
             console.log(result);
         }
 
-        display(result,resultsBox,inputBox);
+        display(result,InputId,ResultId);
 
         if (!result.length)
         {
@@ -59,17 +59,33 @@ function SetAutoCompleteToElement(InputId, ResultId)
 }
 
 
-function display(result,resultsBox,inputBox)
+function display(result,InputId,ResultId)
 {
-    const content = result.map((item) => {
-        return `<li onclick="selectInput(this,resultsBox,inputBox)">${item}</li>`;
+    const resultsBoxHere = document.getElementById(ResultId);
+    const inputBoxHere = document.getElementById(InputId);
+
+    // Clear existing content
+    resultsBoxHere.innerHTML = '';
+
+    // Create a list element and attach event listeners
+    const ul = document.createElement('ul');
+
+    result.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+
+        // Attach click event listener
+        li.addEventListener('click', () => {
+            selectInput(li, resultsBoxHere, inputBoxHere);
+        });
+
+        ul.appendChild(li);
     });
 
-    resultsBox.innerHTML = `<ul>${content.join('')}</ul>`;
+    resultsBoxHere.appendChild(ul);
 }
 
-function selectInput(list,resultsBox,inputBox)
-{
-    inputBox.value = list.innerHTML;
-    resultsBox.innerHTML = '';
+function selectInput(list, resultsBox, inputBox) {
+    inputBox.value = list.textContent;
+    resultsBox.innerHTML = ''; // Clear the results
 }

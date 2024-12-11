@@ -1,11 +1,31 @@
 
+body
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    visibility: hidden; /* Hides the element but keeps its space */
+    opacity: 0;
+    position: absolute; /* Removes it visually without disrupting layout */
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    position: relative; /* Default position to reintegrate it */
+}
+
 .image-section {
-    width: 35%;
+    width: 50%;
+    margin: 30px;
     aspect-ratio: 3 / 2;
-    border: 1px solid #ccc;
-    display: flex; /* Make it a flex container */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .image-section img {
@@ -13,4 +33,47 @@
     max-height: 100%;
     vertical-align: middle;
     filter: blur(5px);
+}
+
+.leagues-sections
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 350px;
+    width: 350px;
+    height: auto;
+}
+
+.league-button
+{
+    display: flex;
+    background-color: #3a3a3c;
+    flex-grow: 0.5;
+    color: white;
+    height: 75px;
+    justify-content: center;
+    align-items: center;
+}
+
+.health-bar
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.heart
+{
+    color: rgb(255, 0, 0);
+    margin: 0 5px;
+}
+
+.logo-game-section
+{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
 }
