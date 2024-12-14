@@ -204,8 +204,6 @@ function CreateHealthBar()
 {
     const HealthBar = document.querySelector('.health-bar');
 
-    console.log(currentLives)
-
     if (!HealthBar)  return
 
     for (let i = 0; i < currentLives; i++)

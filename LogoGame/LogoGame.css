@@ -38,19 +38,22 @@ body
 .leagues-sections
 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     max-width: 350px;
     width: 350px;
-    height: auto;
+    height: 500px;
+
 }
 
 .league-button
 {
+    margin: 10px;
     display: flex;
     background-color: #3a3a3c;
-    flex-grow: 0.5;
+    flex-grow: 1;
+    min-width: 200px;
     color: white;
     height: 75px;
     justify-content: center;
@@ -76,4 +79,5 @@ body
 
     justify-content: center;
     align-items: center;
+
 }
