@@ -7,20 +7,21 @@ body
 }
 
 .hidden {
-    visibility: hidden; /* Hides the element but keeps its space */
+    visibility: hidden;
     opacity: 0;
-    position: absolute; /* Removes it visually without disrupting layout */
+    position: absolute;
 }
 
 .visible {
     visibility: visible;
     opacity: 1;
-    position: relative; /* Default position to reintegrate it */
+    position: relative;
 }
 
 .image-section {
     width: 50%;
     margin: 30px;
+    margin-top: 50px;
     aspect-ratio: 3 / 2;
 
     display: flex;
@@ -64,12 +65,16 @@ body
 {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
 }
 
 .heart
 {
     color: rgb(255, 0, 0);
-    margin: 0 5px;
+    margin: 5px 5px;
+
 }
 
 .logo-game-section
@@ -80,4 +85,16 @@ body
     justify-content: center;
     align-items: center;
 
+}
+
+.play-again-button
+{
+    display: flex;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.25);
+    min-width: 100px;
+    min-height: 50px;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
 }

@@ -1,36 +1,29 @@
 import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
 import {loadAndParseCsv} from '/Utilities/queryCsv.js';
 
-/**
- * Enum for types of Paths for the csv logos.
- * @readonly
- * @enum {{path: string}}
- */
-const LogoLeaguePaths = Object.freeze({
-    PremierLeague: {path: "/csv/Logo/PremierLeague_Logos.csv"},
-});
 
-
-let images = ['/LogoImages/PremierLeague/crystal-palace-2022-logo.png'
-    , '/LogoImages/PremierLeague/brentford-fc-2017-logo.png'
-    , '/LogoImages/PremierLeague/manchester-city-2016-logo.png'];
-let currentIndex = 0;
-
-
+//Element
 let LogoElement = null;
-let selectedLogo = null;
+let PlayAgainElement = null;
+
+//
 let selectedLeaguePath  = null;
+let selectedLogo = null;
 let SelectedClubData = null;
+
+//Health
 let maxlives = 5;
 let currentLives = 5;
 
+//Blur
 let maxBlur = 10;
 let currentBlur = null;
 let minBlur = 0;
 let blurSectionAmount;
 
 
-function UpdateToSelectedLogo()
+//#region Logo
+function UpdateLogoElement()
 {
     if (!LogoElement) return
 
@@ -59,49 +52,14 @@ function ReduceBlurFromLogo()
     LogoElement.style.filter = `blur(${currentBlur}px)`
 }
 
-async function ShowTheLogoGame()
+async function SelectNewLogo()
 {
-    await StartGame()
+    if (selectedLeaguePath == null)
+    {
+        console.error("No Selected League Path");
+        return
+    }
 
-    let logoSection = document.getElementById('logoGame');
-    logoSection.classList.toggle('hidden', false);
-    logoSection.classList.toggle('visible', true);
-
-    let leagueSection = document.getElementById('SelectLeague');
-    leagueSection.classList.toggle('hidden', true);
-    leagueSection.classList.toggle('visible', false);
-}
-
-function HideTheLogoGame()
-{
-    let logoSection = document.getElementById('logoGame');
-    logoSection.classList.toggle('hidden',true);
-    logoSection.classList.toggle('visible',false);
-
-    let leagueSection = document.getElementById('SelectLeague');
-    leagueSection.classList.toggle('hidden',false);
-    leagueSection.classList.toggle('visible',true);
-}
-
-async function StartGame()
-{
-    LogoElement = document.getElementById("logo");
-
-    await SetUpAutoComplete([selectedLeaguePath], "team", "input-box", "result-box")
-
-    UpdateToSelectedLogo()
-
-    CreateHealthBar()
-
-    currentLives = maxlives;
-    blurSectionAmount = Math.abs(maxBlur - minBlur) / maxlives;
-}
-
-async function ButtonClick(LeagueCSVPath)
-{
-    let tries = 5;
-
-    selectedLeaguePath = LeagueCSVPath;
     let csvData = await loadAndParseCsv(selectedLeaguePath);
 
     if (!Array.isArray(csvData) || csvData.length <= 0)
@@ -110,8 +68,8 @@ async function ButtonClick(LeagueCSVPath)
         return
     }
 
-
-    while (!(await DoesPathReturnImg(selectedLogo)) && tries >= 0)
+    let tries = 5;
+    do
     {
         tries--;
 
@@ -119,41 +77,36 @@ async function ButtonClick(LeagueCSVPath)
         SelectedClubData = csvData[randomIndex];
         selectedLogo = SelectedClubData.path_to_folder + '/' + SelectedClubData.logo_path;
 
-    }
-
-    if (selectedLogo == null)
-    {
-        console.error("No Selected Logo");
-        return
-    }
+    }while (!(await DoesPathReturnImg(selectedLogo)) && tries >= 0)
 
     console.debug(SelectedClubData.team);
-
-    if (selectedLeaguePath == null)
-    {
-        console.error("No Selected League Path");
-        return
-    }
-
-    ShowTheLogoGame();
 }
 
-async function DoesPathReturnImg(path)
+//#endregion
+
+//#region Visibility Logo Game
+
+async function ShowTheLogoGame()
 {
-    try
-    {
-        const response = await fetch(path, { method: 'HEAD' });
-        return response.ok;
-    }
-    catch (error) {return false;}
+    await ShowElementByID('logoGame');
+    await HideElementByID('SelectLeague');
 }
+
+async function HideTheLogoGame()
+{
+    await HideElementByID('logoGame');
+    await ShowElementByID('SelectLeague');
+}
+
+//#endregion
+
+//#region Manage Game
 
 function MakeGuess()
 {
     if (currentLives <= 0 ) return
 
     let inputBox = document.getElementById("input-box")
-
 
     if (inputBox.value === SelectedClubData.team)
     {
@@ -165,69 +118,172 @@ function MakeGuess()
     }
 }
 
-function CorrectGuess()
+async function CorrectGuess()
 {
-    UnblurLogo();
     alert("you won bitch")
+    await GameEnded();
 }
 
-function WrongGuess()
-{
-    currentLives--;
-
-    if (currentLives <= 0)
+async function WrongGuess() {
+    if (currentLives > 0)
     {
-        alert("No more tries today, Better luck tomorrow")
-    }
-    else
-    {
+        currentLives--;
+        RemoveAHeart()
+        ReduceBlurFromLogo();
         alert("you lost sadge")
     }
 
-    RemoveAHeart()
-    ReduceBlurFromLogo();
-
-}
-
-
-function RemoveAHeart()
-{
-    const firstIcon = document.querySelector(' .fa-solid.fa-heart');
-
-// Remove it if it exists
-    if (firstIcon) {
-        firstIcon.remove();
+    if (currentLives <= 0)
+    {
+        await GameEnded();
+        alert("No more hearts, try again")
     }
 }
 
-function CreateHealthBar()
+async function GameEnded()
 {
+    ClearSearchBar();
+    UnblurLogo();
+    await ShowElement(PlayAgainElement);
+}
+
+async function InitializeGame()
+{
+    await HideElement(PlayAgainElement);
+
+    InitializeHealth();
+
+    //Logo
+    await InitializeLogo()
+
+    //Autocomplete
+    await SetUpAutoComplete([selectedLeaguePath], "team", "input-box", "result-box")
+
+    //BLUR
+    blurSectionAmount = Math.abs(maxBlur - minBlur) / maxlives;
+}
+
+async function InitializeLogo()
+{
+    LogoElement = document.getElementById("logo");
+    await HideElement(LogoElement);
+    await SelectNewLogo();
+    UpdateLogoElement();
+    await ShowElement(LogoElement);
+}
+
+
+function InitializeHealth()
+{
+    currentLives = maxlives;
+
     const HealthBar = document.querySelector('.health-bar');
 
     if (!HealthBar)  return
+
+    HealthBar.innerHTML = '';
 
     for (let i = 0; i < currentLives; i++)
     {
         HealthBar.innerHTML += '<i class="fa-solid fa-heart heart"></i>';
     }
+}
+//#endregion
 
+//#region UI
+
+function ClearSearchBar()
+{
+    let searchBar = document.getElementById("input-box")
+    let ResultsBox = document.getElementById("result-box")
+
+    searchBar.value = '';
+    ResultsBox.innerHTML = '';
 }
 
+function RemoveAHeart()
+{
+    const firstIcon = document.querySelector(' .fa-solid.fa-heart');
+
+    if (firstIcon) firstIcon.remove();
+}
+
+async function SelectLeagueAndStartGame(LeagueCSVPath)
+{
+    //league is selected
+    selectedLeaguePath = LeagueCSVPath;
+
+    await InitializeGame();
+
+    await ShowTheLogoGame();
+}
+
+//#endregion
+
+//#region Util
+
+async function DoesPathReturnImg(path)
+{
+    try
+    {
+        const response = await fetch(path, { method: 'HEAD' });
+        return response.ok;
+    }
+    catch (error) {return false;}
+}
+
+async function HideElementByID(id)
+{
+    let element = document.getElementById(id);
+    element.classList.toggle('hidden',true);
+    element.classList.toggle('visible',false);
+}
+
+async function ShowElementByID(id)
+{
+    let element = document.getElementById(id);
+    element.classList.toggle('hidden',false);
+    element.classList.toggle('visible',true);
+}
+
+async function HideElement(element)
+{
+    if (element == null) return;
+    element.classList.toggle('hidden',true);
+    element.classList.toggle('visible',false);
+}
+
+async function ShowElement(element)
+{
+    if (element == null) return;
+
+    element.classList.toggle('hidden',false);
+    element.classList.toggle('visible',true);
+}
+
+//#endregion
 
 $(document).ready(function ()
 {
+    PlayAgainElement = document.getElementById("play-again-button");
+    LogoElement = document.getElementById("logo");
+
+    PlayAgainElement.onclick = InitializeGame;
+
     HideTheLogoGame()
 
     const buttons = document.getElementsByClassName('league-button');
     Array.from(buttons).forEach(element =>
     {
         element.onclick = () => {
-            ButtonClick(element.getAttribute('data-path'))
+            SelectLeagueAndStartGame(element.getAttribute('data-path'))
         };
     })
 
     let submitButton = document.getElementById("submit-btn")
     submitButton.onclick = MakeGuess;
+
+
 
 })
 
