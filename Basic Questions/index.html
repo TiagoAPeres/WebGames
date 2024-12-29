@@ -9,20 +9,31 @@
 
 </head>
 <body>
-    <div class="health" id="health"></div>
+    <div class="game-area">
+    
+        <div class="health" id="health"></div>
 
-    <div class="question"></div>
+        <div class="question"></div>
 
-    <div class="search-box">
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Player name" autocomplete="off">
-            <button><i id= "submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="search-box">
+            <div class="row">
+                <input type="text" id="input-box" placeholder="PLAYER NAME" autocomplete="off">
+                <button><i id= "submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box"></div>
         </div>
-        <div class="result-box">
-        </div>
-
     </div>
 
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="title">CORRECT! <br> WELL DONE!</div>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            Come play again tomorrow!
+        </div>
+    </div>
+    <div id="overlay"></div>
 
 <script src="autocomplete.js"></script>
 </body>

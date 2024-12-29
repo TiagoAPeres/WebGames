@@ -12,12 +12,23 @@ let lives = 3;
 const questionArea = document.querySelector(".question");
 const submitButton = document.getElementById("submit-btn");
 
+const resultsBox = document.querySelector(".result-box");
+const inputBox = document.getElementById("input-box");
+const popupResults = document.querySelector(".title");
+
+const popupModal = document.getElementById("modal");
+const closeModalButton = document.querySelector(".close-button");
+const overlay = document.getElementById("overlay");
+
+const healthContainer = document.getElementById("health");
+
+
 async function loadWordsAndStartGame() {
     try {
         const response = await fetch('FIFA2019');
         const text = await response.text();
 
-        const lines = text.split('\n').map(word => word.trim().toLowerCase()); // Ensure all words are lowercased and trimmed
+        const lines = text.split('\n').map(word => word.trim().toUpperCase()); // Ensure all words are uppercase and trimmed
 
         players = lines.map(line => {
             const [name, country] = line.split(/\s{2,}|\t+/);
@@ -35,20 +46,19 @@ async function loadWordsAndStartGame() {
     }
 
     
-
     fetch('index.json')
         .then(response => response.json())
         .then(data => {
             let now = new Date();
-            now.setHours(now.getHours() - 1);
+            now.setHours(now.getHours());
             let today = now.toISOString().split('T')[0];
             let todayQuiz = data.days.find(day => day.date === today);
 
-            console.log("Date: " + lives)
+            console.log("Date: " + today)
 
             if(todayQuiz){
-                questionArea.innerHTML = todayQuiz.question;
-                answer = todayQuiz.answers;
+                questionArea.innerHTML = todayQuiz.question.toUpperCase();
+                answer = todayQuiz.answers.toUpperCase();
             }
             else{
                 questionArea.innerHTML = "question";
@@ -57,21 +67,15 @@ async function loadWordsAndStartGame() {
         .catch(error => {
             // handle errors
         });
-
-
 }
 
-
-
-const resultsBox = document.querySelector(".result-box");
-const inputBox = document.getElementById("input-box");
 
 inputBox.onkeyup = function () {
     let result = [];
     let input = inputBox.value;
     if (input.length) {
         result = players.filter((keyword) => {
-            return keyword.name.toLowerCase().includes(input.toLowerCase());
+            return keyword.name.toUpperCase().includes(input.toUpperCase());
         });
         console.log(result);
     }
@@ -88,7 +92,8 @@ submitButton.onclick = function () {
     {
         if (inputBox.value == answer) {
             gameState = STATE.WIN;
-            questionArea.innerHTML = "YOU WIN! COME BACK TOMORROW FOR A NEW GAME!";
+            popupResults.innerHTML = "CORRECT! <br> WELL DONE!";
+            showModal();
         } else {
             if (lives>1) {
                 lives--;
@@ -99,14 +104,29 @@ submitButton.onclick = function () {
                 lives = 0;
                 updateHealth();
                 gameState = STATE.LOSE;
-                questionArea.innerHTML = "YOU LOST! COME BACK TOMORROW FOR A NEW GAME!";
+                popupResults.innerHTML = "INCORRECT! <br> YOU LOST!";
+                showModal();
                 inputBox.value = null;
             }
         }
     }
 }
 
-const healthContainer = document.getElementById("health");
+function showModal() {
+    popupModal.classList.add("active");
+    overlay.classList.add("active");
+}
+
+closeModalButton.onclick = function () {
+    popupModal.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
+overlay.onclick = function () {
+    popupModal.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
 
 function updateHealth () {
     healthContainer.innerHTML = '';
@@ -115,8 +135,11 @@ function updateHealth () {
         heart.className = 'fa-solid fa-heart';
         heart.style.color = '#ff0000';
         heart.style.margin = '0 5px';
+        //heart.style.fontSize = '30px';
+        heart.style.textShadow = '0 0 1px black, 0 0 2px black, 0 0 3px black';
         healthContainer.appendChild(heart);
     }
+    flashHearts();
 }
 
 function display(result) {
@@ -129,6 +152,21 @@ function display(result) {
 function selectInput(list) {
     inputBox.value = list.innerHTML;
     resultsBox.innerHTML = '';
+}
+
+function flashHearts()
+{
+    const hearts = document.querySelectorAll('.health i');
+    hearts.forEach(heart => {
+        heart.classList.add('flash-once');
+    });
+
+    setTimeout(() => {
+        hearts.forEach(heart => {
+            heart.classList.remove('flash-once');
+        });
+    }, 500);
+
 }
 
 loadWordsAndStartGame();
