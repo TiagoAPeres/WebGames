@@ -5,7 +5,7 @@
 
     <title>Logo Game</title>
     <link rel="stylesheet" href="/LogoGame/LogoGame.css">
-    <link rel="stylesheet" href="/Basic%20Questions/style.css">
+    <link rel="stylesheet" href="/LogoGame/style.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -14,27 +14,45 @@
 </head>
 <body>
 <div class="logo-game-section" id="logoGame">
-    <div class="health-bar">
+    <div class="health-exit-section">
+        <div class="return-button" id="return-button">X</div>
+        <div class="health-bar"></div>
+        <div></div>
+     </div>
+
+     <div class="logo-section">
+         <!--<section class="image-section">-->
+         <img id="logo" src="" alt="Section Image">
+         <!--</section>-->
     </div>
-    <section class="image-section">
-        <img id="logo" src="" alt="Section Image">
-    </section>
-    <div class="search-box">
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
-            <button><i id="submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
+
+    <div class="search-bar-section">
+       <div class="search-box">
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
+                <button><i id="submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box" id="result-box">
+            </div>
         </div>
-
-        <div class="result-box" id="result-box"></div>
-
     </div>
-    <div class="play-again-button" id="play-again-button">play again</div>
+
+
+
+    <div class="play-again-section" >
+        <div class="play-again-button" id="play-again-button">play again</div>
+    </div>
+
 </div>
 
-<div id="SelectLeague" class="leagues-sections">
+<div id="SelectLeague" class="SelectLeague-section">
+<div class="text" > Select League : </div>
+<div class="league-container">
     <button id="PremierLeague_Button" class="league-button" data-path="/csv/Logo/PremierLeague_Logos.csv"> Premier League </button>
     <button class="league-button" data-path="/csv/Logo/PrimeiraLiga_Logos.csv" >Primeira Liga</button>
-    <button  class="league-button" data-path="/csv/Logo/International_Logos.csv" >International Clubs</button>
+    <button class="league-button" data-path="/csv/Logo/International_Logos.csv" >International Clubs</button>
+    <button id="Daily_League" class="league-button" data-path="/csv/Logo/International_Logos.csv" data-type="daily">DAILY</button>
+</div>
 </div>
 
 </body>
@@ -43,4 +61,6 @@
 <script type="module" src="/Utilities/queryCsv.js"></script>
 
 <script type="module" src="LogoScript.js" defer></script>
+<script type="module" src="DailyCookie.js" defer></script>
 </html>
+

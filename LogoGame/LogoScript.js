@@ -1,6 +1,7 @@
 import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
-import {loadAndParseCsv} from '/Utilities/queryCsv.js';
-
+import { loadAndParseCsv} from '/Utilities/queryCsv.js';
+import { DoesPathReturnImg } from '/Utilities/FilesUtil.js'
+import { CanPlayToday, SetPlayerData } from "./DailyCookie.js";
 
 //Element
 let LogoElement = null;
@@ -11,8 +12,11 @@ let selectedLeaguePath  = null;
 let selectedLogo = null;
 let SelectedClubData = null;
 
+export let IsGameDaily = false;
+
 //Health
-let maxlives = 5;
+export let maxlives = 5;
+//let maxlives = 5;
 let currentLives = 5;
 
 //Blur
@@ -107,6 +111,7 @@ function MakeGuess()
     if (currentLives <= 0 ) return
 
     let inputBox = document.getElementById("input-box")
+    if (inputBox == null) return;
 
     if (inputBox.value === SelectedClubData.team)
     {
@@ -124,12 +129,14 @@ async function CorrectGuess()
     await GameEnded();
 }
 
-async function WrongGuess() {
+async function WrongGuess()
+{
     if (currentLives > 0)
     {
         currentLives--;
         RemoveAHeart()
         ReduceBlurFromLogo();
+        SetPlayerData(currentLives);
         alert("you lost sadge")
     }
 
@@ -144,7 +151,11 @@ async function GameEnded()
 {
     ClearSearchBar();
     UnblurLogo();
-    await ShowElement(PlayAgainElement);
+
+    if (!IsGameDaily)
+    {
+        await ShowElement(PlayAgainElement);
+    }
 }
 
 async function InitializeGame()
@@ -208,10 +219,11 @@ function RemoveAHeart()
     if (firstIcon) firstIcon.remove();
 }
 
-async function SelectLeagueAndStartGame(LeagueCSVPath)
+async function SelectLeagueAndStartGame(LeagueCSVPath,IsDailyGame)
 {
     //league is selected
     selectedLeaguePath = LeagueCSVPath;
+    IsGameDaily = IsDailyGame;
 
     await InitializeGame();
 
@@ -222,7 +234,7 @@ async function SelectLeagueAndStartGame(LeagueCSVPath)
 
 //#region Util
 
-async function DoesPathReturnImg(path)
+/*async function DoesPathReturnImg(path)
 {
     try
     {
@@ -230,7 +242,7 @@ async function DoesPathReturnImg(path)
         return response.ok;
     }
     catch (error) {return false;}
-}
+}*/
 
 async function HideElementByID(id)
 {
@@ -268,22 +280,41 @@ $(document).ready(function ()
     PlayAgainElement = document.getElementById("play-again-button");
     LogoElement = document.getElementById("logo");
 
-    PlayAgainElement.onclick = InitializeGame;
+    if(PlayAgainElement !=null) PlayAgainElement.onclick = InitializeGame;
 
     HideTheLogoGame()
 
     const buttons = document.getElementsByClassName('league-button');
     Array.from(buttons).forEach(element =>
     {
-        element.onclick = () => {
-            SelectLeagueAndStartGame(element.getAttribute('data-path'))
-        };
+        if (element.getAttribute('data-type') === "daily")
+        {
+            element.onclick = () => {
+                if (CanPlayToday()) SelectLeagueAndStartGame(element.getAttribute('data-path'),true)
+            };
+        }
+        else
+        {
+            element.onclick = () => {
+                SelectLeagueAndStartGame(element.getAttribute('data-path'),false)
+            };
+        }
     })
 
+    /*let button = document.getElementById("Daily_League");
+    button.onclick= ( ) =>
+    {
+        if (CanPlayToday())
+        {
+            SelectLeagueAndStartGame(button.getAttribute('data-path'))
+        }
+    }*/
+
     let submitButton = document.getElementById("submit-btn")
-    submitButton.onclick = MakeGuess;
+    if (submitButton != null ) submitButton.onclick = MakeGuess;
 
-
+    let returnButton = document.getElementById("return-button");
+    if(returnButton != null ) returnButton.onclick = () => {HideTheLogoGame();};
 
 })
 

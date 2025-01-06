@@ -37,6 +37,11 @@ function SetAutoCompleteToElement(InputId, ResultId)
 {
     const resultsBox = document.getElementById(ResultId);
     const inputBox = document.getElementById(InputId);
+    if (inputBox == null || resultsBox == null)
+    {
+        console.error("no input box or results box")
+        return
+    }
 
     inputBox.onkeyup = function () {
         let result = [];
