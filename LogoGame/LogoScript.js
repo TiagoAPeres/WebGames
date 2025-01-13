@@ -301,14 +301,6 @@ $(document).ready(function ()
         }
     })
 
-    /*let button = document.getElementById("Daily_League");
-    button.onclick= ( ) =>
-    {
-        if (CanPlayToday())
-        {
-            SelectLeagueAndStartGame(button.getAttribute('data-path'))
-        }
-    }*/
 
     let submitButton = document.getElementById("submit-btn")
     if (submitButton != null ) submitButton.onclick = MakeGuess;
@@ -316,5 +308,11 @@ $(document).ready(function ()
     let returnButton = document.getElementById("return-button");
     if(returnButton != null ) returnButton.onclick = () => {HideTheLogoGame();};
 
+    let inputBox = document.getElementById("input-box");
+    if (inputBox != null) inputBox.onclick = ( ) =>
+    {
+        console.log("focus")
+        inputBox.focus()
+    }
 })
 
