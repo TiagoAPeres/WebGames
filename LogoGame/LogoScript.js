@@ -10,7 +10,8 @@ let PlayAgainElement = null;
 //
 let selectedLeaguePath  = null;
 let selectedLogo = null;
-let SelectedClubData = null;
+let SelectedClubData = null
+let leaguePopUpIndex = null;
 
 export let IsGameDaily = false;
 
@@ -25,6 +26,33 @@ let currentBlur = null;
 let minBlur = 0;
 let blurSectionAmount;
 
+let PopUpInformation =
+{
+    daily:
+    {
+        "title" : "Daily Logo Game",
+        "description" : "1"
+    },
+
+    PrimeiraLiga:
+    {
+        "title" : "Primeira Liga Logo Game",
+        "description" : "2"
+    },
+
+    International:
+        {
+            "title" : "International Logo Game",
+            "description" : "2"
+        },
+
+    PremierLeague:
+        {
+            "title" : "Premier League Logo Game",
+            "description" : "3"
+        },
+
+};
 
 //#region Logo
 function UpdateLogoElement()
@@ -219,15 +247,50 @@ function RemoveAHeart()
     if (firstIcon) firstIcon.remove();
 }
 
-async function SelectLeagueAndStartGame(LeagueCSVPath,IsDailyGame)
+async function SelectLeagueAndStartGame(leagueElement)
 {
     //league is selected
-    selectedLeaguePath = LeagueCSVPath;
-    IsGameDaily = IsDailyGame;
+    //selectedLeaguePath = LeagueCSVPath;
+    //IsGameDaily = IsDailyGame;
+
+    if (leagueElement == null) return;
+
+    selectedLeaguePath = leagueElement.getAttribute('data-path');
+    IsGameDaily = leagueElement.getAttribute('data-type') === "daily";
+    leaguePopUpIndex = leagueElement.id;
+
+    await UpdateAndShowPopUp()
+
+    //StartGame();
+}
+
+async function StartGame()
+{
+    if(selectedLeaguePath == null)
+    {
+        console.error("error retrieving data from path:" + selectedLeaguePath);
+        return;
+    }
+
+    if (IsGameDaily && !CanPlayToday()) return;
 
     await InitializeGame();
 
     await ShowTheLogoGame();
+}
+
+async function UpdateAndShowPopUp()
+{
+    document.getElementById("popup-title").textContent = PopUpInformation[leaguePopUpIndex].title;
+    document.getElementById("popup-description").textContent = PopUpInformation[leaguePopUpIndex].description;
+
+    document.getElementById("popup-button").onclick = () =>
+    {
+        StartGame();
+        HideElementByID('popup-background');
+    }
+
+    await ShowElementByID('popup-background');
 }
 
 //#endregion
@@ -247,15 +310,13 @@ async function SelectLeagueAndStartGame(LeagueCSVPath,IsDailyGame)
 async function HideElementByID(id)
 {
     let element = document.getElementById(id);
-    element.classList.toggle('hidden',true);
-    element.classList.toggle('visible',false);
+    await HideElement(element);
 }
 
 async function ShowElementByID(id)
 {
     let element = document.getElementById(id);
-    element.classList.toggle('hidden',false);
-    element.classList.toggle('visible',true);
+    await ShowElement(element);
 }
 
 async function HideElement(element)
@@ -287,7 +348,7 @@ $(document).ready(function ()
     const buttons = document.getElementsByClassName('league-button');
     Array.from(buttons).forEach(element =>
     {
-        if (element.getAttribute('data-type') === "daily")
+        /*if (element.getAttribute('data-type') === "daily")
         {
             element.onclick = () => {
                 if (CanPlayToday()) SelectLeagueAndStartGame(element.getAttribute('data-path'),true)
@@ -298,7 +359,10 @@ $(document).ready(function ()
             element.onclick = () => {
                 SelectLeagueAndStartGame(element.getAttribute('data-path'),false)
             };
-        }
+        }*/
+        element.onclick = () => {
+            SelectLeagueAndStartGame(element)
+        };
     })
 
 
@@ -314,5 +378,18 @@ $(document).ready(function ()
         console.log("focus")
         inputBox.focus()
     }
+
+    let ReturnButtons = document.querySelectorAll(".return-button");
+
+    ReturnButtons.forEach(element =>
+    {
+        if (element.hasAttribute('data-closeId'))
+        {
+            element.onclick = () =>
+            {
+                HideElementByID(element.getAttribute('data-closeId'));
+            };
+        }
+    });
 })
 
