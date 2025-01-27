@@ -30,27 +30,39 @@ let PopUpInformation =
 {
     daily:
     {
-        "title" : "Daily Logo Game",
-        "description" : "1"
+        "title" : "Jogo do Logotipo - Diario",
+        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+            "<p>Neste modo, qualquer clube pode aparecer.</p>" +
+            "<p>Boa sorte!</p>"
     },
 
     PrimeiraLiga:
     {
-        "title" : "Primeira Liga Logo Game",
-        "description" : "2"
+        "title" : "Jogo do Logotipo - Primeira Liga",
+        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+            "<p>Neste modo, apenas clubes da Primeira Liga aparecerão.</p>" +
+            "<p>Boa sorte!</p>"
     },
 
     International:
-        {
-            "title" : "International Logo Game",
-            "description" : "2"
-        },
+    {
+        "title" : "Jogo do Logotipo - International",
+        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+                "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+            "<p>Neste modo, apenas clubes da International League aparecerão.</p>" +
+            "<p>Boa sorte!</p>"
+    },
 
     PremierLeague:
-        {
-            "title" : "Premier League Logo Game",
-            "description" : "3"
-        },
+    {
+        "title" : "Jogo do Logotipo - Premier League",
+        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+            "<p>Neste modo, apenas clubes da Premier League aparecerão.</p>" +
+            "<p>Boa sorte!</p>"
+    },
 
 };
 
@@ -282,7 +294,7 @@ async function StartGame()
 async function UpdateAndShowPopUp()
 {
     document.getElementById("popup-title").textContent = PopUpInformation[leaguePopUpIndex].title;
-    document.getElementById("popup-description").textContent = PopUpInformation[leaguePopUpIndex].description;
+    document.getElementById("popup-description").innerHTML = PopUpInformation[leaguePopUpIndex].description;
 
     document.getElementById("popup-button").onclick = () =>
     {

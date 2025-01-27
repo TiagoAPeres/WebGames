@@ -134,8 +134,9 @@ html, body {
     align-items: center;
     width: 40px;
 
-    color: white;
+    /*color: white;
     background-color: rgba(0, 0, 0, 0.25);
+    border: 1px white solid;*/
     border-radius: 8px;
     min-height: 40px;
     user-select: none;
@@ -143,7 +144,23 @@ html, body {
 
 .return-button:hover
 {
-    background-color: rgba(0, 0, 0, 0.35);
+    /* background-color: rgb(255, 255, 255);
+     color: black;
+     border: none;*/
+}
+
+.interactable
+{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px white solid;
+}
+
+.interactable:hover
+{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: none;
 }
 
 .health-exit-section
