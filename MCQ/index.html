@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search bar</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="game-area">
+
+        <div class="question"></div>
+
+        <div class="options">
+            <button class="option" id="option-1">A) </button>
+            <button class="option" id="option-2">B) </button>
+            <button class="option" id="option-3">C) </button>
+            <button class="option" id="option-4">D) </button>
+        </div>
+
+        <div class="scoreboard">
+            <p><span class="prize">$0</span> <br> 
+                <span class="prize">$100</span> <br>
+                <span class="prize">$200</span> <br>
+                <span class="prize">$500</span> <br>
+                <span class="prize">$1,000</span> <br>
+                <span class="prize">$2,000</span> <br>
+                <span class="prize">$5,000</span> <br>
+                <span class="prize">$10,000</span> <br>
+                <span class="prize">$50,000</span> <br>
+                <span class="prize">$100,000</span> <br>
+                <span class="prize">$100,000,000</span> <br></p>
+        </div>
+
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="title">CONGRATULATIONS! <br> YOU ARE A MILLIONAIRE (not really)!</div>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            Come play again tomorrow!
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+<script src="autocomplete.js"></script>
+</body>
+</html>

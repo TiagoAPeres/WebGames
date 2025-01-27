@@ -1,0 +1,75 @@
+{
+    "days": [
+      {
+        "date": "2025-01-27",
+        "questions": [
+        {
+            "question": "Top Croatian Champions League scorer?",
+            "options": ["l. modrić", "m. mandžukić", "d. suker", "e. bokšić"],
+            "answer": "d. suker"
+        },
+        {
+            "question": "Top English Premier League scorer?",
+            "options": ["m. owen", "w. rooney", "a. shearer", "h. kane"],
+            "answer": "a. shearer"
+        },
+        {
+          "question": "Which country won the FIFA World Cup in 2018?",
+          "options": ["Brazil", "France", "Germany", "Argentina"],
+          "answer": "France"
+        },
+        {
+          "question": "What is Cristiano Ronaldo's first club'?",
+          "options": ["Benfica", "Porto", "Sporting Lisboa", "CD Nacional"],
+          "answer": "Sporting Lisboa"
+        },
+        {
+          "question": "Which club has won the most UEFA Champions League titles?",
+          "options": ["Real Madrid", "AC Milan", "FC Barcelona", "Manchester United"],
+          "answer": "Real Madrid"
+        },
+        {
+          "question": "Which player holds the record for the most goals in a single World Cup tournament?",
+          "options": ["Miroslav Klose", "Just Fontaine", "Ronaldo Nazário", "Lionel Messi"],
+          "answer": "Just Fontaine"
+        },
+        {
+          "question": "Which football club is nicknamed 'The Old Lady'?",
+          "options": ["Juventus", "Bayern Munich", "Chelsea", "Inter Milan"],
+          "answer": "Juventus"
+        },
+        {
+          "question": "Who scored the 'Hand of God' goal in the 1986 FIFA World Cup?",
+          "options": ["Zinedine Zidane", "Diego Maradona", "Johan Cruyff", "Roberto Baggio"],
+          "answer": "Diego Maradona"
+        },
+        {
+          "question": "Which African nation was the first to reach the FIFA World Cup quarter-finals?",
+          "options": ["Ghana", "Cameroon", "Nigeria", "Senegal"],
+          "answer": "Cameroon"
+        },
+        {
+          "question": "Who holds the record for the fastest hat-trick in Premier League history?",
+          "options": ["Sadio Mané", "Sergio Agüero", "Alan Shearer", "Mohamed Salah"],
+          "answer": "Sadio Mané"
+        }
+        ]
+      },
+      {
+        "date": "2025-01-28",
+        "questions": [
+          {
+            "question": "Top English Premier League scorer?",
+            "options": ["m. owen", "w. rooney", "a. shearer", "h. kane"],
+            "answer": "a. shearer"
+        },
+        {
+            "question": "Top Croatian Champions League scorer?",
+            "options": ["l. modrić", "m. mandžukić", "d. suker", "e. bokšić"],
+            "answer": "d. suker"
+        }
+        ]
+      }
+    ]
+}
+  
