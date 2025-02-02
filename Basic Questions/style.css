@@ -26,7 +26,7 @@ body{
 }
 
 .health{
-    display: flex;
+
     justify-content: center;
     font-size: 30px;
     height: 40px;
@@ -34,7 +34,7 @@ body{
 }
 
 .search-box{
-    width: 600px;
+    /*width: 600px;*/
     background: #fff;
     margin: 120px auto 0;
     border-radius: 5px;
@@ -52,7 +52,7 @@ input{
     background: transparent;
     border: 0;
     outline: 0;
-    font-size: 18px;
+    font-size: 15px;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -160,8 +160,13 @@ button .fa-solid{
         font-size: 3rem;
         font-weight: bold;
         position: absolute; /* Use absolute positioning */
-        top: 10px; /* Adjust as needed for spacing */
-        right: 15px; /* Align with the padding of the header */
+        top: 5px; /* Adjust as needed for spacing */
+        right: 10px; /* Align with the padding of the header */
+        color: red;
+    }
+
+    .modal-header .close-button:hover{
+        color: #ae0101;
     }
 
 .modal-body{
@@ -182,7 +187,22 @@ button .fa-solid{
     pointer-events: none;
 }
 
-#overlay.active{
-    opacity: 1;
-    pointer-events: all;
+@media (max-width: 640px){
+    .modal-header .title{
+        font-size: 1.5rem;
+    }
+
+    .modal-header .close-button{
+        font-size: 2rem;
+    }
+    
+    .modal-body{
+        font-size: 1rem;
+    }
+
+    .question{
+        font-size: 30px;
+    }
+
+
 }

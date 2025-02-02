@@ -77,12 +77,12 @@ function checkAnswer(selectedButton, choice, solution) {
 
             setTimeout(() => {
                 if (currentQuestionNumber < questions.length) {
-                    popupResults.innerHTML = "Right answer! You've won " + currentPrize.textContent;
+                    popupResults.innerHTML = "Right answer! </br> You've won " + currentPrize.textContent;
                     popupTextResults.innerHTML = "Next question!";
                     showModal();
                     displayQuestions();
                 } else {
-                    popupResults.innerHTML = "Congratulations! You won $1 million!";
+                    popupResults.innerHTML = "Congratulations! </br> You won $1 million!";
                     popupTextResults.innerHTML = "Play again tomorrow!";
                     showModal();
                 }

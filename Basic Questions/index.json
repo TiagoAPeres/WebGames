@@ -1,15 +1,56 @@
 {
-    "days": [
-      {
-        "date": "2024-12-29",
-        "question": "Top Croatian Champions League scorer?",
-        "answers": "l. modrić"
-      },
-      {
-        "date": "2024-12-30",
-        "question": "Top English Premier League scorer?",
-        "answers": "a. shearer"
-      }
-    ]
+  "days": [
+    {
+      "date": "2025-01-29",
+      "question": "Which player has scored in the most consecutive Champions League seasons?",
+      "answers": "l. messi"
+    },
+    {
+      "date": "2025-01-30",
+      "question": "Who is the only player to win the Champions League, World Cup, and Ballon d'Or in the same year?",
+      "answers": "p. rossi"
+    },
+    {
+      "date": "2025-01-31",
+      "question": "Which player has provided the most assists in Premier League history?",
+      "answers": "r. giggs"
+    },
+    {
+      "date": "2025-02-01",
+      "question": "Who is the only player to score in **five** different World Cups?",
+      "answers": "cristiano ronaldo"
+    },
+    {
+      "date": "2025-02-02",
+      "question": "Who is the oldest goalscorer in a World Cup final?",
+      "answers": "nilton santos"
+    },
+    {
+      "date": "2025-02-03",
+      "question": "Which player has played in the most UEFA Champions League finals?",
+      "answers": "cristiano ronaldo"
+    },
+    {
+      "date": "2025-02-04",
+      "question": "Who was the first player to score in three different Champions League finals?",
+      "answers": "alfredo di stefano"
+    },
+    {
+      "date": "2025-02-05",
+      "question": "Which player has won the most club trophies in history?",
+      "answers": "dani alves"
+    },
+    {
+      "date": "2025-02-06",
+      "question": "Who is the only player to score in **two** different European Championship finals and win both?",
+      "answers": "fernando torres"
+    },
+    {
+      "date": "2025-02-07",
+      "question": "Which player has the most official goals scored for a single club?",
+      "answers": "l. messi"
+    }
+  ]
 }
+
   

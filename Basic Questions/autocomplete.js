@@ -61,7 +61,7 @@ async function loadWordsAndStartGame() {
                 answer = todayQuiz.answers.toUpperCase();
             }
             else{
-                questionArea.innerHTML = "question";
+                questionArea.innerHTML = "Try again later!";
             }
         })
         .catch(error => {
@@ -104,7 +104,7 @@ submitButton.onclick = function () {
                 lives = 0;
                 updateHealth();
                 gameState = STATE.LOSE;
-                popupResults.innerHTML = "INCORRECT! <br> YOU LOST!";
+                popupResults.innerHTML = "INCORRECT! <br> THE ANSWER WAS: <br>" + answer;
                 showModal();
                 inputBox.value = null;
             }

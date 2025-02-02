@@ -45,7 +45,7 @@ button .fa-solid{
 .question{
     color: #000000;
     text-align: center;
-    margin: 150px auto 0;
+    margin: 50px auto 50px;
     padding-top: 20px;
     font-family: "Lucida Console", "Courier New", monospace;
     font-weight: 10000;
@@ -147,8 +147,13 @@ button .fa-solid{
         font-size: 3rem;
         font-weight: bold;
         position: absolute; /* Use absolute positioning */
-        top: 10px; /* Adjust as needed for spacing */
-        right: 15px; /* Align with the padding of the header */
+        top: 5px; /* Adjust as needed for spacing */
+        right: 10px; /* Align with the padding of the header */
+        color: red;
+    }
+
+    .modal-header .close-button:hover{
+        color: #ae0101;
     }
 
 .modal-body{
@@ -216,4 +221,15 @@ button .fa-solid{
 .grey-out {
     color: #999;  /* Grey color for greyed out */
     text-decoration: line-through; /* Scratch out */
+}
+
+@media (max-width: 640px){
+    .modal-header .title{
+        font-size: 1.5rem;
+    }
+
+    .modal-header .close-button{
+        font-size: 2rem;
+    }
+    
 }

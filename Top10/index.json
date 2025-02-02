@@ -1,0 +1,164 @@
+{
+  "days": [
+    {
+      "date": "2025-02-01",
+      "question": "Top 10 players with the most international goals?",
+      "answers": [
+        "cristiano ronaldo",
+        "ali daei",
+        "lionel messi",
+        "sunil chhetri",
+        "ferenc puskás",
+        "mokhtar dahari",
+        "godfrey chitalu",
+        "hussein saeed",
+        "pele",
+        "neymar jr"
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "question": "Top 10 players with the most Champions League assists?",
+      "answers": [
+        "cristiano ronaldo",
+        "lionel messi",
+        "angel di maria",
+        "ryan giggs",
+        "karim benzema",
+        "neymar jr",
+        "xavi",
+        "luis suárez",
+        "robert lewandowski",
+        "kevin de bruyne"
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "question": "Top 10 players with the most World Cup goals?",
+      "answers": [
+        "miroslav klose",
+        "ronaldo nazário",
+        "gerd müller",
+        "just fontaine",
+        "pele",
+        "lionel messi",
+        "kylian mbappe",
+        "cristiano ronaldo",
+        "helmut rahn",
+        "gary lineker"
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "question": "Top 10 most expensive football transfers?",
+      "answers": [
+        "neymar jr",
+        "kylian mbappe",
+        "philippe coutinho",
+        "ousmane dembele",
+        "joão félix",
+        "antoine griezmann",
+        "cristiano ronaldo",
+        "eden hazard",
+        "paul pogba",
+        "gareth bale"
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "question": "Top 10 players with the most career hat-tricks?",
+      "answers": [
+        "pelé",
+        "lionel messi",
+        "cristiano ronaldo",
+        "ferenc puskás",
+        "gerd müller",
+        "jimmy jones",
+        "robert lewandowski",
+        "alfredo di stéfano",
+        "eusébio",
+        "zlatan ibrahimović"
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "question": "Top 10 goalkeepers with the most clean sheets in history?",
+      "answers": [
+        "gianluigi buffon",
+        "petr cech",
+        "iker casillas",
+        "edwin van der sar",
+        "manuel neuer",
+        "oliver kahn",
+        "peter shilton",
+        "ray clemence",
+        "hugo lloris",
+        "victor valdes"
+      ]
+    },
+    {
+      "date": "2025-02-07",
+      "question": "Top 10 players with the most club trophies won?",
+      "answers": [
+        "dani alves",
+        "lionel messi",
+        "ryan giggs",
+        "maxwell",
+        "gerard piqué",
+        "kenny dalglish",
+        "vitor baia",
+        "sergio busquets",
+        "cristiano ronaldo",
+        "zlatan ibrahimović"
+      ]
+    },
+    {
+      "date": "2025-02-08",
+      "question": "Top 10 Champions League all-time goal scorers?",
+      "answers": [
+        "cristiano ronaldo",
+        "lionel messi",
+        "robert lewandowski",
+        "karim benzema",
+        "raúl",
+        "ruud van nistelrooy",
+        "thomas müller",
+        "thierry henry",
+        "zlatan ibrahimović",
+        "andriy shevchenko"
+      ]
+    },
+    {
+      "date": "2025-02-09",
+      "question": "Top 10 Ballon d'Or winners with the most awards?",
+      "answers": [
+        "lionel messi",
+        "cristiano ronaldo",
+        "johan cruyff",
+        "michel platini",
+        "marco van basten",
+        "alfredo di stéfano",
+        "franz beckenbauer",
+        "ronaldo nazario",
+        "kevin keegan",
+        "karl-heinz rummenigge"
+      ]
+    },
+    {
+      "date": "2025-02-10",
+      "question": "Top 10 all-time Premier League goal scorers?",
+      "answers": [
+        "alan shearer",
+        "harry kane",
+        "wayne rooney",
+        "andy cole",
+        "sergio agüero",
+        "frank lampard",
+        "thierry henry",
+        "robbie fowler",
+        "jermain defoe",
+        "michael owen"
+      ]
+    }
+  ]
+}
