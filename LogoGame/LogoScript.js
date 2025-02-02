@@ -1,5 +1,5 @@
 import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
-import { loadAndParseCsv} from '/Utilities/queryCsv.js';
+import {loadAndParseCsv, loadAndParseCsvArray} from '/Utilities/queryCsv.js';
 import { DoesPathReturnImg } from '/Utilities/FilesUtil.js'
 import { CanPlayToday, SetPlayerData } from "./DailyCookie.js";
 
@@ -9,9 +9,15 @@ let PlayAgainElement = null;
 
 //
 let selectedLeaguePath  = null;
+let selectedLeaguePathArray  = [];
 let selectedLogo = null;
 let SelectedClubData = null
 let leaguePopUpIndex = null;
+
+let AllLeaguePathArray  =
+    [   "/csv/Logo/PremierLeague_Logos.csv",
+        "/csv/Logo/PrimeiraLiga_Logos.csv",
+        "/csv/Logo/International_Logos.csv"];
 
 export let IsGameDaily = false;
 
@@ -72,6 +78,7 @@ function UpdateLogoElement()
     if (!LogoElement) return
 
     LogoElement.src = selectedLogo;
+    RemoveAnimationFromLogo();
     BlurLogo();
 }
 
@@ -79,32 +86,91 @@ function UnblurLogo()
 {
     if (!LogoElement) return
     currentBlur = 0;
-    LogoElement.style.filter = `blur(${currentBlur}px)`
+    //LogoElement.style.filter = `blur(${currentBlur}px)`
+
+    let currentFilter = LogoElement.style.filter;
+    let shadowPart = currentFilter.match(/drop-shadow\((.*?)\)/);
+    let dropShadow = shadowPart ? shadowPart[0] : "drop-shadow(0px 0px 0px transparent)"; // Default if not found
+
+    // Update the filter property with new blur value
+    LogoElement.style.filter = `blur(${currentBlur}px) ${dropShadow}`;
 }
 
 function BlurLogo()
 {
     if (!LogoElement) return
     currentBlur = maxBlur;
-    LogoElement.style.filter = `blur(${currentBlur}px)`
+    //LogoElement.style.filter = `blur(${currentBlur}px)`
+
+    let currentFilter = LogoElement.style.filter;
+    let shadowPart = currentFilter.match(/drop-shadow\((.*?)\)/);
+    let dropShadow = shadowPart ? shadowPart[0] : "drop-shadow(0px 0px 0px transparent)"; // Default if not found
+
+    // Update the filter property with new blur value
+    LogoElement.style.filter = `blur(${currentBlur}px) ${dropShadow}`;
 }
 
-function ReduceBlurFromLogo()
-{
+function ReduceBlurFromLogo() {
     if (!LogoElement) return
+
+    /* LogoElement.style.filter = `blur(${currentBlur}px)` */
+
+    LogoElement.style.animation = "none"; // Reset animation
+    void LogoElement.offsetWidth; // Force reflow to restart animation
+
+    setShadowBlur(currentBlur, currentBlur - blurSectionAmount);
+
     currentBlur -= blurSectionAmount;
-    LogoElement.style.filter = `blur(${currentBlur}px)`
+
+    LogoElement.style.animation = "shadowFade 1.5s ease-in-out forwards"; // Restart animation
+
+    HideElementByID("submit-btn")
+    setTimeout(() => ShowElementByID("submit-btn"), 1500);
+
 }
+
+function setShadowBlur(startBlur, endBlur) {
+    const midBlur = (startBlur + endBlur) /2;
+
+    LogoElement.style.setProperty('--start-blur', `${startBlur}px`);
+    LogoElement.style.setProperty('--mid-blur', `${midBlur}px`);
+    LogoElement.style.setProperty('--end-blur', `${endBlur}px`);
+}
+
+function RemoveAnimationFromLogo()
+{
+    LogoElement.style.animation = "none";
+}
+
+/*
+function ReduceBlurFromLogo() {
+    if (!LogoElement) return;
+
+    // Decrease the blur
+    currentBlur -= blurSectionAmount;
+    if (currentBlur < 0) currentBlur = 0; // Prevent negative blur
+
+    // Apply the new blur + trigger the shadow animation
+    LogoElement.style.filter = `blur(${currentBlur}px)`;
+
+    // Restart shadow animation
+    LogoElement.style.animation = "none"; // Reset animation
+    void LogoElement.offsetWidth; // Force reflow to restart animation
+    LogoElement.style.animation = "shadowFade 1s ease-in-out"; // Restart animation
+}
+*/
 
 async function SelectNewLogo()
 {
-    if (selectedLeaguePath == null)
+    if (selectedLeaguePathArray.length === 0 ) //selectedLeaguePath
     {
         console.error("No Selected League Path");
         return
     }
 
-    let csvData = await loadAndParseCsv(selectedLeaguePath);
+
+    let csvData = await loadAndParseCsvArray(selectedLeaguePathArray);
+    //let csvData = await loadAndParseCsv(selectedLeaguePath);
 
     if (!Array.isArray(csvData) || csvData.length <= 0)
     {
@@ -165,7 +231,6 @@ function MakeGuess()
 
 async function CorrectGuess()
 {
-    alert("you won bitch")
     await GameEnded();
 }
 
@@ -177,13 +242,11 @@ async function WrongGuess()
         RemoveAHeart()
         ReduceBlurFromLogo();
         SetPlayerData(currentLives);
-        alert("you lost sadge")
     }
 
     if (currentLives <= 0)
     {
         await GameEnded();
-        alert("No more hearts, try again")
     }
 }
 
@@ -208,7 +271,7 @@ async function InitializeGame()
     await InitializeLogo()
 
     //Autocomplete
-    await SetUpAutoComplete([selectedLeaguePath], "team", "input-box", "result-box")
+    await SetUpAutoComplete(selectedLeaguePathArray, "team", "input-box", "result-box") //[selectedLeaguePath]
 
     //BLUR
     blurSectionAmount = Math.abs(maxBlur - minBlur) / maxlives;
@@ -239,6 +302,8 @@ function InitializeHealth()
         HealthBar.innerHTML += '<i class="fa-solid fa-heart heart"></i>';
     }
 }
+
+
 //#endregion
 
 //#region UI
@@ -267,7 +332,25 @@ async function SelectLeagueAndStartGame(leagueElement)
 
     if (leagueElement == null) return;
 
-    selectedLeaguePath = leagueElement.getAttribute('data-path');
+    selectedLeaguePathArray = [];
+
+    let dataPathAttribute = leagueElement.getAttribute('data-path');
+    //selectedLeaguePathArray = leagueElement.getAttribute('data-path');
+
+    if (dataPathAttribute == null)
+    {
+        return;
+    }
+    else if (dataPathAttribute === "all")
+    {
+        selectedLeaguePathArray = AllLeaguePathArray;
+    }
+    else
+    {
+        selectedLeaguePathArray.push(dataPathAttribute);
+    }
+
+
     IsGameDaily = leagueElement.getAttribute('data-type') === "daily";
     leaguePopUpIndex = leagueElement.id;
 
@@ -278,11 +361,11 @@ async function SelectLeagueAndStartGame(leagueElement)
 
 async function StartGame()
 {
-    if(selectedLeaguePath == null)
+    /*if(selectedLeaguePath == null)
     {
         console.error("error retrieving data from path:" + selectedLeaguePath);
         return;
-    }
+    }*/
 
     if (IsGameDaily && !CanPlayToday()) return;
 
@@ -360,18 +443,6 @@ $(document).ready(function ()
     const buttons = document.getElementsByClassName('league-button');
     Array.from(buttons).forEach(element =>
     {
-        /*if (element.getAttribute('data-type') === "daily")
-        {
-            element.onclick = () => {
-                if (CanPlayToday()) SelectLeagueAndStartGame(element.getAttribute('data-path'),true)
-            };
-        }
-        else
-        {
-            element.onclick = () => {
-                SelectLeagueAndStartGame(element.getAttribute('data-path'),false)
-            };
-        }*/
         element.onclick = () => {
             SelectLeagueAndStartGame(element)
         };
@@ -403,5 +474,78 @@ $(document).ready(function ()
             };
         }
     });
+
+    document.addEventListener("click", function (event)
+    {
+        document.querySelectorAll(".selectable").forEach(el => el.classList.remove("selected"));
+    });
+
+    document.querySelectorAll(".selectable").forEach(item => {
+        item.addEventListener("click", function (event) {
+            // Prevent the document click event from removing 'selected' immediately
+            event.stopPropagation();
+
+            // Remove 'selected' from all selectable elements
+            document.querySelectorAll(".selectable").forEach(el => el.classList.remove("selected"));
+
+            // Add 'selected' to the clicked element
+            this.classList.add("selected");
+        });
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            let closestEscapeButton = null;
+            let closestZ = null
+            document.querySelectorAll(".return-button").forEach(item => {
+                if (isElementHidden(item)) return;
+
+                if (closestEscapeButton == null )
+                {
+                    closestEscapeButton = item;
+                    closestZ = getZIndex(item);
+                    return;
+                }
+                let currentZ = getZIndex(item);
+
+                if(currentZ > closestZ )
+                {
+                    closestZ = currentZ;
+                    closestEscapeButton = item;
+                }
+            });
+
+            if (closestEscapeButton != null)
+            {
+                closestEscapeButton.click();
+            }
+
+        }
+    });
 })
 
+function getZIndex(button) {
+    return parseInt(window.getComputedStyle(button).zIndex, 10) || 0; // Default to 0 if no z-index is set
+}
+
+
+function isElementHidden(element) {
+    // Check if the element itself is hidden
+    let style = window.getComputedStyle(element);
+
+    if (style.visibility === 'hidden' || style.opacity === '0' || style.display === 'none') {
+        return true;
+    }
+
+    // Check if any parent element is hidden
+    let parent = element.parentElement;
+    while (parent) {
+        let parentStyle = window.getComputedStyle(parent);
+        if (parentStyle.visibility === 'hidden' || parentStyle.opacity === '0' || parentStyle.display === 'none') {
+            return true;
+        }
+        parent = parent.parentElement;
+    }
+
+    return false;
+}

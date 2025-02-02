@@ -56,9 +56,10 @@ button{
 
 button .fa-solid{
     width: 25px;
-    color: #545454;
+    color: #3a3a3a;
     font-size: 22px;
     cursor: pointer;
+
 }
 
 #placeholder{

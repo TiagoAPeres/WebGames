@@ -112,8 +112,9 @@ html, body {
 .play-again-button
 {
     display: flex;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.25);
+    /*color: white;
+    background-color: rgba(0, 0, 0, 0.25);*/
+    border-radius: 15px;
     min-width: 100px;
     min-height: 50px;
     margin: 25px;
@@ -124,7 +125,7 @@ html, body {
 
 .play-again-button:hover
 {
-    background-color: rgba(0, 0, 0, 0.35);
+    /*background-color: rgba(0, 0, 0, 0.35);*/
 }
 
 .return-button
@@ -134,9 +135,6 @@ html, body {
     align-items: center;
     width: 40px;
 
-    /*color: white;
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px white solid;*/
     border-radius: 8px;
     min-height: 40px;
     user-select: none;
@@ -144,9 +142,6 @@ html, body {
 
 .return-button:hover
 {
-    /* background-color: rgb(255, 255, 255);
-     color: black;
-     border: none;*/
 }
 
 .interactable
@@ -163,6 +158,15 @@ html, body {
     border: none;
 }
 
+
+.selectable{}
+
+.selected {
+    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 0 0 25px white;
+}
+
 .health-exit-section
 {
     display: flex;
@@ -173,17 +177,53 @@ html, body {
     padding: 10px 10px;
 }
 
-.logo-section
-{
+/* The container for centering the image */
+.logo-section {
     width: 100%;
     padding: 10px;
-    position: relative;
-    max-width: 100%;
-    max-height: 100%;
-
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* A wrapper around the image for positioning the overlay */
+.img-wrapper {
+    position: relative; /* Establish positioning context */
+    display: inline-block;
+
+    width: auto;
+    height: 90%;
+    object-fit: contain;
+}
+
+/* Ensure the image keeps its natural aspect ratio */
+.img-wrapper img {
+    display: block;
+    /*max-width: 100%;*/
+    /*height: auto;*/
+
+    width: auto;
+    height: 90%;
+    object-fit: contain;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    filter: blur(10px) drop-shadow(0px 0px 0px transparent);
+    --start-blur: 0px;
+    --mid-blur: 0px;
+    --end-blur: 0px;
+}
+
+
+/* Keyframes to grow and then shrink the overlay */
+@keyframes shadowFade {
+    0% {
+        filter: drop-shadow(0px 0px 0px transparent) blur(var(--start-blur, 0px)); /* Initial blur */
+    }
+    50% {
+        filter: drop-shadow(0px 0px 50px red) blur(var(--mid-blur, 20px)); /* Mid animation blur */
+    }
+    100% {
+        filter: drop-shadow(0px 0px 0px transparent) blur(var(--end-blur, 0px)); /* Final blur */
+    }
 }
 
 .search-bar-section
@@ -358,4 +398,18 @@ body
     z-index: 9999; /* Ensure it's on top of everything */
     justify-content: center;
     align-items: center;
+}
+
+.z-index-9999
+{
+    z-index: 9999;
+}
+.z-index-5000
+{
+    z-index: 5000;
+}
+
+.z-index-1000
+{
+    z-index: 1000;
 }

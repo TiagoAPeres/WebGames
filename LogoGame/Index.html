@@ -22,17 +22,17 @@
         <div></div>
      </div>
 
-     <div class="logo-section">
-         <!--<section class="image-section">-->
-         <img id="logo" src="" alt="Section Image">
-         <!--</section>-->
+    <div class="logo-section">
+        <div class="img-wrapper">
+            <img id="logo" src="" alt="Section Image">
+        </div>
     </div>
 
     <div class="search-bar-section">
-       <div class="search-box">
+       <div class="search-box selected selectable">
             <div class="row">
                 <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
-                <button><i id="submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
+                <button><i id="submit-btn" class="fa-solid fa-arrow-right"></i></button>
             </div>
             <div class="result-box" id="result-box">
             </div>
@@ -42,7 +42,7 @@
 
 
     <div class="play-again-section" >
-        <div class="play-again-button" id="play-again-button">play again</div>
+        <div class="play-again-button interactable" id="play-again-button">play again</div>
     </div>
 
 </div>
@@ -53,13 +53,13 @@
     <button id="PremierLeague" class="league-button" data-path="/csv/Logo/PremierLeague_Logos.csv" > Premier League </button>
     <button id="PrimeiraLiga" class="league-button" data-path="/csv/Logo/PrimeiraLiga_Logos.csv" >Primeira Liga</button>
     <button id="International" class="league-button" data-path="/csv/Logo/International_Logos.csv" >International Clubs</button>
-    <button id="daily" class="league-button" data-path="/csv/Logo/International_Logos.csv" data-type="daily">DAILY</button>
+    <button id="daily" class="league-button" data-path="all" data-type="daily">DAILY</button>
 </div>
 </div>
 
 <div id="popup-background" class="popUpBackground hidden">
     <div id="popup" class="LeaguePopUpSection grid-column-2">
-        <div class="return-button interactable" data-closeId="popup-background">x</div>
+        <div class="return-button interactable z-index-9999" data-closeId="popup-background">x</div>
         <div class="popUpTitle" id="popup-title">name of the game</div>
         <div class="popUpDescription" id="popup-description">description</div>
         <div class="pop-up-button interactable" id="popup-button">PLAY</div>
