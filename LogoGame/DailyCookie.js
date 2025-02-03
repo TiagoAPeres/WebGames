@@ -78,18 +78,24 @@ async function GetDailyLogo() {
     }
 }
 
-export function SetPlayerData(AmountHearts)
+export function SetPlayerData(AmountHearts,CanPlayToday = null)
 {
+    if (CanPlayToday == null)
+    {
+        CanPlayToday = CanPlayDailyToday();
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const updatedData =
     {
         date: today,
         hearts: AmountHearts,
+        canPlay: CanPlayToday
     };
     setCookie('playerData', JSON.stringify(updatedData), 1);
 }
 
-export function CanPlayToday()
+export function CanPlayDailyToday()
 {
     const today = new Date().toISOString().split('T')[0];
     const playerDataCookie = getCookie('playerData');
@@ -97,17 +103,13 @@ export function CanPlayToday()
 
     if (playerDataCookie === null || !(playerData.date === today))
     {
-        SetPlayerData(maxlives);
+        SetPlayerData(maxlives,true);
         return true;
     }
 
-    if (playerData.date === today && playerData.hearts > 0)
+    if (playerData.date === today)
     {
-        return true;
+        return playerData.canPlay;
     }
 
-    if(playerData.date === today && playerData.hearts <= 0)
-    {
-        return false;
-    }
 }

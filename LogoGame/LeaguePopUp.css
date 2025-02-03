@@ -29,7 +29,7 @@
     padding: 20px;
 
     display: grid;
-    grid-template-rows: 15% 20% 1fr 15%;
+    grid-template-rows: 15% 18% 1fr 15%;
     justify-items: center;
     align-items: center;
 }
@@ -60,6 +60,16 @@
     color: #ffffff;
 }
 
+.green-text
+{
+    color: #85ff00;
+}
+
+.red-text
+{
+    color: #ff0000;
+}
+
 .pop-up-button
 {
     width: 50%;
@@ -68,11 +78,48 @@
     justify-content: center;
     align-content: center;
     border-radius: 15px;
+    font-size: 13px;
 }
 
 @media (max-width: 640px)
 {
     .LeaguePopUpSection
+    {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+
+.LeaguePopUpSection-mini
+{
+    width: 366px;
+    height: 300px;
+
+    background: #000000;
+    box-shadow: 0 0 100px black,
+    100px 100px 200px black,
+    -100px -100px  200px black;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1010;
+
+    padding: 20px;
+
+    display: grid;
+    grid-template-rows: 25% 1fr 1fr 25%;
+    justify-items: center;
+    align-items: center;
+}
+
+
+
+@media (max-width: 640px)
+{
+    .LeaguePopUpSection-mini
     {
         width: 100%;
         padding: 10px;

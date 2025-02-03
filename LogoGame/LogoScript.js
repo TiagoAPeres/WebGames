@@ -1,7 +1,7 @@
 import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
 import {loadAndParseCsv, loadAndParseCsvArray} from '/Utilities/queryCsv.js';
 import { DoesPathReturnImg } from '/Utilities/FilesUtil.js'
-import { CanPlayToday, SetPlayerData } from "./DailyCookie.js";
+import { CanPlayDailyToday, SetPlayerData } from "./DailyCookie.js";
 
 //Element
 let LogoElement = null;
@@ -19,11 +19,12 @@ let AllLeaguePathArray  =
         "/csv/Logo/PrimeiraLiga_Logos.csv",
         "/csv/Logo/International_Logos.csv"];
 
+
 export let IsGameDaily = false;
+let GameWon = false
 
 //Health
 export let maxlives = 5;
-//let maxlives = 5;
 let currentLives = 5;
 
 //Blur
@@ -34,41 +35,42 @@ let blurSectionAmount;
 
 let PopUpInformation =
 {
-    daily:
-    {
-        "title" : "Jogo do Logotipo - Diario",
-        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
-            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+    daily: {
+        "title": "Jogo do Logotipo - Diário",
+        "description":
+            "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
             "<p>Neste modo, qualquer clube pode aparecer.</p>" +
-            "<p>Boa sorte!</p>"
+            "<p>Boa sorte! 🍀</p>"
     },
 
-    PrimeiraLiga:
-    {
-        "title" : "Jogo do Logotipo - Primeira Liga",
-        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
-            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+    PrimeiraLiga: {
+        "title": "Jogo do Logotipo - Primeira Liga",
+        "description":
+            "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
             "<p>Neste modo, apenas clubes da Primeira Liga aparecerão.</p>" +
-            "<p>Boa sorte!</p>"
+            "<p>Boa sorte! ⚽</p>"
     },
 
-    International:
-    {
-        "title" : "Jogo do Logotipo - International",
-        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
-                "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
-            "<p>Neste modo, apenas clubes da International League aparecerão.</p>" +
-            "<p>Boa sorte!</p>"
+    International: {
+        "title": "Jogo do Logotipo - Internacional",
+        "description":
+            "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
+            "<p>Neste modo, apenas clubes da liga internacional aparecerão.</p>" +
+            "<p>Boa sorte! 🌍</p>"
     },
 
-    PremierLeague:
-    {
-        "title" : "Jogo do Logotipo - Premier League",
-        "description" : "<p class='pop-up-description-highlighted-text'>O jogador tem 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
-            "<p>O logotipo começará desfocado e ficará cada vez mais nítido à medida que o jogo avança.</p> " +
+    PremierLeague: {
+        "title": "Jogo do Logotipo - Premier League",
+        "description":
+            "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+            "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
             "<p>Neste modo, apenas clubes da Premier League aparecerão.</p>" +
-            "<p>Boa sorte!</p>"
-    },
+            "<p>Boa sorte! 🏆</p>"
+    }
+
 
 };
 
@@ -241,7 +243,7 @@ async function WrongGuess()
         currentLives--;
         RemoveAHeart()
         ReduceBlurFromLogo();
-        SetPlayerData(currentLives);
+        if (IsGameDaily) SetPlayerData(currentLives);
     }
 
     if (currentLives <= 0)
@@ -252,18 +254,24 @@ async function WrongGuess()
 
 async function GameEnded()
 {
+    GameWon = currentLives > 0;
+
+    if (IsGameDaily)
+    {
+        SetPlayerData(currentLives,false);
+    }
+
     ClearSearchBar();
     UnblurLogo();
 
-    if (!IsGameDaily)
-    {
-        await ShowElement(PlayAgainElement);
-    }
+    await UpdateAndShowGameResultPopUp();
+
+
 }
 
 async function InitializeGame()
 {
-    await HideElement(PlayAgainElement);
+    /*await HideElement(PlayAgainElement);*/
 
     InitializeHealth();
 
@@ -350,11 +358,10 @@ async function SelectLeagueAndStartGame(leagueElement)
         selectedLeaguePathArray.push(dataPathAttribute);
     }
 
-
     IsGameDaily = leagueElement.getAttribute('data-type') === "daily";
     leaguePopUpIndex = leagueElement.id;
 
-    await UpdateAndShowPopUp()
+    await UpdateAndShowLeaguePopUp()
 
     //StartGame();
 }
@@ -367,15 +374,21 @@ async function StartGame()
         return;
     }*/
 
-    if (IsGameDaily && !CanPlayToday()) return;
+    if (IsGameDaily && !CanPlayDailyToday())
+    {
+        //todo show pop up and make hide play button maybe
+        return;
+    }
 
     await InitializeGame();
 
     await ShowTheLogoGame();
 }
 
-async function UpdateAndShowPopUp()
+async function UpdateAndShowLeaguePopUp()
 {
+    if (IsGameDaily) UpdateDailyPopUp();
+
     document.getElementById("popup-title").textContent = PopUpInformation[leaguePopUpIndex].title;
     document.getElementById("popup-description").innerHTML = PopUpInformation[leaguePopUpIndex].description;
 
@@ -386,6 +399,68 @@ async function UpdateAndShowPopUp()
     }
 
     await ShowElementByID('popup-background');
+}
+
+async function UpdateAndShowGameResultPopUp()
+{
+    if (IsGameDaily)
+    {
+        await UpdateDailyGameResultPopUp()
+    }
+    else
+    {
+        await UpdateNonDailyGameResultPopUp()
+    }
+
+    await ShowElementByID('game-result-popup-background');
+}
+
+async function UpdateNonDailyGameResultPopUp()
+{
+    if (GameWon) {
+        document.getElementById("game-result-popup-title").textContent = "🎉 JOGO VENCIDO! 🎉";
+        document.getElementById("game-result-popup-description").innerHTML =
+            "<p>Parabéns! Fizeste um ótimo trabalho. 👏😃</p>";
+    } else {
+        document.getElementById("game-result-popup-title").textContent = "❌ JOGO PERDIDO ❌";
+        document.getElementById("game-result-popup-description").innerHTML =
+            "<p>O clube correto era <strong>" + SelectedClubData.team + "</strong>.</p>" +
+            "<p>Não desistas! Tenta novamente 💪⚽</p>";
+    }
+    document.getElementById("game-result-popup-button").innerHTML = "JOGAR OUTRA VEZ"
+    document.getElementById("game-result-popup-button").onclick = () =>
+    {
+        InitializeGame()
+
+        //if daily game
+        //button turns to exit game
+        HideElementByID('game-result-popup-background');
+    }
+}
+
+async function UpdateDailyGameResultPopUp()
+{
+    if (GameWon)
+    {
+        document.getElementById("game-result-popup-title").textContent = "🎉 JOGO VENCIDO! 🎉";;
+        document.getElementById("game-result-popup-description").innerHTML = "<p>Parabéns! Hoje conseguiste adivinhar corretamente. Excelente trabalho! 👏⚽</p>";
+    }
+    else
+    {
+        document.getElementById("game-result-popup-title").textContent = "JOGO PERDIDO";
+        document.getElementById("game-result-popup-description").innerHTML =
+            "O clube correto era " + SelectedClubData.team + "."
+            +"<p>Infelizmente, hoje não conseguiste adivinhar corretamente.</p>"
+            +"<p>Mas não desanimes! Tenta outra vez amanhã. 💪⚽</p>"
+    }
+
+    document.getElementById("game-result-popup-button").innerHTML = "EXIT GAME"
+    document.getElementById("game-result-popup-button").onclick = () =>
+    {
+        HideElementByID('logoGame');
+        HideElementByID('game-result-popup-background');
+        ShowElementByID('SelectLeague')
+    }
 }
 
 //#endregion
@@ -433,10 +508,10 @@ async function ShowElement(element)
 
 $(document).ready(function ()
 {
-    PlayAgainElement = document.getElementById("play-again-button");
+    //PlayAgainElement = document.getElementById("play-again-button");
     LogoElement = document.getElementById("logo");
 
-    if(PlayAgainElement !=null) PlayAgainElement.onclick = InitializeGame;
+    //if(PlayAgainElement !=null) PlayAgainElement.onclick = InitializeGame;
 
     HideTheLogoGame()
 
@@ -482,13 +557,8 @@ $(document).ready(function ()
 
     document.querySelectorAll(".selectable").forEach(item => {
         item.addEventListener("click", function (event) {
-            // Prevent the document click event from removing 'selected' immediately
             event.stopPropagation();
-
-            // Remove 'selected' from all selectable elements
             document.querySelectorAll(".selectable").forEach(el => el.classList.remove("selected"));
-
-            // Add 'selected' to the clicked element
             this.classList.add("selected");
         });
     });
@@ -522,7 +592,32 @@ $(document).ready(function ()
 
         }
     });
+
+    UpdateDailyPopUp();
 })
+
+
+function UpdateDailyPopUp()
+{
+    let description = "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
+        "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
+        "<p>Neste modo, qualquer clube pode aparecer.</p>" +
+        "<p>Boa sorte! 🍀</p>"
+
+    let PrefixString;
+
+    if (CanPlayDailyToday())
+    {
+        PrefixString = "<p class='green-text'>" +"Ainda podes jogar hoje</p>"
+    }
+    else
+    {
+        PrefixString = "<p class='red-text'>" +"Já não podes jogar hoje</p>"
+    }
+
+
+    PopUpInformation["daily"].description = PrefixString + description;
+}
 
 function getZIndex(button) {
     return parseInt(window.getComputedStyle(button).zIndex, 10) || 0; // Default to 0 if no z-index is set

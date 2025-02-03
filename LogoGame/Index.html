@@ -41,8 +41,8 @@
 
 
 
-    <div class="play-again-section" >
-        <div class="play-again-button interactable" id="play-again-button">play again</div>
+    <div class="play-again-section hidden" >
+        <div class="play-again-button interactable" id="play-again-button">JOGAR OUTRA VEZ</div>
     </div>
 
 </div>
@@ -60,9 +60,18 @@
 <div id="popup-background" class="popUpBackground hidden">
     <div id="popup" class="LeaguePopUpSection grid-column-2">
         <div class="return-button interactable z-index-9999" data-closeId="popup-background">x</div>
-        <div class="popUpTitle" id="popup-title">name of the game</div>
-        <div class="popUpDescription" id="popup-description">description</div>
-        <div class="pop-up-button interactable" id="popup-button">PLAY</div>
+        <div id="popup-title" class="popUpTitle" >name of the game</div>
+        <div id="popup-description" class="popUpDescription" >description</div>
+        <div id="popup-button" class="pop-up-button interactable">JOGAR</div>
+    </div>
+</div>
+
+<div id="game-result-popup-background" class="popUpBackground hidden">
+    <div id="game-result-popup" class="LeaguePopUpSection-mini  grid-column-2">
+        <div class="return-button interactable z-index-9999" data-closeId="game-result-popup-background">x</div>
+        <div id="game-result-popup-title" class="popUpTitle" >name of the game</div>
+        <div id="game-result-popup-description" class="popUpDescription" >description</div>
+        <div id="game-result-popup-button" class="pop-up-button interactable" >JOGAR</div>
     </div>
 </div>
 
