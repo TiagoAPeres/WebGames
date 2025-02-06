@@ -96,6 +96,24 @@ button.fa-solid:hover{
     pointer-events: none;
 }
 
+.correct {
+    pointer-events: none;
+    opacity: 1;
+    background-color: #4caf50; /* Green for correct answer */
+    color: white;
+    border-color: #4caf50;
+    
+}
+
+.wrong {
+    pointer-events: none;
+    opacity: 1;
+    background-color: #f44336; /* Red for wrong answer */
+    color: white;
+    border-color: #f44336;
+    
+}
+
 #placeholder{
     color: #555;
 }

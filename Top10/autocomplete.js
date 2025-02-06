@@ -56,20 +56,21 @@ async function loadWordsAndStartGame() {
             let now = new Date();
             now.setHours(now.getHours());
             let today = now.toISOString().split('T')[0];
+
+            console.log("Date: " + today); // Ensure this runs after 'today' is set
+
             let todayQuiz = data.days.find(day => day.date === today);
 
-            console.log("Date: " + today)
-
-            if(todayQuiz){
+            if (todayQuiz) {
                 questionArea.innerHTML = todayQuiz.question.toUpperCase();
-                answer = todayQuiz.answers.toUpperCase();
-            }
-            else{
+                answer = todayQuiz.answers.map(a => normalizeText(a));
+                console.log("answer: " + answer);
+            } else {
                 questionArea.innerHTML = "Try again later!";
             }
         })
         .catch(error => {
-            // handle errors
+            console.error('Error loading word list:', error);
         });
 }
 
@@ -95,14 +96,17 @@ function normalizeText(text) {
 }
 
 submitButton.onclick = function () {
-    console.log(answer);
     let input = normalizeText(inputBox.value) 
 
     if (input && gameState === STATE.NO_RESULT)
     {
-        if (answer.includes(inputBox.value) && !guessedAnswers.has(input)) {
+        console.log(answer);
+        if (answer.includes(input) && !guessedAnswers.has(input)) {
+            let index = answer.indexOf(input);
+            console.log(index);
             guessedAnswers.add(input);
-            
+            correctAnswer(index, input);
+            inputBox.value = null;
 
             if (guessedAnswers.size === answer.length) {
                 gameState = STATE.WIN;
@@ -111,11 +115,14 @@ submitButton.onclick = function () {
             }
         } else {
             if (lives>1) {
+                wrongAnswer();
                 lives--;
                 updateHealth();
                 inputBox.value = null;
             }
             else {
+                wrongAnswer();
+                revealAnswer();
                 lives = 0;
                 updateHealth();
                 gameState = STATE.LOSE;
@@ -127,8 +134,27 @@ submitButton.onclick = function () {
     }
 }
 
-function revealAnswers() {
+function correctAnswer(index, answer) {
+    options[index].innerHTML = answer;
+    options[index].classList.add("correct");
     
+}
+
+function revealAnswer() {
+    options.forEach((option, index) => {
+        option.innerHTML = answer[index];
+    });
+}
+
+function wrongAnswer() {
+    options.forEach(option => {
+        option.classList.add("wrong");
+    });
+    setTimeout(() => {
+        options.forEach(option => {
+            option.classList.remove('wrong');
+        });
+    }, 200);
 }
 
 function showModal() {
