@@ -58,21 +58,19 @@
 </div>
 
 <div id="popup-background" class="popUpBackground hidden">
-    <div id="popup" class="LeaguePopUpSection grid-column-2">
-        <div class="return-button interactable z-index-9999" data-closeId="popup-background">x</div>
+    <div id="popup" class="LeaguePopUpSection-flex grid-column-2">
+        <div id="popup-button-return-button" class="return-button interactable z-index-9999" data-closeId="popup-background">x</div>
         <div id="popup-title" class="popUpTitle" >name of the game</div>
         <div id="popup-description" class="popUpDescription" >description</div>
         <div id="popup-button" class="pop-up-button interactable">JOGAR</div>
+        <div id="popup-play-button" class="pop-up-button interactable" >JOGAR OUTRA VEZ</div>
+        <div id="popup-exit-button" class="pop-up-button interactable" >SAIR</div>
     </div>
 </div>
 
-<div id="game-result-popup-background" class="popUpBackground hidden">
-    <div id="game-result-popup" class="LeaguePopUpSection-mini  grid-column-2">
-        <div class="return-button interactable z-index-9999" data-closeId="game-result-popup-background">x</div>
-        <div id="game-result-popup-title" class="popUpTitle" >name of the game</div>
-        <div id="game-result-popup-description" class="popUpDescription" >description</div>
-        <div id="game-result-popup-button" class="pop-up-button interactable" >JOGAR</div>
-    </div>
+
+<div id="hidden-element" class="hidden">
+
 </div>
 
 
@@ -83,5 +81,6 @@
 
 <script type="module" src="LogoScript.js" defer></script>
 <script type="module" src="DailyCookie.js" defer></script>
+<script type="module" src="PopUpController.js" defer></script>
 </html>
 

@@ -55,3 +55,17 @@ export async function getDailyRandomIndex(array)
     }
     return hexToDecimal(getDailyHash()) % array.length;
 }
+
+export function isInstanceOf(obj, cls) {
+    while (obj != null) {
+        if (Object.getPrototypeOf(obj) === cls.prototype) {
+            return true;
+        }
+        obj = Object.getPrototypeOf(obj);
+    }
+    return false;
+}
+
+export function isSubclassOf(subClass, superClass) {
+    return subClass.prototype instanceof superClass;
+}

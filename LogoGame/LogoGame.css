@@ -14,6 +14,7 @@ html, body {
     visibility: hidden;
     opacity: 0;
     position: absolute;
+    pointer-events: none;
 }
 
 .visible {

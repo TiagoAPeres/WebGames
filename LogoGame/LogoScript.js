@@ -2,6 +2,15 @@ import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
 import {loadAndParseCsv, loadAndParseCsvArray} from '/Utilities/queryCsv.js';
 import { DoesPathReturnImg } from '/Utilities/FilesUtil.js'
 import { CanPlayDailyToday, SetPlayerData } from "./DailyCookie.js";
+import {HideElementByID, ShowElementByID, HideElement, ShowElement} from "../Utilities/Elements.js";
+import {
+    DailyGameResult,
+    LeagueSelect,
+    PopulatePopUp,
+    popUp,
+    PopUpTypes,
+    ReplayableGameResult
+} from "./PopUpController.js";
 
 //Element
 let LogoElement = null;
@@ -9,10 +18,10 @@ let PlayAgainElement = null;
 
 //
 let selectedLeaguePath  = null;
-let selectedLeaguePathArray  = [];
-let selectedLogo = null;
-let SelectedClubData = null
-let leaguePopUpIndex = null;
+export let selectedLeaguePathArray  = [];
+export let selectedLogo = null;
+export let SelectedClubData = null
+export let leaguePopUpIndex = null;
 
 let AllLeaguePathArray  =
     [   "/csv/Logo/PremierLeague_Logos.csv",
@@ -21,7 +30,7 @@ let AllLeaguePathArray  =
 
 
 export let IsGameDaily = false;
-let GameWon = false
+export let GameWon = false
 
 //Health
 export let maxlives = 5;
@@ -32,6 +41,18 @@ let maxBlur = 10;
 let currentBlur = null;
 let minBlur = 0;
 let blurSectionAmount;
+
+
+//Game State
+const GameState = Object.freeze({
+    SelectLeague: {id: 1},
+    ReplayableGame: {id: 2},
+    DailyGame: {id: 3}
+});
+
+let gameState = null;
+
+
 
 let PopUpInformation =
 {
@@ -73,6 +94,26 @@ let PopUpInformation =
 
 
 };
+
+
+function ChangeGameState(newGameState)
+{
+    gameState = newGameState;
+
+    if (gameState === GameState.DailyGame)
+    {
+        popUp.ChangeType(DailyGameResult);
+    }
+    else if (gameState === GameState.ReplayableGame)
+    {
+        popUp.ChangeType(ReplayableGameResult);
+    }
+    else if (gameState === GameState.SelectLeague)
+    {
+        popUp.ChangeType(LeagueSelect);
+    }
+
+}
 
 //#region Logo
 function UpdateLogoElement()
@@ -198,14 +239,24 @@ async function SelectNewLogo()
 
 //#region Visibility Logo Game
 
-async function ShowTheLogoGame()
+export async function ShowTheLogoGame()
 {
+    if  (IsGameDaily)
+    {
+        ChangeGameState(GameState.DailyGame);
+    }
+    else
+    {
+        ChangeGameState(GameState.ReplayableGame);
+    }
+
     await ShowElementByID('logoGame');
     await HideElementByID('SelectLeague');
 }
 
-async function HideTheLogoGame()
+export async function HideTheLogoGame()
 {
+    ChangeGameState(GameState.SelectLeague);
     await HideElementByID('logoGame');
     await ShowElementByID('SelectLeague');
 }
@@ -264,12 +315,15 @@ async function GameEnded()
     ClearSearchBar();
     UnblurLogo();
 
-    await UpdateAndShowGameResultPopUp();
+    await popUp.UpdateElements();
+    await popUp.Show();
+
+    //await UpdateAndShowGameResultPopUp();
 
 
 }
 
-async function InitializeGame()
+export async function InitializeGame()
 {
     /*await HideElement(PlayAgainElement);*/
 
@@ -332,7 +386,7 @@ function RemoveAHeart()
     if (firstIcon) firstIcon.remove();
 }
 
-async function SelectLeagueAndStartGame(leagueElement)
+async function SelectLeagueAndShowPopUp(leagueElement)
 {
     //league is selected
     //selectedLeaguePath = LeagueCSVPath;
@@ -361,23 +415,25 @@ async function SelectLeagueAndStartGame(leagueElement)
     IsGameDaily = leagueElement.getAttribute('data-type') === "daily";
     leaguePopUpIndex = leagueElement.id;
 
-    await UpdateAndShowLeaguePopUp()
+    await popUp.UpdateElements();
+    await popUp.Show();
+
+    //await UpdateAndShowLeaguePopUp()
 
     //StartGame();
 }
 
-async function StartGame()
+export async function StartGame()
 {
-    /*if(selectedLeaguePath == null)
-    {
-        console.error("error retrieving data from path:" + selectedLeaguePath);
-        return;
-    }*/
+    if (IsGameDaily && !CanPlayDailyToday()) {return;}
 
-    if (IsGameDaily && !CanPlayDailyToday())
+    if (IsGameDaily)
     {
-        //todo show pop up and make hide play button maybe
-        return;
+        ChangeGameState(GameState.DailyGame)
+    }
+    else
+    {
+        ChangeGameState(GameState.ReplayableGame)
     }
 
     await InitializeGame();
@@ -385,133 +441,16 @@ async function StartGame()
     await ShowTheLogoGame();
 }
 
-async function UpdateAndShowLeaguePopUp()
-{
-    if (IsGameDaily) UpdateDailyPopUp();
-
-    document.getElementById("popup-title").textContent = PopUpInformation[leaguePopUpIndex].title;
-    document.getElementById("popup-description").innerHTML = PopUpInformation[leaguePopUpIndex].description;
-
-    document.getElementById("popup-button").onclick = () =>
-    {
-        StartGame();
-        HideElementByID('popup-background');
-    }
-
-    await ShowElementByID('popup-background');
-}
-
-async function UpdateAndShowGameResultPopUp()
-{
-    if (IsGameDaily)
-    {
-        await UpdateDailyGameResultPopUp()
-    }
-    else
-    {
-        await UpdateNonDailyGameResultPopUp()
-    }
-
-    await ShowElementByID('game-result-popup-background');
-}
-
-async function UpdateNonDailyGameResultPopUp()
-{
-    if (GameWon) {
-        document.getElementById("game-result-popup-title").textContent = "🎉 JOGO VENCIDO! 🎉";
-        document.getElementById("game-result-popup-description").innerHTML =
-            "<p>Parabéns! Fizeste um ótimo trabalho. 👏😃</p>";
-    } else {
-        document.getElementById("game-result-popup-title").textContent = "❌ JOGO PERDIDO ❌";
-        document.getElementById("game-result-popup-description").innerHTML =
-            "<p>O clube correto era <strong>" + SelectedClubData.team + "</strong>.</p>" +
-            "<p>Não desistas! Tenta novamente 💪⚽</p>";
-    }
-    document.getElementById("game-result-popup-button").innerHTML = "JOGAR OUTRA VEZ"
-    document.getElementById("game-result-popup-button").onclick = () =>
-    {
-        InitializeGame()
-
-        //if daily game
-        //button turns to exit game
-        HideElementByID('game-result-popup-background');
-    }
-}
-
-async function UpdateDailyGameResultPopUp()
-{
-    if (GameWon)
-    {
-        document.getElementById("game-result-popup-title").textContent = "🎉 JOGO VENCIDO! 🎉";;
-        document.getElementById("game-result-popup-description").innerHTML = "<p>Parabéns! Hoje conseguiste adivinhar corretamente. Excelente trabalho! 👏⚽</p>";
-    }
-    else
-    {
-        document.getElementById("game-result-popup-title").textContent = "JOGO PERDIDO";
-        document.getElementById("game-result-popup-description").innerHTML =
-            "O clube correto era " + SelectedClubData.team + "."
-            +"<p>Infelizmente, hoje não conseguiste adivinhar corretamente.</p>"
-            +"<p>Mas não desanimes! Tenta outra vez amanhã. 💪⚽</p>"
-    }
-
-    document.getElementById("game-result-popup-button").innerHTML = "EXIT GAME"
-    document.getElementById("game-result-popup-button").onclick = () =>
-    {
-        HideElementByID('logoGame');
-        HideElementByID('game-result-popup-background');
-        ShowElementByID('SelectLeague')
-    }
-}
-
 //#endregion
 
-//#region Util
-
-/*async function DoesPathReturnImg(path)
-{
-    try
-    {
-        const response = await fetch(path, { method: 'HEAD' });
-        return response.ok;
-    }
-    catch (error) {return false;}
-}*/
-
-async function HideElementByID(id)
-{
-    let element = document.getElementById(id);
-    await HideElement(element);
-}
-
-async function ShowElementByID(id)
-{
-    let element = document.getElementById(id);
-    await ShowElement(element);
-}
-
-async function HideElement(element)
-{
-    if (element == null) return;
-    element.classList.toggle('hidden',true);
-    element.classList.toggle('visible',false);
-}
-
-async function ShowElement(element)
-{
-    if (element == null) return;
-
-    element.classList.toggle('hidden',false);
-    element.classList.toggle('visible',true);
-}
-
-//#endregion
 
 $(document).ready(function ()
 {
-    //PlayAgainElement = document.getElementById("play-again-button");
+    PopulatePopUp().then(r => popUp.Hide());
+    ChangeGameState(GameState.SelectLeague);
+
     LogoElement = document.getElementById("logo");
 
-    //if(PlayAgainElement !=null) PlayAgainElement.onclick = InitializeGame;
 
     HideTheLogoGame()
 
@@ -519,7 +458,7 @@ $(document).ready(function ()
     Array.from(buttons).forEach(element =>
     {
         element.onclick = () => {
-            SelectLeagueAndStartGame(element)
+            SelectLeagueAndShowPopUp(element)
         };
     })
 
@@ -593,12 +532,13 @@ $(document).ready(function ()
         }
     });
 
-    UpdateDailyPopUp();
+    //UpdateDailyPopUp();
 })
 
 
 function UpdateDailyPopUp()
 {
+
     let description = "<p class='pop-up-description-highlighted-text'>Tens 5 tentativas para adivinhar a que clube pertence o logotipo.</p>" +
         "<p>O logotipo começará desfocado e ficará mais nítido à medida que o jogo avança.</p>" +
         "<p>Neste modo, qualquer clube pode aparecer.</p>" +
