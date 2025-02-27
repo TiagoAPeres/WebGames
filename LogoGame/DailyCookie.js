@@ -1,5 +1,5 @@
-import {loadAndParseCsv} from '/Utilities/queryCsv.js'
-import {fetchFileList, getDailyRandomIndex} from '/Utilities/FilesUtil.js'
+import {loadAndParseCsv} from '../Utilities/queryCsv.js'
+import {fetchFileList, getDailyRandomIndex} from '../Utilities/FilesUtil.js'
 import {maxlives} from "./LogoScript.js";
 
 /**

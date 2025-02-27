@@ -1,6 +1,6 @@
-import { SetUpAutoComplete } from '/Utilities/autocomplete.js';
-import {loadAndParseCsv, loadAndParseCsvArray} from '/Utilities/queryCsv.js';
-import { DoesPathReturnImg } from '/Utilities/FilesUtil.js'
+import { SetUpAutoComplete } from '../Utilities/autocomplete.js';
+import {loadAndParseCsv, loadAndParseCsvArray} from '../Utilities/queryCsv.js';
+import { DoesPathReturnImg } from '../Utilities/FilesUtil.js'
 import { CanPlayDailyToday, SetPlayerData } from "./DailyCookie.js";
 import {HideElementByID, ShowElementByID, HideElement, ShowElement} from "../Utilities/Elements.js";
 import {
@@ -24,9 +24,9 @@ export let SelectedClubData = null
 export let leaguePopUpIndex = null;
 
 let AllLeaguePathArray  =
-    [   "/csv/Logo/PremierLeague_Logos.csv",
-        "/csv/Logo/PrimeiraLiga_Logos.csv",
-        "/csv/Logo/International_Logos.csv"];
+    [   "../csv/Logo/PremierLeague_Logos.csv",
+        "../csv/Logo/PrimeiraLiga_Logos.csv",
+        "../csv/Logo/International_Logos.csv"];
 
 
 export let IsGameDaily = false;
