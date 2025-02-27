@@ -1,3 +1,5 @@
+import { setGameCookie, getGameCookie, deleteGameCookie } from "/Utilities/CookieUtil.js";
+
 let players = [];
 let answer;
 
@@ -9,7 +11,7 @@ const STATE = {
 let gameState = STATE.NO_RESULT;
 
 let lives = 3;
-let guessedAnswers = new Set()
+let guessedAnswers = new Set();
 
 const questionArea = document.querySelector(".question");
 const submitButton = document.getElementById("submit-btn");
@@ -26,6 +28,53 @@ const overlay = document.getElementById("overlay");
 
 const healthContainer = document.getElementById("health");
 
+const retryButton = document.getElementById("retry-button");
+
+function saveGameState() {
+    console.log('Saving game state:', { lives, guessedAnswers: Array.from(guessedAnswers), gameState });
+    setGameCookie('top10', 'lives', lives); // Save lives until the end of the day
+    setGameCookie('top10', 'guessedAnswers', JSON.stringify(Array.from(guessedAnswers))); // Save guessed answers until the end of the day
+    setGameCookie('top10', 'state', gameState); // Save game state until the end of the day
+}
+
+function loadGameState() {
+    const savedLives = getGameCookie('top10', 'lives');
+    const savedGuessedAnswers = getGameCookie('top10', 'guessedAnswers');
+    const savedState = getGameCookie('top10', 'state');
+
+    if (savedLives !== null) {
+        lives = parseInt(savedLives, 10);
+    }
+
+    if (savedGuessedAnswers !== null) {
+        guessedAnswers = new Set(JSON.parse(savedGuessedAnswers));
+        guessedAnswers.forEach(guessedAnswer => {
+            let index = answer.indexOf(guessedAnswer);
+            if (index !== -1) {
+                correctAnswer(index, guessedAnswer);
+            }
+        });
+    }
+
+    if (savedState !== null) {
+        gameState = parseInt(savedState, 10);
+    }
+
+    updateHealth();
+    console.log('Loaded game state:', { lives, guessedAnswers: Array.from(guessedAnswers), gameState });
+}
+
+function clearGameState() {
+    deleteGameCookie('top10', 'lives');
+    deleteGameCookie('top10', 'guessedAnswers');
+    deleteGameCookie('top10', 'state');
+    console.log('Cleared game state');
+}
+
+retryButton.onclick = function() {
+    clearGameState();
+    location.reload(); // Reload the page to start a new game
+};
 
 async function loadWordsAndStartGame() {
     try {
@@ -49,7 +98,6 @@ async function loadWordsAndStartGame() {
         console.error('Error loading word list:', err);
     }
 
-    
     fetch('index.json')
         .then(response => response.json())
         .then(data => {
@@ -64,16 +112,20 @@ async function loadWordsAndStartGame() {
             if (todayQuiz) {
                 questionArea.innerHTML = todayQuiz.question.toUpperCase();
                 answer = todayQuiz.answers.map(a => normalizeText(a));
-                console.log("answer: " + answer);
+                console.log("state: " + gameState);
+
+                loadGameState();
             } else {
-                questionArea.innerHTML = "Try again later!";
+                questionArea.innerHTML = "Tente novamente mais tarde!";
             }
         })
         .catch(error => {
             console.error('Error loading word list:', error);
         });
-}
 
+    //loadGameState();
+    updateHealth();
+}
 
 inputBox.onkeyup = function () {
     let result = [];
@@ -96,48 +148,50 @@ function normalizeText(text) {
 }
 
 submitButton.onclick = function () {
-    let input = normalizeText(inputBox.value) 
+    let input = normalizeText(inputBox.value);
+    console.log("STATE before:", gameState);
 
-    if (input && gameState === STATE.NO_RESULT)
-    {
+    if (input && gameState === STATE.NO_RESULT) {
         console.log(answer);
         if (answer.includes(input) && !guessedAnswers.has(input)) {
             let index = answer.indexOf(input);
-            console.log(index);
             guessedAnswers.add(input);
+            console.log(guessedAnswers);
             correctAnswer(index, input);
             inputBox.value = null;
 
             if (guessedAnswers.size === answer.length) {
                 gameState = STATE.WIN;
-                popupResults.innerHTML = "YOU FOUND ALL ANSWERS! <br> WELL DONE!";
+                console.log("Updated gameState to WIN");
+                popupResults.innerHTML = "ENCONTROU TODAS AS RESPOSTAS! <br> BEM FEITO!";
                 showModal();
             }
         } else {
-            if (lives>1) {
+            if (lives > 1) {
                 wrongAnswer();
                 lives--;
                 updateHealth();
                 inputBox.value = null;
-            }
-            else {
+            } else {
                 wrongAnswer();
                 revealAnswer();
                 lives = 0;
                 updateHealth();
                 gameState = STATE.LOSE;
-                popupResults.innerHTML = "INCORRECT! <br> YOU LOST!";
+                console.log("Updated gameState to LOSE");
+                popupResults.innerHTML = "ERRADO! <br> PERDEU!";
                 showModal();
                 inputBox.value = null;
             }
         }
+        saveGameState();
     }
+    console.log("STATE after:", gameState);
 }
 
 function correctAnswer(index, answer) {
     options[index].innerHTML = answer;
     options[index].classList.add("correct");
-    
 }
 
 function revealAnswer() {
@@ -172,8 +226,7 @@ overlay.onclick = function () {
     overlay.classList.remove("active");
 }
 
-
-function updateHealth () {
+function updateHealth() {
     healthContainer.innerHTML = '';
     for (let i = 0; i < lives; i++) {
         const heart = document.createElement('i');
@@ -189,7 +242,7 @@ function updateHealth () {
 
 function display(result) {
     const content = result.map((list) => {
-        return "<li onclick=selectInput(this)>" + list.name + "</li>";
+        return "<li onclick='selectInput(this)'>" + list.name + "</li>";
     });
     resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
 }
@@ -199,8 +252,10 @@ function selectInput(list) {
     resultsBox.innerHTML = '';
 }
 
-function flashHearts()
-{
+// Attach selectInput to the window object to make it globally accessible
+window.selectInput = selectInput;
+
+function flashHearts() {
     const hearts = document.querySelectorAll('.health i');
     hearts.forEach(heart => {
         heart.classList.add('flash-once');
@@ -211,7 +266,6 @@ function flashHearts()
             heart.classList.remove('flash-once');
         });
     }, 500);
-
 }
 
 loadWordsAndStartGame();

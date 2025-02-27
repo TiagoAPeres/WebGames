@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Games</title>
+    <link rel="stylesheet" href="style.css">
+    
+    
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item">
+            <a href="#" class="game-link" data-game="basic">
+                <img src="basic.png" alt="Image 1">
+                <p>Pergunta Diária!</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            <a href="#" class="game-link" data-game="mcq">
+                <img src="mcq.png" alt="Image 2">
+                <p>Futebol Milionário!</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            <a href="#" class="game-link" data-game="top10">
+                <img src="top.png" alt="Image 3">
+                <p>Futebol Top10!</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            <a href="LogoGame/Index.html">
+                <img src="logo.png" alt="Image 4">
+                <p>Advinha o logotipo!</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            
+                <img src="soon.png" alt="Image 5">
+                <p>Não perca o milhão!</p>
+            
+        </div>
+        <div class="grid-item">
+            
+                <img src="soon.png" alt="Image 6">
+                <p>Advinha o jogador!</p>
+            
+        </div>
+    </div>
+
+    <div id="popup-background" class="popUpBackground hidden">
+        <div id="popup" class="LeaguePopUpSection-flex grid-column-2">
+            
+            <div id="popup-title" class="popUpTitle">Game Title</div>
+            <div id="popup-description" class="popUpDescription">Game description goes here.</div>
+            <div id="popup-button" class="pop-up-button interactable">JOGAR</div>
+            <div id="popup-exit-button" class="pop-up-button interactable">X</div>
+        </div>
+    </div>
+
+    <div class="retry-container">
+        <button id="retry-button" class="retry-button">RETRY</button>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>

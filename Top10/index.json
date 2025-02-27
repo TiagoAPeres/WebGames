@@ -1,8 +1,8 @@
 {
   "days": [
     {
-      "date": "2025-02-06",
-      "question": "Top 10 players with the most international goals?",
+      "date": "2025-02-27",
+      "question": "Top 10 jogadores com mais golos internacionais?",
       "answers": [
         "cristiano ronaldo",
         "ali daei",
@@ -12,13 +12,13 @@
         "mokhtar dahari",
         "godfrey chitalu",
         "hussein saeed",
-        "pele",
+        "pelé",
         "neymar jr"
       ]
     },
     {
-      "date": "2025-02-07",
-      "question": "Top 10 players with the most Champions League assists?",
+      "date": "2025-02-28",
+      "question": "Top 10 jogadores com mais assistências na Liga dos Campeões?",
       "answers": [
         "cristiano ronaldo",
         "lionel messi",
@@ -33,14 +33,14 @@
       ]
     },
     {
-      "date": "2025-02-08",
-      "question": "Top 10 players with the most World Cup goals?",
+      "date": "2025-03-01",
+      "question": "Top 10 jogadores com mais golos em Campeonatos do Mundo?",
       "answers": [
         "miroslav klose",
         "ronaldo nazário",
         "gerd müller",
         "just fontaine",
-        "pele",
+        "pelé",
         "lionel messi",
         "kylian mbappe",
         "cristiano ronaldo",
@@ -49,8 +49,8 @@
       ]
     },
     {
-      "date": "2025-02-09",
-      "question": "Top 10 most expensive football transfers?",
+      "date": "2025-03-02",
+      "question": "Top 10 transferências de futebol mais caras?",
       "answers": [
         "neymar jr",
         "kylian mbappe",
@@ -65,8 +65,8 @@
       ]
     },
     {
-      "date": "2025-02-10",
-      "question": "Top 10 players with the most career hat-tricks?",
+      "date": "2025-03-03",
+      "question": "Top 10 jogadores com mais hat-tricks na carreira?",
       "answers": [
         "pelé",
         "lionel messi",
@@ -81,8 +81,8 @@
       ]
     },
     {
-      "date": "2025-02-11",
-      "question": "Top 10 goalkeepers with the most clean sheets in history?",
+      "date": "2025-03-04",
+      "question": "Top 10 guarda-redes com mais jogos sem sofrer golos na história?",
       "answers": [
         "gianluigi buffon",
         "petr cech",
@@ -97,8 +97,8 @@
       ]
     },
     {
-      "date": "2025-02-12",
-      "question": "Top 10 players with the most club trophies won?",
+      "date": "2025-03-05",
+      "question": "Top 10 jogadores com mais troféus de clubes ganhos?",
       "answers": [
         "dani alves",
         "lionel messi",
@@ -113,8 +113,8 @@
       ]
     },
     {
-      "date": "2025-02-13",
-      "question": "Top 10 Champions League all-time goal scorers?",
+      "date": "2025-03-06",
+      "question": "Top 10 melhores marcadores de sempre da Liga dos Campeões?",
       "answers": [
         "cristiano ronaldo",
         "lionel messi",
@@ -129,8 +129,8 @@
       ]
     },
     {
-      "date": "2025-02-14",
-      "question": "Top 10 Ballon d'Or winners with the most awards?",
+      "date": "2025-03-07",
+      "question": "Top 10 vencedores da Bola de Ouro com mais prémios?",
       "answers": [
         "lionel messi",
         "cristiano ronaldo",
@@ -139,14 +139,14 @@
         "marco van basten",
         "alfredo di stéfano",
         "franz beckenbauer",
-        "ronaldo nazario",
+        "ronaldo nazário",
         "kevin keegan",
         "karl-heinz rummenigge"
       ]
     },
     {
-      "date": "2025-02-15",
-      "question": "Top 10 all-time Premier League goal scorers?",
+      "date": "2025-03-08",
+      "question": "Top 10 melhores marcadores de sempre da Premier League?",
       "answers": [
         "alan shearer",
         "harry kane",
@@ -158,6 +158,38 @@
         "robbie fowler",
         "jermain defoe",
         "michael owen"
+      ]
+    },
+    {
+      "date": "2025-03-09",
+      "question": "Top 10 jogadores com mais golos na história da Primeira Liga?",
+      "answers": [
+        "fernando peyroteo",
+        "eusebio",
+        "fernando gomes",
+        "jose agostinho",
+        "manuel fernandes",
+        "mario jardel",
+        "nene",
+        "ricardo sa pinto",
+        "joao pinto",
+        "paulinho santos"
+      ]
+    },
+    {
+      "date": "2025-03-10",
+      "question": "Top 10 clubes com mais títulos da Primeira Liga?",
+      "answers": [
+        "sl benfica",
+        "fc porto",
+        "sporting cp",
+        "belenenses",
+        "boavista",
+        "braga",
+        "vitoria de guimaraes",
+        "maritimo",
+        "estoril",
+        "rio ave"
       ]
     }
   ]

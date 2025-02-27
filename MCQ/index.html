@@ -10,7 +10,9 @@
 <body>
     <div class="game-area">
 
-        <div class="question">LOADING QUESTION...</div>
+        <div class="question">A CARREGAR PERGUNTA...</div>
+
+    
 
         <div class="options">
             <button class="option" id="option-1">A) </button>
@@ -35,17 +37,24 @@
 
     </div>
 
+
+
     <div class="modal" id="modal">
         <div class="modal-header">
-            <div class="title">CONGRATULATIONS! <br> YOU ARE A MILLIONAIRE (not really)!</div>
+            <div class="title">PARABÉNS! <br> ÉS UM MILIONÁRIO!</div>
             <button class="close-button">&times;</button>
         </div>
         <div class="modal-body">
-            Come play again tomorrow!
+            Venha jogar novamente amanhã!
         </div>
     </div>
     <div id="overlay"></div>
 
-<script src="autocomplete.js"></script>
+
+    <div class="retry-container">
+        <button id="retry-button" class="retry-button">TENTAR DE NOVO</button>
+    </div>
+
+<script type="module" src="autocomplete.js"></script>
 </body>
 </html>

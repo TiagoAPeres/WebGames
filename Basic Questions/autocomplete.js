@@ -1,3 +1,5 @@
+import { setGameCookie, getGameCookie, deleteGameCookie } from "/Utilities/CookieUtil.js";
+
 let players = [];
 let answer;
 
@@ -22,6 +24,36 @@ const overlay = document.getElementById("overlay");
 
 const healthContainer = document.getElementById("health");
 
+const retryButton = document.getElementById("retry-button");
+
+function saveGameState() {
+    setGameCookie('basic', 'lives', lives); // Save lives until the end of the day
+    setGameCookie('basic', 'state', gameState); // Save game state until the end of the day
+}
+
+function loadGameState() {
+    const savedLives = getGameCookie('basic', 'lives');
+    const savedState = getGameCookie('basic', 'state');
+
+    if (savedLives !== null) {
+        lives = parseInt(savedLives, 10);
+    }
+
+    if (savedState !== null) {
+        gameState = parseInt(savedState, 10);
+    }
+}
+
+function clearGameState() {
+    deleteGameCookie('basic', 'lives');
+    deleteGameCookie('basic', 'state');
+    console.log('Cleared game state');
+}
+
+retryButton.onclick = function() {
+    clearGameState();
+    location.reload(); // Reload the page to start a new game
+};
 
 async function loadWordsAndStartGame() {
     try {
@@ -45,7 +77,6 @@ async function loadWordsAndStartGame() {
         console.error('Error loading word list:', err);
     }
 
-    
     fetch('index.json')
         .then(response => response.json())
         .then(data => {
@@ -54,21 +85,22 @@ async function loadWordsAndStartGame() {
             let today = now.toISOString().split('T')[0];
             let todayQuiz = data.days.find(day => day.date === today);
 
-            console.log("Date: " + today)
+            console.log("Date: " + today);
 
-            if(todayQuiz){
+            if (todayQuiz) {
                 questionArea.innerHTML = todayQuiz.question.toUpperCase();
                 answer = todayQuiz.answers.toUpperCase();
-            }
-            else{
-                questionArea.innerHTML = "Try again later!";
+            } else {
+                questionArea.innerHTML = "Tente novamente mais tarde!";
             }
         })
         .catch(error => {
-            // handle errors
+            console.error('Error loading word list:', error);
         });
-}
 
+    loadGameState();
+    updateHealth();
+}
 
 inputBox.onkeyup = function () {
     let result = [];
@@ -88,27 +120,26 @@ inputBox.onkeyup = function () {
 
 submitButton.onclick = function () {
     console.log(answer);
-    if (inputBox.value && gameState === STATE.NO_RESULT)
-    {
+    if (inputBox.value && gameState === STATE.NO_RESULT) {
         if (inputBox.value == answer) {
             gameState = STATE.WIN;
-            popupResults.innerHTML = "CORRECT! <br> WELL DONE!";
+            popupResults.innerHTML = "CORRETO! <br> BEM FEITO!";
             showModal();
         } else {
-            if (lives>1) {
+            if (lives > 1) {
                 lives--;
                 updateHealth();
                 inputBox.value = null;
-            }
-            else {
+            } else {
                 lives = 0;
                 updateHealth();
                 gameState = STATE.LOSE;
-                popupResults.innerHTML = "INCORRECT! <br> THE ANSWER WAS: <br>" + answer;
+                popupResults.innerHTML = "ERRADO! <br> A RESPOSTA É: <br>" + answer;
                 showModal();
                 inputBox.value = null;
             }
         }
+        saveGameState();
     }
 }
 
@@ -127,8 +158,7 @@ overlay.onclick = function () {
     overlay.classList.remove("active");
 }
 
-
-function updateHealth () {
+function updateHealth() {
     healthContainer.innerHTML = '';
     for (let i = 0; i < lives; i++) {
         const heart = document.createElement('i');
@@ -154,8 +184,9 @@ function selectInput(list) {
     resultsBox.innerHTML = '';
 }
 
-function flashHearts()
-{
+window.selectInput = selectInput;
+
+function flashHearts() {
     const hearts = document.querySelectorAll('.health i');
     hearts.forEach(heart => {
         heart.classList.add('flash-once');
@@ -166,7 +197,6 @@ function flashHearts()
             heart.classList.remove('flash-once');
         });
     }, 500);
-
 }
 
 loadWordsAndStartGame();

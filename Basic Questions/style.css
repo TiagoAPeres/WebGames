@@ -5,13 +5,15 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background: #262a2f;
     color: #333;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     min-height: 100vh;
+    padding: 20px; /* Add padding to ensure content is not cut off on small screens */
 }
 
 .game-area{
@@ -187,9 +189,36 @@ button .fa-solid{
     pointer-events: none;
 }
 
+.retry-container {
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+.retry-button {
+    background-color: #87929e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: inline-block; /* Ensure inline-block for centering */
+}
+
+.retry-button:hover {
+    background-color: #be5252;
+}
+
 @media (max-width: 640px){
     .modal-header .title{
         font-size: 1.5rem;
+    }
+
+    .game-area {
+        width: 100%;
+   
     }
 
     .modal-header .close-button{
@@ -201,8 +230,17 @@ button .fa-solid{
     }
 
     .question{
-        font-size: 30px;
+        font-size: 2rem;
     }
 
+    .search-box {
+        width: 100%;
+    }
 
+    input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    
 }

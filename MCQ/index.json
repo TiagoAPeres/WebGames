@@ -1,75 +1,334 @@
 {
-    "days": [
+  "days": [
       {
-        "date": "2025-01-28",
-        "questions": [
-        {
-            "question": "Top Croatian Champions League scorer?",
-            "options": ["l. modrić", "m. mandžukić", "d. suker", "e. bokšić"],
-            "answer": "d. suker"
-        },
-        {
-            "question": "Top English Premier League scorer?",
-            "options": ["m. owen", "w. rooney", "a. shearer", "h. kane"],
-            "answer": "a. shearer"
-        },
-        {
-          "question": "Which country won the FIFA World Cup in 2018?",
-          "options": ["Brazil", "France", "Germany", "Argentina"],
-          "answer": "France"
-        },
-        {
-          "question": "What is Cristiano Ronaldo's first club'?",
-          "options": ["Benfica", "Porto", "Sporting Lisboa", "CD Nacional"],
-          "answer": "Sporting Lisboa"
-        },
-        {
-          "question": "Which club has won the most UEFA Champions League titles?",
-          "options": ["Real Madrid", "AC Milan", "FC Barcelona", "Manchester United"],
-          "answer": "Real Madrid"
-        },
-        {
-          "question": "Which player holds the record for the most goals in a single World Cup tournament?",
-          "options": ["Miroslav Klose", "Just Fontaine", "Ronaldo Nazário", "Lionel Messi"],
-          "answer": "Just Fontaine"
-        },
-        {
-          "question": "Which football club is nicknamed 'The Old Lady'?",
-          "options": ["Juventus", "Bayern Munich", "Chelsea", "Inter Milan"],
-          "answer": "Juventus"
-        },
-        {
-          "question": "Who scored the 'Hand of God' goal in the 1986 FIFA World Cup?",
-          "options": ["Zinedine Zidane", "Diego Maradona", "Johan Cruyff", "Roberto Baggio"],
-          "answer": "Diego Maradona"
-        },
-        {
-          "question": "Which African nation was the first to reach the FIFA World Cup quarter-finals?",
-          "options": ["Ghana", "Cameroon", "Nigeria", "Senegal"],
-          "answer": "Cameroon"
-        },
-        {
-          "question": "Who holds the record for the fastest hat-trick in Premier League history?",
-          "options": ["Sadio Mané", "Sergio Agüero", "Alan Shearer", "Mohamed Salah"],
-          "answer": "Sadio Mané"
-        }
-        ]
+          "date": "2025-02-27",
+          "questions": [
+              {
+                "question": "Melhor marcador croata na Liga dos Campeões?",
+                "options": ["Luka Modrić", "Mario Mandžukić", "Davor Šuker", "Alen Bokšić"],
+                "answer": "Davor Šuker"
+              },
+              {
+                "question": "Melhor marcador da Premier League inglesa?",
+                "options": ["Michael Owen", "Wayne Rooney", "Alan Shearer", "Harry Kane"],
+                "answer": "Alan Shearer"
+              },
+              {
+                  "question": "Qual país venceu o Campeonato do Mundo da FIFA em 2018?",
+                  "options": ["Brasil", "França", "Alemanha", "Argentina"],
+                  "answer": "França"
+              },
+              {
+                  "question": "Qual foi o primeiro clube de Cristiano Ronaldo?",
+                  "options": ["Benfica", "Porto", "Sporting Lisboa", "CD Nacional"],
+                  "answer": "Sporting Lisboa"
+              },
+              {
+                  "question": "Qual clube ganhou mais títulos da Liga dos Campeões da UEFA?",
+                  "options": ["Real Madrid", "AC Milan", "FC Barcelona", "Manchester United"],
+                  "answer": "Real Madrid"
+              },
+              {
+                  "question": "Qual jogador detém o recorde de mais golos num único torneio do Campeonato do Mundo?",
+                  "options": ["Miroslav Klose", "Just Fontaine", "Ronaldo Nazário", "Lionel Messi"],
+                  "answer": "Just Fontaine"
+              },
+              {
+                  "question": "Qual clube de futebol é apelidado de 'A Velha Senhora'?",
+                  "options": ["Juventus", "Bayern Munich", "Chelsea", "Inter Milan"],
+                  "answer": "Juventus"
+              },
+              {
+                  "question": "Quem marcou o golo 'Mão de Deus' no Campeonato do Mundo da FIFA de 1986?",
+                  "options": ["Zinedine Zidane", "Diego Maradona", "Johan Cruyff", "Roberto Baggio"],
+                  "answer": "Diego Maradona"
+              },
+              {
+                  "question": "Qual nação africana foi a primeira a chegar aos quartos de final do Campeonato do Mundo da FIFA?",
+                  "options": ["Gana", "Camarões", "Nigéria", "Senegal"],
+                  "answer": "Camarões"
+              },
+              {
+                  "question": "Quem detém o recorde do hat-trick mais rápido na história da Premier League?",
+                  "options": ["Sadio Mané", "Sergio Agüero", "Alan Shearer", "Mohamed Salah"],
+                  "answer": "Sadio Mané"
+              }
+          ]
       },
       {
-        "date": "2025-01-28",
-        "questions": [
-          {
-            "question": "Top English Premier League scorer?",
-            "options": ["m. owen", "w. rooney", "a. shearer", "h. kane"],
-            "answer": "a. shearer"
-        },
-        {
-            "question": "Top Croatian Champions League scorer?",
-            "options": ["l. modrić", "m. mandžukić", "d. suker", "e. bokšić"],
-            "answer": "d. suker"
-        }
-        ]
-      }
-    ]
+          "date": "2025-02-28",
+          "questions": [
+              {
+                  "question": "Qual jogador marcou mais golos numa única temporada da Premier League?",
+                  "options": ["Thierry Henry", "Cristiano Ronaldo", "Mohamed Salah", "Alan Shearer"],
+                  "answer": "Mohamed Salah"
+              },
+              {
+                  "question": "Qual país ganhou mais Campeonatos do Mundo da FIFA?",
+                  "options": ["Brasil", "Alemanha", "Itália", "Argentina"],
+                  "answer": "Brasil"
+              },
+              {
+                  "question": "Quem é o melhor marcador de sempre da La Liga?",
+                  "options": ["Cristiano Ronaldo", "Lionel Messi", "Raúl", "Karim Benzema"],
+                  "answer": "Lionel Messi"
+              },
+              {
+                  "question": "Qual jogador tem mais assistências na história da Premier League?",
+                  "options": ["Ryan Giggs", "Cesc Fàbregas", "Frank Lampard", "Steven Gerrard"],
+                  "answer": "Ryan Giggs"
+              },
+              {
+                  "question": "Qual clube ganhou mais títulos da Serie A?",
+                  "options": ["AC Milan", "Inter Milan", "Juventus", "AS Roma"],
+                  "answer": "Juventus"
+              },
+              {
+                  "question": "Quem é o único jogador a ganhar a Liga dos Campeões, o Campeonato do Mundo e a Bola de Ouro no mesmo ano?",
+                  "options": ["Lionel Messi", "Cristiano Ronaldo", "Paolo Rossi", "Zinedine Zidane"],
+                  "answer": "Paolo Rossi"
+              },
+              {
+                  "question": "Qual jogador marcou em mais temporadas consecutivas da Liga dos Campeões?",
+                  "options": ["Cristiano Ronaldo", "Lionel Messi", "Karim Benzema", "Raúl"],
+                  "answer": "Lionel Messi"
+              },
+              {
+                  "question": "Quem é o único jogador a marcar em cinco Campeonatos do Mundo diferentes?",
+                  "options": ["Pelé", "Miroslav Klose", "Cristiano Ronaldo", "Lionel Messi"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Quem é o marcador mais velho numa final do Campeonato do Mundo?",
+                  "options": ["Pelé", "Zinedine Zidane", "Nilton Santos", "Miroslav Klose"],
+                  "answer": "Nilton Santos"
+              },
+              {
+                  "question": "Qual jogador tem mais golos oficiais marcados por um único clube?",
+                  "options": ["Cristiano Ronaldo", "Lionel Messi", "Pelé", "Gerd Müller"],
+                  "answer": "Lionel Messi"
+              }
+          ]
+      },
+      {
+          "date": "2025-03-01",
+          "questions": [
+              {
+                  "question": "Qual jogador tem mais assistências numa única temporada da Premier League?",
+                  "options": ["Thierry Henry", "Kevin De Bruyne", "Mesut Özil", "Cesc Fàbregas"],
+                  "answer": "Kevin De Bruyne"
+              },
+              {
+                  "question": "Qual país ganhou mais títulos da Copa América?",
+                  "options": ["Brasil", "Argentina", "Uruguai", "Chile"],
+                  "answer": "Uruguai"
+              },
+              {
+                  "question": "Quem é o melhor marcador de sempre da Bundesliga?",
+                  "options": ["Gerd Müller", "Robert Lewandowski", "Klaus Fischer", "Jupp Heynckes"],
+                  "answer": "Gerd Müller"
+              },
+              {
+                  "question": "Qual jogador tem mais aparições na história da Premier League?",
+                  "options": ["Ryan Giggs", "Gareth Barry", "Frank Lampard", "Steven Gerrard"],
+                  "answer": "Gareth Barry"
+              },
+              {
+                  "question": "Qual clube ganhou mais títulos da Ligue 1?",
+                  "options": ["Paris Saint-Germain", "Marseille", "Lyon", "Saint-Étienne"],
+                  "answer": "Saint-Étienne"
+              },
+              {
+                  "question": "Quem é o único jogador a ganhar a Liga dos Campeões com três clubes diferentes?",
+                  "options": ["Clarence Seedorf", "Cristiano Ronaldo", "Zlatan Ibrahimović", "David Beckham"],
+                  "answer": "Clarence Seedorf"
+              },
+              {
+                  "question": "Qual jogador marcou mais golos numa única temporada da Serie A?",
+                  "options": ["Gonzalo Higuaín", "Ciro Immobile", "Luca Toni", "Francesco Totti"],
+                  "answer": "Gonzalo Higuaín"
+              },
+              {
+                  "question": "Quem é o único jogador a marcar em quatro torneios diferentes do Campeonato Europeu?",
+                  "options": ["Cristiano Ronaldo", "Michel Platini", "Thierry Henry", "Zlatan Ibrahimović"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Quem é o marcador mais jovem numa final do Campeonato do Mundo?",
+                  "options": ["Pelé", "Kylian Mbappé", "Geoff Hurst", "Mario Götze"],
+                  "answer": "Pelé"
+              },
+              {
+                  "question": "Qual jogador tem mais hat-tricks na história da La Liga?",
+                  "options": ["Cristiano Ronaldo", "Lionel Messi", "Telmo Zarra", "Ferenc Puskás"],
+                  "answer": "Lionel Messi"
+              }
+          ]
+      },
+      {
+          "date": "2025-03-02",
+          "questions": [
+              {
+                  "question": "Qual clube português ganhou mais títulos da Primeira Liga?",
+                  "options": ["FC Porto", "Sporting CP", "SL Benfica", "Braga"],
+                  "answer": "SL Benfica"
+              },
+              {
+                  "question": "Qual jogador tem mais golos na história do Campeonato Europeu?",
+                  "options": ["Michel Platini", "Cristiano Ronaldo", "Antoine Griezmann", "Thierry Henry"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Qual treinador ganhou mais títulos da Liga dos Campeões da UEFA?",
+                  "options": ["Zinedine Zidane", "Pep Guardiola", "Carlo Ancelotti", "Sir Alex Ferguson"],
+                  "answer": "Carlo Ancelotti"
+              },
+              {
+                  "question": "Quem é o melhor marcador de sempre da Primeira Liga portuguesa?",
+                  "options": ["Eusébio", "Fernando Peyroteo", "Cristiano Ronaldo", "Nené"],
+                  "answer": "Fernando Peyroteo"
+              },
+              {
+                  "question": "Qual clube foi o primeiro a ganhar uma Taça Europeia?",
+                  "options": ["Real Madrid", "AC Milan", "Benfica", "Barcelona"],
+                  "answer": "Real Madrid"
+              },
+              {
+                  "question": "Qual clube português ganhou mais dobradinhas domésticas (liga e taça)?",
+                  "options": ["SL Benfica", "FC Porto", "Sporting CP", "Braga"],
+                  "answer": "SL Benfica"
+              },
+              {
+                  "question": "Qual jogador detém o recorde de mais golos num único jogo da Primeira Liga?",
+                  "options": ["Eusébio", "Fernando Peyroteo", "Mário Jardel", "Jonas"],
+                  "answer": "Fernando Peyroteo"
+              },
+              {
+                  "question": "Qual jogador português ganhou mais prémios da Bola de Ouro?",
+                  "options": ["Cristiano Ronaldo", "Eusébio", "Luís Figo", "Rui Costa"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Qual clube português venceu a primeira temporada da Primeira Liga?",
+                  "options": ["SL Benfica", "FC Porto", "Sporting CP", "Belenenses"],
+                  "answer": "FC Porto"
+              },
+              {
+                  "question": "Quem é o melhor marcador de sempre da seleção portuguesa?",
+                  "options": ["Eusébio", "Cristiano Ronaldo", "Pauleta", "Nené"],
+                  "answer": "Cristiano Ronaldo"
+              }
+          ]
+      },
+      {
+          "date": "2025-03-03",
+          "questions": [
+              {
+                  "question": "Qual clube português tem mais participações na Liga dos Campeões da UEFA?",
+                  "options": ["FC Porto", "Sporting CP", "SL Benfica", "Boavista"],
+                  "answer": "FC Porto"
+              },
+              {
+                  "question": "Quem foi o primeiro jogador a marcar cinco golos num único jogo da Liga dos Campeões?",
+                  "options": ["Lionel Messi", "Cristiano Ronaldo", "Robert Lewandowski", "Luiz Adriano"],
+                  "answer": "Lionel Messi"
+              },
+              {
+                  "question": "Qual estádio sediou mais finais da Liga dos Campeões da UEFA?",
+                  "options": ["Wembley Stadium", "San Siro", "Santiago Bernabéu", "Camp Nou"],
+                  "answer": "Wembley Stadium"
+              },
+              {
+                  "question": "Qual jogador tem mais assistências na história da Liga dos Campeões da UEFA?",
+                  "options": ["Lionel Messi", "Cristiano Ronaldo", "Angel Di Maria", "Xavi"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Qual equipa portuguesa venceu a Liga dos Campeões da UEFA em 2004?",
+                  "options": ["SL Benfica", "FC Porto", "Sporting CP", "Boavista"],
+                  "answer": "FC Porto"
+              },
+              {
+                  "question": "Quem é o jogador mais jovem a estrear pela seleção portuguesa?",
+                  "options": ["Cristiano Ronaldo", "João Félix", "Renato Sanches", "Eduardo Quaresma"],
+                  "answer": "João Félix"
+              },
+              {
+                  "question": "Qual clube português ganhou mais títulos da Liga Europa da UEFA?",
+                  "options": ["FC Porto", "SL Benfica", "Sporting CP", "Braga"],
+                  "answer": "FC Porto"
+              },
+              {
+                  "question": "Qual jogador português jogou mais partidas na Liga dos Campeões da UEFA?",
+                  "options": ["Cristiano Ronaldo", "Pepe", "Deco", "Luís Figo"],
+                  "answer": "Cristiano Ronaldo"
+              },
+              {
+                  "question": "Qual clube português ganhou mais títulos da Supertaça Cândido de Oliveira?",
+                  "options": ["FC Porto", "SL Benfica", "Sporting CP", "Braga"],
+                  "answer": "FC Porto"
+              },
+              {
+                  "question": "Qual jogador tem mais golos na história da fase eliminatória da Liga dos Campeões da UEFA?",
+                  "options": ["Cristiano Ronaldo", "Lionel Messi", "Robert Lewandowski", "Karim Benzema"],
+                  "answer": "Cristiano Ronaldo"
+              }
+          ]
+      },
+      {
+          "date": "2025-03-04",
+          "questions": [
+              {
+                  "question": "Qual jogador detém o recorde de mais golos numa única época da Primeira Liga?",
+                  "options": ["Fernando Peyroteo", "Eusébio", "Mário Jardel", "Cristiano Ronaldo"],
+                  "answer": "Mário Jardel"
+              },
+              {
+                  "question": "Qual foi o primeiro clube português a vencer uma competição europeia?",
+                  "options": ["SL Benfica", "FC Porto", "Sporting CP", "Boavista"],
+                  "answer": "Sporting CP"
+              },
+              {
+                  "question": "Quantos títulos de Primeira Liga tem o Belenenses?",
+                  "options": ["1", "3", "5", "7"],
+                  "answer": "1"
+              },
+              {
+                  "question": "Quem marcou o golo da vitória do FC Porto na final da Liga dos Campeões de 2004?",
+                  "options": ["Deco", "Carlos Alberto", "Derlei", "Maniche"],
+                  "answer": "Carlos Alberto"
+              },
+              {
+                  "question": "Qual destas equipas NUNCA venceu a Taça de Portugal?",
+                  "options": ["Boavista", "SC Braga", "Vitória SC", "Rio Ave"],
+                  "answer": "Rio Ave"
+              },
+              {
+                  "question": "Qual foi o primeiro treinador estrangeiro a vencer a Primeira Liga?",
+                  "options": ["John Mortimore", "Sven-Göran Eriksson", "José María Pedroto", "Béla Guttmann"],
+                  "answer": "Béla Guttmann"
+              },
+              {
+                  "question": "Quem é o jogador com mais jogos disputados na história da Primeira Liga?",
+                  "options": ["Manuel Fernandes", "João Vieira Pinto", "Nené", "Vítor Baía"],
+                  "answer": "Nené"
+              },
+              {
+                  "question": "Qual clube português teve a pior campanha de sempre na fase de grupos da Liga dos Campeões da UEFA?",
+                  "options": ["SC Braga", "Boavista", "SL Benfica", "FC Porto"],
+                  "answer": "SL Benfica"
+              },
+              {
+                  "question": "Quantos golos marcou Eusébio na final da Taça dos Clubes Campeões Europeus de 1962?",
+                  "options": ["1", "2", "3", "4"],
+                  "answer": "2"
+              },
+              {
+                  "question": "Em que ano foi disputado o primeiro jogo oficial da história da Primeira Liga?",
+                  "options": ["1929", "1934", "1938", "1941"],
+                  "answer": "1934"
+              }
+          ]
+      }      
+  ]
 }
-  

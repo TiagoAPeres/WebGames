@@ -1,3 +1,4 @@
+import { setGameCookie, getGameCookie, deleteGameCookie } from "/Utilities/CookieUtil.js";
 
 const STATE = {
     NO_RESULT: 1,
@@ -16,14 +17,46 @@ const popupModal = document.getElementById("modal");
 const closeModalButton = document.querySelector(".close-button");
 const overlay = document.getElementById("overlay");
 
+const retryButton = document.getElementById("retry-button");
+
 let questions = [];
 let currentQuestionNumber = 0; 
 
 let currentPrize;
 
-async function loadQuestionsAndStartGame() {
+function saveGameState() {
+    console.log('Saving game state:', { currentQuestionNumber, gameState });
+    setGameCookie('mcq', 'question', currentQuestionNumber); // Save current question number until the end of the day
+    setGameCookie('mcq', 'state', gameState); // Save game state until the end of the day
+}
 
-    
+function loadGameState() {
+    const savedQuestionNumber = getGameCookie('mcq', 'question');
+    const savedState = getGameCookie('mcq', 'state');
+
+    if (savedQuestionNumber !== null) {
+        currentQuestionNumber = parseInt(savedQuestionNumber, 10);
+    }
+
+    if (savedState !== null) {
+        gameState = parseInt(savedState, 10);
+    }
+
+    console.log('Loaded game state:', { currentQuestionNumber, gameState });
+} 
+
+function clearGameState() {
+    deleteGameCookie('mcq', 'question');
+    deleteGameCookie('mcq', 'state');
+    console.log('Cleared game state');
+}
+
+retryButton.onclick = function() {
+    clearGameState();
+    location.reload(); // Reload the page to start a new game
+};
+
+async function loadQuestionsAndStartGame() {
     fetch('index.json')
         .then(response => response.json())
         .then(data => {
@@ -32,21 +65,19 @@ async function loadQuestionsAndStartGame() {
             let today = now.toISOString().split('T')[0];
             let todayQuiz = data.days.find(day => day.date === today);
 
-            console.log("Date: " + today)
+            console.log("Date: " + today);
 
-            if(todayQuiz){
+            if (todayQuiz) {
+                loadGameState();
                 questions = todayQuiz.questions;
                 displayQuestions();
-                //questionArea.innerHTML = todayQuiz.question.toUpperCase();
-                //answer = todayQuiz.answers.toUpperCase();
-            }
-            else{
-                questionArea.innerHTML = "Try again later";
+            } else {
+                questionArea.innerHTML = "Tente novamente mais tarde!";
                 console.log(data.days.find(day => day.date === today));
             }
         })
         .catch(error => {
-            // handle errors
+            console.error('Error loading questions:', error);
         });
 }
 
@@ -60,8 +91,12 @@ function displayQuestions() {
     options.forEach((option, index) => {
         option.textContent = `${String.fromCharCode(65 + index)}) ${currentQuestion.options[index]}`;
         option.classList.remove("correct", "wrong", "disabled"); // Reset styles
-        option.onclick = () => checkAnswer(option, currentQuestion.options[index], currentQuestion.answer);
+        if (gameState === STATE.NO_RESULT) {
+            option.onclick = () => checkAnswer(option, currentQuestion.options[index], currentQuestion.answer);
+        }
     });
+
+    updateScoreboard();
 }
 
 function checkAnswer(selectedButton, choice, solution) {
@@ -77,13 +112,17 @@ function checkAnswer(selectedButton, choice, solution) {
 
             setTimeout(() => {
                 if (currentQuestionNumber < questions.length) {
-                    popupResults.innerHTML = "Right answer! </br> You've won " + currentPrize.textContent;
+                    popupResults.innerHTML = "Resposta certa! </br> Ganhou " + currentPrize.textContent;
                     popupTextResults.innerHTML = "Next question!";
+                    saveGameState();
                     showModal();
                     displayQuestions();
                 } else {
-                    popupResults.innerHTML = "Congratulations! </br> You won $1 million!";
-                    popupTextResults.innerHTML = "Play again tomorrow!";
+                    gameState = STATE.WIN;
+                    console.log("Updated gameState to WIN");
+                    saveGameState();
+                    popupResults.innerHTML = "Parabéns! </br> Ganhou $ 1 milhão!";
+                    popupTextResults.innerHTML = "Jogue novamente amanhã!";
                     showModal();
                 }
             }, 1000);
@@ -95,12 +134,16 @@ function checkAnswer(selectedButton, choice, solution) {
             const correctOption = Array.from(options).find(option => option.textContent.includes(solution));
             correctOption.classList.add("correct");
             setTimeout(() => {
-                popupResults.innerHTML = "Sorry, you lost!";
-                popupTextResults.innerHTML = "Play again tomorrow!";
+                gameState = STATE.LOSE;
+                saveGameState();
+                console.log("Updated gameState to LOSE");
+                popupResults.innerHTML = "Desculpe, perdeu!";
+                popupTextResults.innerHTML = "Jogue novamente amanhã!";
                 showModal();
             }, 1000);
         }, 2000);
     }
+    saveGameState();
     console.log(currentQuestionNumber);
 }
 
@@ -124,32 +167,6 @@ function updateScoreboard() {
         }
     });
 }
-
-/*submitButton.onclick = function () {
-    console.log(answer);
-    if (inputBox.value && gameState === STATE.NO_RESULT)
-    {
-        if (inputBox.value == answer) {
-            gameState = STATE.WIN;
-            popupResults.innerHTML = "CORRECT! <br> WELL DONE!";
-            showModal();
-        } else {
-            if (lives>1) {
-                lives--;
-                updateHealth();
-                inputBox.value = null;
-            }
-            else {
-                lives = 0;
-                updateHealth();
-                gameState = STATE.LOSE;
-                popupResults.innerHTML = "INCORRECT! <br> YOU LOST!";
-                showModal();
-                inputBox.value = null;
-            }
-        }
-    }
-}*/
 
 function showModal() {
     popupModal.classList.add("active");

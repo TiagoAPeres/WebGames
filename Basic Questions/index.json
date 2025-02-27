@@ -1,56 +1,79 @@
 {
   "days": [
     {
-      "date": "2025-01-29",
-      "question": "Which player has scored in the most consecutive Champions League seasons?",
-      "answers": "l. messi"
+      "date": "2025-02-27",
+      "question": "Qual jogador marcou em mais temporadas consecutivas da Liga dos Campeões?",
+      "answers": "lionel messi"
     },
     {
-      "date": "2025-01-30",
-      "question": "Who is the only player to win the Champions League, World Cup, and Ballon d'Or in the same year?",
-      "answers": "p. rossi"
+      "date": "2025-02-28",
+      "question": "Quem é o único jogador a ganhar a Liga dos Campeões, o Campeonato do Mundo e a Bola de Ouro no mesmo ano?",
+      "answers": "paolo rossi"
     },
     {
-      "date": "2025-01-31",
-      "question": "Which player has provided the most assists in Premier League history?",
-      "answers": "r. giggs"
+      "date": "2025-03-01",
+      "question": "Qual jogador tem mais assistências na história da Premier League?",
+      "answers": "ryan giggs"
     },
     {
-      "date": "2025-02-01",
-      "question": "Who is the only player to score in **five** different World Cups?",
+      "date": "2025-03-02",
+      "question": "Quem é o único jogador a marcar em cinco Campeonatos do Mundo diferentes?",
       "answers": "cristiano ronaldo"
     },
     {
-      "date": "2025-02-02",
-      "question": "Who is the oldest goalscorer in a World Cup final?",
+      "date": "2025-03-03",
+      "question": "Quem é o marcador mais velho numa final do Campeonato do Mundo?",
       "answers": "nilton santos"
     },
     {
-      "date": "2025-02-03",
-      "question": "Which player has played in the most UEFA Champions League finals?",
+      "date": "2025-03-04",
+      "question": "Qual jogador jogou mais finais da Liga dos Campeões da UEFA?",
       "answers": "cristiano ronaldo"
     },
     {
-      "date": "2025-02-04",
-      "question": "Who was the first player to score in three different Champions League finals?",
+      "date": "2025-03-05",
+      "question": "Quem foi o primeiro jogador a marcar em três finais diferentes da Liga dos Campeões?",
       "answers": "alfredo di stefano"
     },
     {
-      "date": "2025-02-05",
-      "question": "Which player has won the most club trophies in history?",
+      "date": "2025-03-06",
+      "question": "Qual jogador ganhou mais troféus de clubes na história?",
       "answers": "dani alves"
     },
     {
-      "date": "2025-02-06",
-      "question": "Who is the only player to score in **two** different European Championship finals and win both?",
+      "date": "2025-03-07",
+      "question": "Quem é o único jogador a marcar em duas finais diferentes do Campeonato Europeu e vencer ambas?",
       "answers": "fernando torres"
     },
     {
-      "date": "2025-02-07",
-      "question": "Which player has the most official goals scored for a single club?",
-      "answers": "l. messi"
+      "date": "2025-03-08",
+      "question": "Qual jogador tem mais golos oficiais marcados por um único clube?",
+      "answers": "lionel messi"
+    },
+    {
+      "date": "2025-03-09",
+      "question": "Qual clube português ganhou mais títulos da Primeira Liga?",
+      "answers": "sl benfica"
+    },
+    {
+      "date": "2025-03-10",
+      "question": "Qual jogador português tem mais golos na história da Primeira Liga?",
+      "answers": "fernando peyroteo"
+    },
+    {
+      "date": "2025-03-11",
+      "question": "Qual clube português ganhou mais títulos da Taça de Portugal?",
+      "answers": "sl benfica"
+    },
+    {
+      "date": "2025-03-12",
+      "question": "Qual jogador português tem mais assistências na história da Primeira Liga?",
+      "answers": "ricardo quaresma"
+    },
+    {
+      "date": "2025-03-13",
+      "question": "Qual clube português tem mais participações na Liga dos Campeões da UEFA?",
+      "answers": "fc porto"
     }
   ]
 }
-
-  

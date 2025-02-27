@@ -13,7 +13,7 @@
     
         <div class="health" id="health"></div>
 
-        <div class="question">LOADING QUESTION...</div>
+        <div class="question">A CARREGAR PERGUNTA...</div>
 
         <div class="options">
             <button class="option" id="option-1">1 </button> <br>
@@ -30,7 +30,7 @@
 
         <div class="search-box">
             <div class="row">
-                <input type="text" id="input-box" placeholder="PLAYER NAME" autocomplete="off">
+                <input type="text" id="input-box" placeholder="NOME DO JOGADOR" autocomplete="off">
                 <button><i id= "submit-btn" class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="result-box"></div>
@@ -39,15 +39,19 @@
 
     <div class="modal" id="modal">
         <div class="modal-header">
-            <div class="title">CORRECT! <br> WELL DONE!</div>
+            <div class="title">CORRETO! <br> BEM FEITO!</div>
             <button class="close-button">&times;</button>
         </div>
         <div class="modal-body">
-            Come play again tomorrow!
+            Venha jogar novamente amanhã!
         </div>
     </div>
     <div id="overlay"></div>
 
-<script src="autocomplete.js"></script>
+    <div class="retry-container">
+        <button id="retry-button" class="retry-button">TENTAR DE NOVO</button>
+    </div>
+
+<script type="module" src="autocomplete.js"></script>
 </body>
 </html>
