@@ -228,7 +228,7 @@ async function SelectNewLogo()
 
         const randomIndex = Math.floor(Math.random() * csvData.length);
         SelectedClubData = csvData[randomIndex];
-        selectedLogo = SelectedClubData.path_to_folder + '/' + SelectedClubData.logo_path;
+        selectedLogo =  ".." + SelectedClubData.path_to_folder + '/' + SelectedClubData.logo_path;
 
     }while (!(await DoesPathReturnImg(selectedLogo)) && tries >= 0)
 
