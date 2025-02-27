@@ -1,4 +1,4 @@
-import { getGameCookie, deleteGameCookie } from "/Utilities/CookieUtil.js";
+import { getGameCookie, deleteGameCookie } from "./Utilities/CookieUtil.js";
 import { PopulatePopUp, popUp, PopUpTypes } from "./PopUpController.js";
 
 const STATE = {

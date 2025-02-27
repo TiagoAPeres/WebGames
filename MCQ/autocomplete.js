@@ -1,4 +1,4 @@
-import { setGameCookie, getGameCookie, deleteGameCookie } from "/Utilities/CookieUtil.js";
+import { setGameCookie, getGameCookie, deleteGameCookie } from "../Utilities/CookieUtil.js";
 
 const STATE = {
     NO_RESULT: 1,
