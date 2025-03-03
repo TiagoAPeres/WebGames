@@ -1,0 +1,22 @@
+.selectable{}
+
+.selected {
+    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 0 0 25px white;
+}
+.fa-solid{
+    width: 25px;
+    color: #3a3a3a;
+    font-size: 22px;
+    cursor: pointer;
+
+}
+
+.center-text{
+    text-align: center;
+}
+
+.big-text{
+    font-size: 50px;
+}

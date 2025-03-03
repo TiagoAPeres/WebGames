@@ -160,13 +160,7 @@ html, body {
 }
 
 
-.selectable{}
 
-.selected {
-    border-radius: 5px;
-    border: 1px solid white;
-    box-shadow: 0 0 25px white;
-}
 
 .health-exit-section
 {
