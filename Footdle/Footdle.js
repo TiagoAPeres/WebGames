@@ -1,46 +1,26 @@
 import {SetUpAutoComplete} from "../Utilities/autocomplete.js";
 import {loadAndParseCsv, ReturnRandomRow, ReturnRow} from "../Utilities/queryCsv.js";
 
-let chosenPlayer = null
+let mysteryPlayer = null
 let ArrayOfPlayers = null
+let inputPlayers = []
 
-class Player
+class ComparisonResults
 {
-    constructor()
+    constructor(inputPlayer)
     {
-        this.name = "name";
-        this.nation = "nation";
-        this.positions = ["position" , "position"];
-        this.squad = "squad";
-        this.age = 1;
-        this.goals = 1;
-    }
+        if (mysteryPlayer === null || mysteryPlayer === undefined)
+        {
+            console.error("No Mystery Player found");
+            return null;
+        }
 
-    PopulatePlayer(array)
-    {
-        this.name = array["Player"];
-        this.nation = array["nation"];
-        this.positions = array["position"];
-        this.squad = array["squad"];
-        this.age = array["age"];
-        this.goals = array["goals"];
-    }
-
-    ComparePlayers(Otherplayer)
-    {
-
-        let nameResult = this.CompareStrings(this.name, Otherplayer.name);
-
-        let nationResult = this.CompareStrings(this.name, Otherplayer.name);
-
-        let positionResult = this.CompareArrayOfStrings(this.positions, Otherplayer.positions);
-
-        let squadResult = this.CompareStrings(this.name, Otherplayer.name);
-
-        let ageResult = this.CompareNumbers(this.age, Otherplayer.age);
-
-        let goalsResult= this.CompareNumbers(this.goals, Otherplayer.goals);
-
+        this.name = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.nation = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.positions = this.CompareArrayOfStrings(mysteryPlayer.positions, inputPlayer.positions);
+        this.squad = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.age = this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
+        this.goals = this.CompareNumbers(mysteryPlayer.goals, inputPlayer.goals);
     }
 
     CompareNumbers(thisNumber, theirNumber)
@@ -103,7 +83,34 @@ class Player
 
         return overlap;
     }
+}
 
+class Player
+{
+    constructor()
+    {
+        this.name = "name";
+        this.nation = "nation";
+        this.positions = ["position" , "position"];
+        this.squad = "squad";
+        this.age = 1;
+        this.goals = 1;
+    }
+
+    PopulatePlayer(array)
+    {
+        this.name = array["Player"];
+        this.nation = array["nation"].split(' ').slice(1).join(' ');
+        this.positions = array["position"].split(',')
+        this.squad = array["squad"];
+        this.age = array["age"];
+        this.goals = array["goals"];
+    }
+
+    ComparePlayers(inputPlayer)
+    {
+        return new ComparisonResults(inputPlayer);
+    }
 
 }
 
@@ -144,7 +151,7 @@ export function GetRandomPlayer()
 
 export function SelectNewChosenPlayer()
 {
-    chosenPlayer = GetRandomPlayer();
+    mysteryPlayer = GetRandomPlayer();
 }
 
 export function GetPlayerFromPlayerObject(PlayerRow)
@@ -160,15 +167,13 @@ export function MakeGuess()
     let inputBox = document.getElementById("input-box")
     if (inputBox == null) return;
 
-    if (inputBox.value.trim() === chosenPlayer.name)
-    {
-        alert("Correct")
-    }
-    else
-    {
-        alert("Incorrect")
-    }
+    let inputPlayer = GetPlayer(inputBox.value.trim())
+    if (inputPlayer == null) return;
 
+    let results = mysteryPlayer.ComparePlayers(inputPlayer);
+    if (results == null) return;
+
+    //show the results
 
 }
 
@@ -180,7 +185,7 @@ $(document).ready(async function () {
 
     await SelectNewChosenPlayer()
 
-    console.log(chosenPlayer.name);
+    console.log(mysteryPlayer);
 
     let submitButton = document.getElementById("submit-btn")
     if (submitButton != null ) submitButton.onclick = MakeGuess;

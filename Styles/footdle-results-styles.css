@@ -1,0 +1,43 @@
+.answer-row
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    width: 40%;
+    height: auto;
+    gap: 10px;
+}
+
+.answer-rectangle
+{
+    background: black;
+    flex-basis: calc(16% - 10px);
+    aspect-ratio: 1 / 1.2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rows-key-row
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    width: 40%;
+    height: auto;
+    gap: 10px;
+}
+
+.rows-key-rectangle
+{
+    border-bottom: 2px solid #7e7e7e;
+    flex-basis: calc(16% - 10px);
+    aspect-ratio: 1 / 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
