@@ -56,10 +56,28 @@ class Condition {
 }
 
 
+export function ReturnRow(ArrayData, DataName, Data) {
+    if (!ArrayData || ArrayData.length === 0) {
+        console.error('ArrayData is empty or undefined');
+        return null;
+    }
+    return ArrayData.find(row => row[DataName] === Data);
+}
+
+export function ReturnRandomRow(ArrayData) {
+    if (!ArrayData || ArrayData.length === 0) {
+        console.error('ArrayData is empty or undefined');
+        return null;
+    }
+    const randomIndex = Math.floor(Math.random() * ArrayData.length);
+    return ArrayData[randomIndex];
+}
+
+
 /**
  * Method that returns an Array made of each row
- * @enum {{csvUrl: string}}
- *
+ * @param {string} csvPath - URL or path to the CSV file
+ * @returns {Promise<Array>} - Parsed CSV data as an array of objects
  */
 export function loadAndParseCsv(csvPath) {
     return new Promise((resolve, reject) => {
@@ -102,13 +120,6 @@ export async function loadAndParseCsvArray(CsvPaths)
     }
     return allCsvObjects
 }
-
-/*$(document).ready(function ()
-{
-    let CsvPaths = ['../csv/FIFA_World_Cups.csv','../csv/FIFA_World_Cups.csv', '../csv/PremierLeague_2022_2023_Players.csv'];
-    let Conditions = new Condition("1st", Comparisons.EQUAL, "Brazil") ;
-    QueryCsv.getSpecificElements(CsvPaths,Conditions);
-});*/
 
 
 class QueryCsv {
