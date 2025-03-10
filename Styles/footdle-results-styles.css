@@ -41,3 +41,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.green-background
+{
+    background: green;
+}
+
+.red-background
+{
+    background: red;
+}

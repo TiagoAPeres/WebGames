@@ -1,9 +1,27 @@
-import {SetUpAutoComplete} from "../Utilities/autocomplete.js";
+import {GetARemovedWordsIndex, RemovedWords, SetUpAutoComplete} from "../Utilities/autocomplete.js";
 import {loadAndParseCsv, ReturnRandomRow, ReturnRow} from "../Utilities/queryCsv.js";
+import {ClearInputBox} from "../Utilities/Elements.js";
 
 let mysteryPlayer = null
 let ArrayOfPlayers = null
+//let ListOfChosenPlayers = null
+let RemovedWordsIndex = null
 let inputPlayers = []
+
+/* Enum for types of overlap between information.
+* @readonly
+* @enum {{id: number}}
+*/
+const RelationTypes  = Object.freeze({
+    // String Overlap
+    Full: {id: 1},
+    Some: {id: 2},
+    None: {id: 3},
+
+    // Number Comparisons
+    Bigger: {id: 4},
+    Smaller: {id: 5}
+});
 
 class ComparisonResults
 {
@@ -40,7 +58,7 @@ class ComparisonResults
 
     CompareArrayOfStrings(thisArray, theirArray)
     {
-        let booleanResults = {};
+        let booleanResults = [];
         let currentResult = false;
         let overlap = "none"
 
@@ -118,8 +136,10 @@ export async function SettingUpPage()
 {
     //get the csvpath for the players
 
+    RemovedWordsIndex = GetARemovedWordsIndex();
+
     //get all the players for the autocomplete
-    await SetUpAutoComplete(["../csv/PremierLeague_2022_2023_Players.csv"], "Player", "input-box", "result-box")
+    await SetUpAutoComplete(["../csv/PremierLeague_2022_2023_Players.csv"], "Player", "input-box", "result-box",RemovedWordsIndex)
 }
 
 export function GetPlayer(name)
@@ -170,12 +190,38 @@ export function MakeGuess()
     let inputPlayer = GetPlayer(inputBox.value.trim())
     if (inputPlayer == null) return;
 
+    RemovedWords[RemovedWordsIndex].push(inputPlayer.name);
+
     let results = mysteryPlayer.ComparePlayers(inputPlayer);
     if (results == null) return;
 
+    ClearInputBox("input-box")
+
     //show the results
+    MakeHtmlResults(inputPlayer,results)
 
 }
+
+function MakeHtmlResults(inputPlayer,results)
+{
+    let posisitonsString = inputPlayer.positions.map(position => position).join(" , ");
+
+    let i = 1;
+    let answers = document.getElementById("answers");
+    answers.innerHTML += `
+        <div class="answer-row">
+            <div class="answer-rectangle">${inputPlayer.name}</div>
+            <div class="answer-rectangle">${inputPlayer.nation}</div>
+            <div class="answer-rectangle">${posisitonsString}</div>
+            <div class="answer-rectangle">${inputPlayer.squad}</div>
+            <div class="answer-rectangle">${inputPlayer.age}</div>
+            <div class="answer-rectangle">${inputPlayer.goals}</div>
+        </div>
+    `;
+}
+
+
+
 
 $(document).ready(async function () {
 

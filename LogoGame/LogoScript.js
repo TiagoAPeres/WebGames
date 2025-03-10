@@ -2,7 +2,7 @@ import { SetUpAutoComplete } from '../Utilities/autocomplete.js';
 import {loadAndParseCsv, loadAndParseCsvArray} from '../Utilities/queryCsv.js';
 import { DoesPathReturnImg } from '../Utilities/FilesUtil.js'
 import { CanPlayDailyToday, SetPlayerData } from "./DailyCookie.js";
-import {HideElementByID, ShowElementByID, HideElement, ShowElement} from "../Utilities/Elements.js";
+import {HideElementByID, ShowElementByID, HideElement, ShowElement, ClearInputBox} from "../Utilities/Elements.js";
 import {
     DailyGameResult,
     LeagueSelect,
@@ -280,6 +280,8 @@ function MakeGuess()
     {
         if (inputBox.value.length > 0) WrongGuess()
     }
+
+    ClearInputBox("input-box")
 }
 
 async function CorrectGuess()

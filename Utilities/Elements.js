@@ -24,3 +24,8 @@ export async function ShowElement(element)
     element.classList.toggle('hidden',false);
     element.classList.toggle('visible',true);
 }
+
+export function ClearInputBox(id)
+{
+    document.getElementById(id).value = "";
+}

@@ -1,13 +1,15 @@
-/**
- * Enum for types of comparisons.
- * @readonly
- * @enum {{id: number}}
- */
+
+
+/* Enum for types of comparisons.
+* @readonly
+* @enum {{id: number}}
+*/
 const Comparisons = Object.freeze({
     ABOVE: {id: 1},
     BELOW: {id: 2},
     EQUAL: {id: 3}
 });
+
 
 /**
  * Class that creates conditions used to sanitize data.
