@@ -1,7 +1,7 @@
 {
   "days": [
     {
-      "date": "2025-02-27",
+      "date": "2025-03-11",
       "question": "Top 10 jogadores com mais golos internacionais?",
       "answers": [
         "cristiano ronaldo",
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "date": "2025-02-28",
+      "date": "2025-03-12",
       "question": "Top 10 jogadores com mais assistências na Liga dos Campeões?",
       "answers": [
         "cristiano ronaldo",
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "date": "2025-03-01",
+      "date": "2025-03-13",
       "question": "Top 10 jogadores com mais golos em Campeonatos do Mundo?",
       "answers": [
         "miroslav klose",
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "date": "2025-03-02",
+      "date": "2025-03-14",
       "question": "Top 10 transferências de futebol mais caras?",
       "answers": [
         "neymar jr",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "date": "2025-03-03",
+      "date": "2025-03-15",
       "question": "Top 10 jogadores com mais hat-tricks na carreira?",
       "answers": [
         "pelé",
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "date": "2025-03-04",
+      "date": "2025-03-16",
       "question": "Top 10 guarda-redes com mais jogos sem sofrer golos na história?",
       "answers": [
         "gianluigi buffon",
@@ -97,7 +97,7 @@
       ]
     },
     {
-      "date": "2025-03-05",
+      "date": "2025-03-17",
       "question": "Top 10 jogadores com mais troféus de clubes ganhos?",
       "answers": [
         "dani alves",
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "date": "2025-03-06",
+      "date": "2025-03-18",
       "question": "Top 10 melhores marcadores de sempre da Liga dos Campeões?",
       "answers": [
         "cristiano ronaldo",
@@ -129,7 +129,7 @@
       ]
     },
     {
-      "date": "2025-03-07",
+      "date": "2025-03-19",
       "question": "Top 10 vencedores da Bola de Ouro com mais prémios?",
       "answers": [
         "lionel messi",
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "date": "2025-03-08",
+      "date": "2025-03-20",
       "question": "Top 10 melhores marcadores de sempre da Premier League?",
       "answers": [
         "alan shearer",
@@ -161,7 +161,7 @@
       ]
     },
     {
-      "date": "2025-03-09",
+      "date": "2025-03-21",
       "question": "Top 10 jogadores com mais golos na história da Primeira Liga?",
       "answers": [
         "fernando peyroteo",
@@ -174,22 +174,6 @@
         "ricardo sa pinto",
         "joao pinto",
         "paulinho santos"
-      ]
-    },
-    {
-      "date": "2025-03-10",
-      "question": "Top 10 clubes com mais títulos da Primeira Liga?",
-      "answers": [
-        "sl benfica",
-        "fc porto",
-        "sporting cp",
-        "belenenses",
-        "boavista",
-        "braga",
-        "vitoria de guimaraes",
-        "maritimo",
-        "estoril",
-        "rio ave"
       ]
     }
   ]
