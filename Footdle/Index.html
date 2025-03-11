@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../Styles/footdle-styles.css">
     <link rel="stylesheet" href="../Styles/search-bar-styles.css">
     <link rel="stylesheet" href="../Styles/util-styles.css">
+    <link rel="stylesheet" href="../Styles/footdle-results-styles.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -17,23 +18,49 @@
 
 </head>
 <body>
+<div class="container">
 
-<div class="center-text big-text">Adivinha o jogador</div>
+    <div class="center-text big-text" style="margin: 5rem 0;">Adivinha o jogador</div>
 
-<div class="search-bar-section">
-    <div class="search-box selected selectable">
+    <div class="search-bar-section " style="margin-bottom: 5rem;">
+        <div class="search-box selected selectable">
 
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
-            <button><i id="submit-btn" class="fa-solid fa-arrow-right"></i></button>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
+                <button><i id="submit-btn" class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="result-box" id="result-box"></div>
+
         </div>
-
-        <div class="result-box" id="result-box"></div>
-
+    </div>
+    <div class="container" style="gap: 10px;" id="answers">
+        <div class="rows-key-row">
+            <div class="rows-key-rectangle">Name</div>
+            <div class="rows-key-rectangle">Nation</div>
+            <div class="rows-key-rectangle">Positions</div>
+            <div class="rows-key-rectangle">Squad</div>
+            <div class="rows-key-rectangle">Age</div>
+            <div class="rows-key-rectangle">Goals</div>
+        </div>
+        <div class="answer-row">
+            <div class="answer-rectangle">Gabriel Martinelli</div>
+            <div class="answer-rectangle">MF</div>
+            <div class="answer-rectangle">3</div>
+            <div class="answer-rectangle">DF</div>
+            <div class="answer-rectangle">5</div>
+            <div class="answer-rectangle">Brighton</div>
+        </div>
+        <div class="answer-row">
+            <div class="answer-rectangle">1</div>
+            <div class="answer-rectangle">2</div>
+            <div class="answer-rectangle">3</div>
+            <div class="answer-rectangle">4</div>
+            <div class="answer-rectangle">5</div>
+            <div class="answer-rectangle">6</div>
+        </div>
     </div>
 </div>
-
-
 </body>
 
 

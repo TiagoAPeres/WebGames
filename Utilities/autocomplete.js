@@ -1,12 +1,25 @@
 import {loadAndParseCsv, loadAndParseCsvArray} from './queryCsv.js';
 let words = []
+export let RemovedWords = []
+
+export function GetARemovedWordsIndex()
+{
+    if (RemovedWords == null || RemovedWords.length === 0)
+    {
+        RemovedWords = [];
+    }
+
+    RemovedWords[RemovedWords.length ] = [];
+    return RemovedWords.length - 1;
+}
+
 
 /**
  * Method that sets an element to autoComplete based on a csvPath
  * @enum {{csvUrl: string}}
  *
  */
-export async function SetUpAutoComplete(csvPath, dataType, InputId, ResultId) {
+export async function SetUpAutoComplete(csvPath, dataType, InputId, ResultId, RemovedWordsIndex = null) {
     try
     {
         let result = await loadAndParseCsvArray(csvPath)
@@ -29,11 +42,11 @@ export async function SetUpAutoComplete(csvPath, dataType, InputId, ResultId) {
         console.error('Error loading word list:', err);
     }
 
-    SetAutoCompleteToElement(InputId,ResultId)
+    SetAutoCompleteToElement(InputId,ResultId,RemovedWordsIndex)
 }
 
 
-function SetAutoCompleteToElement(InputId, ResultId)
+function SetAutoCompleteToElement(InputId, ResultId, RemovedWordsIndex)
 {
     const resultsBox = document.getElementById(ResultId);
     const inputBox = document.getElementById(InputId);
@@ -43,7 +56,13 @@ function SetAutoCompleteToElement(InputId, ResultId)
         return
     }
 
-    inputBox.onkeyup = function () {
+    inputBox.onkeyup = function ()
+    {
+        if (RemovedWordsIndex != null)
+        {
+            CleanWords(RemovedWordsIndex)
+        }
+
         let result = [];
         let input = inputBox.value;
         if (input.length)
@@ -93,4 +112,11 @@ function display(result,InputId,ResultId)
 function selectInput(list, resultsBox, inputBox) {
     inputBox.value = list.textContent;
     resultsBox.innerHTML = ''; // Clear the results
+}
+
+function CleanWords(RemovedWordsIndex)
+{
+    words = words.filter(word => {
+        return !RemovedWords[RemovedWordsIndex].some(excluded => excluded.toLowerCase() === word.toLowerCase());
+    });
 }
