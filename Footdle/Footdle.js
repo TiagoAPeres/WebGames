@@ -39,6 +39,67 @@ class ComparisonResults
         this.squad = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
         this.age = this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
         this.goals = this.CompareNumbers(mysteryPlayer.goals, inputPlayer.goals);
+
+
+
+        this.ClassName = ""
+
+        if (this.nation === true)
+            {this.ClassNation = "green-background"}
+        else
+            {this.ClassNation = "red-background"}
+
+        switch (this.positions)
+        {
+            case "full":
+                this.ClassPositions = "green-background"
+                break;
+            case "some":
+                this.ClassPositions = "orange-background"
+                break;
+            case "none":
+                this.ClassPositions = "red-background"
+                break;
+        }
+
+        if (this.squad === true)
+            {this.ClassSquads = "green-background"}
+        else
+            {this.ClassSquads = "red-background"}
+
+        switch (this.age)
+        {
+            case "equal":
+                this.ClassAge = "green-background"
+                break;
+            case "bigger":
+                this.ClassAge = "red-background arrow-up-background"
+                break;
+            case "smaller":
+                this.ClassAge = "red-background arrow-down-background"
+                break;
+        }
+
+        switch (this.goals)
+        {
+            case "equal":
+                this.ClassGoals = "green-background"
+                break;
+            case "bigger":
+                this.ClassGoals = "red-background arrow-up-background"
+                break;
+            case "smaller":
+                this.ClassGoals = "red-background arrow-down-background"
+                break;
+        }
+
+        //return an object with the classes for the divs
+        //this.name = //NOTHING
+        //this.nation = //green red
+        //this.positions = //green yellow red
+        //this.squad = //green red
+        //this.age = //green red -- arrow
+        //this.goals = //green red -- arrow
     }
 
     CompareNumbers(thisNumber, theirNumber)
@@ -208,18 +269,18 @@ function MakeHtmlResults(inputPlayer,results)
 
     let i = 1;
     let answers = document.getElementById("answers");
+
     answers.innerHTML += `
         <div class="answer-row">
-            <div class="answer-rectangle">${inputPlayer.name}</div>
-            <div class="answer-rectangle">${inputPlayer.nation}</div>
-            <div class="answer-rectangle">${posisitonsString}</div>
-            <div class="answer-rectangle">${inputPlayer.squad}</div>
-            <div class="answer-rectangle">${inputPlayer.age}</div>
-            <div class="answer-rectangle">${inputPlayer.goals}</div>
+            <div class="answer-rectangle ${results.ClassName}">${inputPlayer.name}</div>
+            <div class="answer-rectangle ${results.ClassNation}">${inputPlayer.nation}</div>
+            <div class="answer-rectangle ${results.ClassPositions}">${posisitonsString}</div>
+            <div class="answer-rectangle ${results.ClassSquads}">${inputPlayer.squad}</div>
+            <div class="answer-rectangle ${results.ClassAge}">${inputPlayer.age}</div>
+            <div class="answer-rectangle ${results.ClassGoals}">${inputPlayer.goals}</div>
         </div>
     `;
 }
-
 
 
 

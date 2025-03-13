@@ -47,7 +47,33 @@
     background: green;
 }
 
+.orange-background
+{
+    background: #ff8204;
+}
+
 .red-background
 {
     background: red;
 }
+
+.arrow-up-background
+{
+    background-image: url("/Footdle/background_up_arrow.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.arrow-down-background
+{
+    background-image: url("/Footdle/background_down_arrow.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
