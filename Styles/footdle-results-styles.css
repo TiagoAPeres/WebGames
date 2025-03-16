@@ -12,6 +12,7 @@
 
 .answer-rectangle
 {
+    opacity: 0;
     background: black;
     flex-basis: calc(16% - 10px);
     aspect-ratio: 1 / 1.2;

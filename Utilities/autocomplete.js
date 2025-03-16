@@ -70,12 +70,12 @@ function SetAutoCompleteToElement(InputId, ResultId, RemovedWordsIndex)
             result = words.filter(word => {
                 return word.toLowerCase().includes(input.toLowerCase()); // Check if the string contains the input
             });
-            console.log(result);
+
+            display(result,InputId,ResultId);
         }
 
-        display(result,InputId,ResultId);
 
-        if (!result.length)
+        if (!input.length)
         {
             resultsBox.innerHTML = '';
         }
@@ -106,8 +106,16 @@ function display(result,InputId,ResultId)
         ul.appendChild(li);
     });
 
+    if (!result.length)
+    {
+        const li = document.createElement('li');
+        li.textContent = "no results found";
+        ul.appendChild(li);
+    }
+
     resultsBoxHere.appendChild(ul);
 }
+
 
 function selectInput(list, resultsBox, inputBox) {
     inputBox.value = list.textContent;

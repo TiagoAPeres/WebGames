@@ -50,8 +50,8 @@
     top: 100%;
     left: 0;
     right: 0;
-    max-height: 400%;
-    height: 400%;
+    /*max-height: 400%;*/
+    height: auto;
     overflow-y: scroll;
     background-color: white;
     border-top: none;

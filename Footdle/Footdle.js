@@ -7,6 +7,7 @@ let ArrayOfPlayers = null
 //let ListOfChosenPlayers = null
 let RemovedWordsIndex = null
 let inputPlayers = []
+let answerRowIndex = null
 
 /* Enum for types of overlap between information.
 * @readonly
@@ -265,13 +266,22 @@ export function MakeGuess()
 
 function MakeHtmlResults(inputPlayer,results)
 {
+    if (answerRowIndex === null)
+    {
+        answerRowIndex = 0;
+    }
+    else
+    {
+        answerRowIndex++;
+    }
+
     let posisitonsString = inputPlayer.positions.map(position => position).join(" , ");
 
     let i = 1;
     let answers = document.getElementById("answers");
 
     answers.innerHTML += `
-        <div class="answer-row">
+        <div id="answerRowIndex${answerRowIndex}" class="answer-row">
             <div class="answer-rectangle ${results.ClassName}">${inputPlayer.name}</div>
             <div class="answer-rectangle ${results.ClassNation}">${inputPlayer.nation}</div>
             <div class="answer-rectangle ${results.ClassPositions}">${posisitonsString}</div>
@@ -280,8 +290,31 @@ function MakeHtmlResults(inputPlayer,results)
             <div class="answer-rectangle ${results.ClassGoals}">${inputPlayer.goals}</div>
         </div>
     `;
+
+    AnimateResults()
 }
 
+function AnimateResults()
+{
+    if (answerRowIndex === null)
+    {
+        console.error("answer-rowIndex was not updated")
+        return
+    }
+
+    let parent = document.getElementById("answerRowIndex"+ answerRowIndex);
+    let boxes = parent.children;
+
+    let index = 0
+    for (let box of boxes)
+    {
+        setTimeout(() => {
+            box.style.opacity = "1";
+            box.style.transform = "translateY(0)";
+        }, index * 400);
+        index++
+    }
+}
 
 
 $(document).ready(async function () {
