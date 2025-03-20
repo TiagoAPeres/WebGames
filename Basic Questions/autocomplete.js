@@ -57,7 +57,7 @@ retryButton.onclick = function() {
 
 async function loadWordsAndStartGame() {
     try {
-        const response = await fetch('FIFA2019');
+        const response = await fetch('../Utilities/FIFA2019');
         const text = await response.text();
 
         const lines = text.split('\n').map(word => word.trim().toUpperCase()); // Ensure all words are uppercase and trimmed

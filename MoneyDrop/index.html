@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search bar</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="game-area">
+
+        <div class="question">A CARREGAR PERGUNTA...</div>
+
+    
+
+    <!--    <div class="options">
+            <div><button class="option" id="option-1">A) </button> <br><br>
+                <input type="number" id="amount"><br><br>
+            </div>
+            
+            <div><button class="option" id="option-2">B) </button> <br><br>
+                <input type="number" id="amount2"><br><br>
+            </div>
+
+            <div><button class="option" id="option-3">C) </button> <br><br>
+                <input type="number" id="amount3"><br><br>
+            </div>
+
+            <div><button class="option" id="option-4">D) </button> <br><br>
+                <input type="number" id="amount4"><br><br>
+            </div>
+
+        </div>  -->
+
+        <div class="options">
+            <div class="input-group" id="input1">
+              <div class="option">A) </div> <br>
+              <input type="text" class="input-box" placeholder="$0"> <br>
+            </div>
+            <div class="input-group" id="input2">
+              <div class="option">B) </div> <br>
+              <input type="text" class="input-box" placeholder="$0"> <br>
+            </div>
+            <div class="input-group" id="input3">
+              <div class="option">C) </div> <br>
+              <input type="text" class="input-box" placeholder="$0"> <br>
+            </div>
+            <div class="input-group" id="input4">
+              <div class="option">D) </div> <br>
+              <input type="text" class="input-box" placeholder="$0"> <br>
+            </div> 
+          </div>
+
+        <div class="submit-button-container">
+            <button id="submit" class="submit-button">Responder</button>
+        </div>
+
+        <div class="scoreboard">
+            <p><span class="prize">Dinheiro: <br> $100,000,000 </p>
+        </div>
+
+    </div>
+
+
+
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="title">PARABÉNS! <br> ÉS UM MILIONÁRIO!</div>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            Venha jogar novamente amanhã!
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+
+    <div class="retry-container">
+        <button id="retry-button" class="retry-button">TENTAcR DE NOVO</button>
+    </div>
+
+<script type="module" src="autocomplete.js"></script>
+</body>
+</html>

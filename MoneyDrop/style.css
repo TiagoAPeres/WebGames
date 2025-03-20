@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background: #262a2f;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px; /* Add padding to ensure content is not cut off on small screens */
+}
+
+.game-area {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    min-height: 700px;
+    padding: 30px;
+    background: #df7777;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px; /* Add margin to separate from retry button */
+}
+
+button {
+    background: transparent;
+    border: 0;
+    outline: 0;
+}
+
+button .fa-solid {
+    width: 25px;
+    color: #545454;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#placeholder {
+    color: #555;
+}
+
+.question {
+    color: #000000;
+    text-align: center;
+    margin: 50px auto 50px;
+    padding-top: 20px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-weight: 10000;
+    font-size: 40px;
+    font-weight: bold; 
+    text-shadow: 2px 0 #353535;
+    letter-spacing: 1px;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.option {
+    padding: 20px 20px;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #df5555;
+    color: #ffffff;
+}
+
+.submit-button {
+    padding: 20px 20px;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #dfac55;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #df7777;
+}
+
+.input-box {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    color: #000000;
+}
+
+.correct {
+    pointer-events: none;
+    opacity: 1;
+    background-color: #4caf50; /* Green for correct answer */
+    color: white;
+    border-color: #4caf50;
+}
+
+.wrong {
+    pointer-events: none;
+    opacity: 1;
+    background-color: #f44336; /* Red for wrong answer */
+    color: white;
+    border-color: #f44336;
+}
+
+.disabled {
+    pointer-events: none; /* Disable interaction */
+    opacity: 0.6;
+}
+
+.scoreboard {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid #000;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+
+.modal-header .title {
+    font-size: 3rem;
+    font-weight: bold;  
+    text-align: center;
+    flex-grow: 1;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 3rem;
+    font-weight: bold;
+    position: absolute; /* Use absolute positioning */
+    top: 5px; /* Adjust as needed for spacing */
+    right: 10px; /* Align with the padding of the header */
+    color: red;
+}
+
+.modal-header .close-button:hover {
+    color: #ae0101;
+}
+
+.modal-body {
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.flash-once {
+    animation: flash 0.5s ease-in-out;
+}
+
+.scoreboard {
+    border: 2px solid #000;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.scoreboard p {
+    margin: 0;
+    padding: 2px 0; /* Reduced padding */
+}
+
+.scoreboard .prize {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f9f9f9; /* Ensure consistent background color */
+    margin: 2px 0; /* Reduced margin */
+}
+
+.highlight {
+    background-color: #b3b011; /* Green background for highlight */
+    color: #b3b011;
+}
+
+.grey-out {
+    color: #999;  /* Grey color for greyed out */
+    text-decoration: line-through; /* Scratch out */
+}
+
+.retry-container {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%; /* Ensure full width */
+}
+
+.retry-button {
+    background-color: #87929e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: inline-block; /* Ensure inline-block for centering */
+}
+
+.retry-button:hover {
+    background-color: #be5252;
+}
+
+@media (max-width: 640px) {
+    .game-area {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 24px;
+        margin: 20px auto;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .option {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .modal-header .title {
+        font-size: 1.5rem;
+    }
+
+    .modal-header .close-button {
+        font-size: 2rem;
+    }
+}
