@@ -9,19 +9,23 @@ let RemovedWordsIndex = null
 let inputPlayers = []
 let answerRowIndex = null
 
+let guessNum = -1;
+let correctGuessNum = null
+
 /* Enum for types of overlap between information.
 * @readonly
 * @enum {{id: number}}
 */
 const RelationTypes  = Object.freeze({
     // String Overlap
-    Full: {id: 1},
-    Some: {id: 2},
-    None: {id: 3},
+    Full: 1,
+    Some: 2,
+    None: 3,
 
     // Number Comparisons
-    Bigger: {id: 4},
-    Smaller: {id: 5}
+    Bigger: 4,
+    Smaller: 5,
+    Equal: 6
 });
 
 class ComparisonResults
@@ -45,7 +49,13 @@ class ComparisonResults
 
         this.ClassName = ""
 
-        if (this.nation === true)
+        this.ClassNation = this.AddClassNames(this.nation);
+        this.ClassPositions = this.AddClassNames(this.positions);
+        this.ClassSquads = this.AddClassNames(this.squad);
+        this.ClassAge = this.AddClassNames(this.age);
+        this.ClassGoals = this.AddClassNames(this.goals);
+
+        /*if (this.nation === true)
             {this.ClassNation = "green-background"}
         else
             {this.ClassNation = "red-background"}
@@ -92,7 +102,7 @@ class ComparisonResults
             case "smaller":
                 this.ClassGoals = "red-background arrow-down-background"
                 break;
-        }
+        }*/
 
         //return an object with the classes for the divs
         //this.name = //NOTHING
@@ -103,19 +113,61 @@ class ComparisonResults
         //this.goals = //green red -- arrow
     }
 
+
+    AddClassNames(dataVariable)
+    {
+        let returnString = ""
+        if (dataVariable === RelationTypes.Equal || dataVariable === RelationTypes.Full)
+        {
+            returnString += "green-background"
+        }
+        if (dataVariable === RelationTypes.Some)
+        {
+            returnString += "orange-background"
+        }
+        if (dataVariable === RelationTypes.Bigger || dataVariable === RelationTypes.Smaller || dataVariable === RelationTypes.None)
+        {
+            returnString += "red-background"
+
+            if(dataVariable === RelationTypes.Bigger)
+            {
+                returnString += "arrow-up-background"
+            }
+
+            if(dataVariable === RelationTypes.Smaller)
+            {
+                returnString += "arrow-down-background"
+            }
+        }
+        return returnString;
+    }
+
     CompareNumbers(thisNumber, theirNumber)
     {
         /* the player to figure out is the this*/
-        if ( thisNumber === theirNumber ) return "equal";
+        if ( thisNumber === theirNumber ) return RelationTypes.Equal;
+
+        if (thisNumber > theirNumber) return RelationTypes.Bigger;
+
+        if (thisNumber < theirNumber) return RelationTypes.Smaller;
+        /*if ( thisNumber === theirNumber ) return "equal";
 
         if (thisNumber > theirNumber) return "bigger";
 
-        if (thisNumber < theirNumber) return "smaller";
+        if (thisNumber < theirNumber) return "smaller";*/
     }
 
     CompareStrings(thisString, theirString)
     {
-        return thisString === theirString;
+        if (thisString === theirString)
+        {
+            return RelationTypes.Full;
+        }
+        else
+        {
+            return RelationTypes.None;
+        }
+        //return thisString === theirString;
     }
 
     CompareArrayOfStrings(thisArray, theirArray)
@@ -150,15 +202,18 @@ class ComparisonResults
 
         if (allTrue)
         {
-            overlap =  "full";
+            overlap = RelationTypes.Full;
+            //overlap =  "full";
         }
         else if (allFalse)
         {
-            overlap = "none";
+            overlap = RelationTypes.None;
+            //overlap = "none";
         }
         else
         {
-            overlap = "some";
+            overlap = RelationTypes.Some;
+            //overlap = "some";
         }
 
         return overlap;
@@ -246,6 +301,8 @@ export function GetPlayerFromPlayerObject(PlayerRow)
 
 export function MakeGuess()
 {
+    guessNum++;
+
     let inputBox = document.getElementById("input-box")
     if (inputBox == null) return;
 
@@ -259,9 +316,18 @@ export function MakeGuess()
 
     ClearInputBox("input-box")
 
+    CheckResults(results)
+
     //show the results
     MakeHtmlResults(inputPlayer,results)
+}
 
+function CheckResults(results)
+{
+    if (results.name === RelationTypes.Full)
+    {
+        correctGuessNum = guessNum;
+    }
 }
 
 function MakeHtmlResults(inputPlayer,results)
@@ -280,41 +346,130 @@ function MakeHtmlResults(inputPlayer,results)
     let i = 1;
     let answers = document.getElementById("answers");
 
+    let allClasses = "answer-rectangle opacity-0"
+
     answers.innerHTML += `
         <div id="answerRowIndex${answerRowIndex}" class="answer-row">
-            <div class="answer-rectangle ${results.ClassName}">${inputPlayer.name}</div>
-            <div class="answer-rectangle ${results.ClassNation}">${inputPlayer.nation}</div>
-            <div class="answer-rectangle ${results.ClassPositions}">${posisitonsString}</div>
-            <div class="answer-rectangle ${results.ClassSquads}">${inputPlayer.squad}</div>
-            <div class="answer-rectangle ${results.ClassAge}">${inputPlayer.age}</div>
-            <div class="answer-rectangle ${results.ClassGoals}">${inputPlayer.goals}</div>
+            <div id="Row${answerRowIndex}-0" class="${allClasses} ${results.ClassName}">${inputPlayer.name}</div>
+            <div id="Row${answerRowIndex}-1" class="${allClasses}  ${results.ClassNation}">${inputPlayer.nation}</div>
+            <div id="Row${answerRowIndex}-2" class="${allClasses}  ${results.ClassPositions}">${posisitonsString}</div>
+            <div id="Row${answerRowIndex}-3" class="${allClasses}  ${results.ClassSquads}">${inputPlayer.squad}</div>
+            <div id="Row${answerRowIndex}-4" class="${allClasses}  ${results.ClassAge}">${inputPlayer.age}</div>
+            <div id="Row${answerRowIndex}-5" class="${allClasses}  ${results.ClassGoals}">${inputPlayer.goals}</div>
         </div>
     `;
 
     AnimateResults()
 }
 
-function AnimateResults()
+function animateBox(id, delay)
 {
-    if (answerRowIndex === null)
+    setTimeout(() =>
     {
-        console.error("answer-rowIndex was not updated")
-        return
-    }
-
-    let parent = document.getElementById("answerRowIndex"+ answerRowIndex);
-    let boxes = parent.children;
-
-    let index = 0
-    for (let box of boxes)
-    {
-        setTimeout(() => {
-            box.style.opacity = "1";
-            box.style.transform = "translateY(0)";
-        }, index * 400);
-        index++
-    }
+        let box = document.getElementById(id);
+        box.style.opacity = "1";
+        box.style.transform = "translateY(0)";
+    }, delay)
 }
+
+/*async function animateBox(box) {
+    console.log("box" + box.innerHTML);
+    box.classList.remove("opacity-0");
+    box.classList.add("opacity-1");
+    box.offsetHeight;
+    box.style.opacity = "1";
+    box.style.transform = "translateY(0)";
+}*/
+
+/*function animateBox(rowIndex, childIndex) {
+
+    let parent = document.getElementById("answerRowIndex" + rowIndex);
+    if (!parent) {
+        console.error("Parent element not found");
+        return;
+    }
+
+    let boxes = parent.children;
+    if (boxes.length <= 0)
+    {
+        console.error("Parent does not have children");
+        return;
+    }
+
+    boxes[childIndex].classList.remove("opacity-0");
+    boxes[childIndex].classList.add("opacity-1");
+    /*box.offsetHeight;
+    box.style.opacity = "1";*/
+    /*box.style.transform = "translateY(0)";
+}*/
+
+function AnimateResults() {
+    if (answerRowIndex === null) {
+        console.error("answer-rowIndex was not updated");
+        return;
+    }
+
+    let parent = document.getElementById("answerRowIndex" + answerRowIndex);
+    if (!parent) {
+        console.error("Parent element not found");
+        return;
+    }
+
+    let boxes = parent.children;
+    if (boxes.length <= 0)
+    {
+        console.error("Parent does not have children");
+        return;
+    }
+
+    for (let i = 0; i < boxes.length; i++)
+    {
+        animateBox(`Row${answerRowIndex}-${i}`,i*400);
+        /*AddAction(animateBox, i*1000,`Row${answerRowIndex}-${i}`);*/
+        /*boxes[i].classList.add('animate__bounce', 'animate__delay-'+i+'s');
+
+        boxes[i].addEventListener('animationend', () => {
+            boxes[i].classList.remove('animate__bounce');
+        });*/
+
+    }
+
+
+    //add animations
+    /*boxes[0].classList.add('animate__bounce');
+    boxes[0].addEventListener('animationend', () => {
+        boxes[0].classList.remove('animate__bounce');
+    });
+
+    for (let i = 1; i < boxes.length; i++)
+    {
+        boxes[i].classList.add('animate__bounce', 'animate__delay-'+i+'s');
+
+        boxes[i].addEventListener('animationend', () => {
+            boxes[i].classList.remove('animate__bounce');
+        });
+
+    }*/
+    
+    /*set timeout
+    for (let i = 0; i < boxes.length; i++) {
+        let box = boxes[i];
+        box.style.opacity = "0"; // Capture the current box reference
+        animateBox(box,i*400);
+    }*/
+
+    /*console.log("done"  +  answerRowIndex);*/
+    /*setTimeout(() => { console.log(answerRowIndex + "1");},1000)
+    setTimeout(() => { console.log(answerRowIndex + "2");},2000)
+    setTimeout(() => { console.log(answerRowIndex + "3");},3000)
+    setTimeout(() => { console.log(answerRowIndex + "4");},4000)
+    setTimeout(() => { console.log(answerRowIndex + "5");},5000)
+    setTimeout(() => { console.log(answerRowIndex + "6");},6000)
+    setTimeout(() => { console.log(answerRowIndex + "7");},7000)*/
+
+    }
+
+
 
 
 $(document).ready(async function () {

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../Styles/search-bar-styles.css">
     <link rel="stylesheet" href="../Styles/util-styles.css">
     <link rel="stylesheet" href="../Styles/footdle-results-styles.css">
+    <link rel="stylesheet" href="../Styles/tooltip-styles.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -34,14 +35,35 @@
 
         </div>
     </div>
-    <div class="container" style="gap: 10px;" id="answers">
+    <div class="container" style="gap: 10px;" >
         <div class="rows-key-row">
-            <div class="rows-key-rectangle">Name</div>
-            <div class="rows-key-rectangle">Nation</div>
-            <div class="rows-key-rectangle">Positions</div>
-            <div class="rows-key-rectangle">Squad</div>
-            <div class="rows-key-rectangle">Age</div>
-            <div class="rows-key-rectangle">Goals</div>
+            <div class="rows-key-rectangle tooltip-container">
+                Nome
+                <div class="tooltip">Nome do jogador</div>
+            </div>
+            <div class="rows-key-rectangle tooltip-container">
+                Nação
+                <div class="tooltip">O país que representa em jogos internacionais.</div>
+            </div>
+            <div class="rows-key-rectangle tooltip-container">
+                Posições
+                <div class="tooltip">As posições em que o jogador pode jogar.</div>
+            </div>
+            <div class="rows-key-rectangle tooltip-container">
+                Equipa
+                <div class="tooltip">O clube a que o jogador pertence.</div>
+            </div>
+            <div class="rows-key-rectangle tooltip-container">
+                Idade
+                <div class="tooltip">A idade do jogador.</div>
+            </div>
+            <div class="rows-key-rectangle tooltip-container">
+                Golos
+                <div class="tooltip">O número de golos marcados pelo jogador.</div>
+            </div>
+        </div>
+        <div class="container-reversed" style="gap: 10px;" id="answers">
+
         </div>
     </div>
 </div>

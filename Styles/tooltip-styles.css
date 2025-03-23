@@ -1,0 +1,21 @@
+.tooltip-container {
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    transform: translateY(-100%);
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
