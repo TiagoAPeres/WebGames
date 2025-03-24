@@ -1,0 +1,25 @@
+.interactable
+{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px white solid;
+}
+
+.interactable:hover
+{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: none;
+}
+
+.return-button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+
+    border-radius: 8px;
+    min-height: 30px;
+    user-select: none;
+}

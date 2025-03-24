@@ -1,6 +1,6 @@
 import {GetARemovedWordsIndex, RemovedWords, SetUpAutoComplete} from "../Utilities/autocomplete.js";
 import {loadAndParseCsv, ReturnRandomRow, ReturnRow} from "../Utilities/queryCsv.js";
-import {ClearInputBox} from "../Utilities/Elements.js";
+import {ClearInputBox, HideElementByID} from "../Utilities/Elements.js";
 
 let mysteryPlayer = null
 let ArrayOfPlayers = null
@@ -39,7 +39,7 @@ class ComparisonResults
         }
 
         this.name = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
-        this.nation = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.nation = this.CompareStrings(mysteryPlayer.nation, inputPlayer.nation);
         this.positions = this.CompareArrayOfStrings(mysteryPlayer.positions, inputPlayer.positions);
         this.squad = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
         this.age = this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
@@ -119,24 +119,24 @@ class ComparisonResults
         let returnString = ""
         if (dataVariable === RelationTypes.Equal || dataVariable === RelationTypes.Full)
         {
-            returnString += "green-background"
+            returnString += "green-background "
         }
         if (dataVariable === RelationTypes.Some)
         {
-            returnString += "orange-background"
+            returnString += "orange-background "
         }
         if (dataVariable === RelationTypes.Bigger || dataVariable === RelationTypes.Smaller || dataVariable === RelationTypes.None)
         {
-            returnString += "red-background"
+            returnString += "red-background "
 
             if(dataVariable === RelationTypes.Bigger)
             {
-                returnString += "arrow-up-background"
+                returnString += "arrow-up-background "
             }
 
             if(dataVariable === RelationTypes.Smaller)
             {
-                returnString += "arrow-down-background"
+                returnString += "arrow-down-background "
             }
         }
         return returnString;
@@ -288,7 +288,9 @@ export function GetRandomPlayer()
 
 export function SelectNewChosenPlayer()
 {
-    mysteryPlayer = GetRandomPlayer();
+    //todo revert
+    //mysteryPlayer = GetRandomPlayer();
+    mysteryPlayer = GetPlayer("Cristiano Ronaldo");
 }
 
 export function GetPlayerFromPlayerObject(PlayerRow)
@@ -350,7 +352,7 @@ function MakeHtmlResults(inputPlayer,results)
 
     answers.innerHTML += `
         <div id="answerRowIndex${answerRowIndex}" class="answer-row">
-            <div id="Row${answerRowIndex}-0" class="${allClasses} ${results.ClassName}">${inputPlayer.name}</div>
+            <div id="Row${answerRowIndex}-0" class="${allClasses}  ${results.ClassName}">${inputPlayer.name}</div>
             <div id="Row${answerRowIndex}-1" class="${allClasses}  ${results.ClassNation}">${inputPlayer.nation}</div>
             <div id="Row${answerRowIndex}-2" class="${allClasses}  ${results.ClassPositions}">${posisitonsString}</div>
             <div id="Row${answerRowIndex}-3" class="${allClasses}  ${results.ClassSquads}">${inputPlayer.squad}</div>
@@ -362,48 +364,20 @@ function MakeHtmlResults(inputPlayer,results)
     AnimateResults()
 }
 
-function animateBox(id, delay)
+function animateBox(id, delay,finalCorrectAnswer = false)
 {
     setTimeout(() =>
     {
         let box = document.getElementById(id);
         box.style.opacity = "1";
         box.style.transform = "translateY(0)";
+        if (finalCorrectAnswer) FinishGame()
     }, delay)
 }
 
-/*async function animateBox(box) {
-    console.log("box" + box.innerHTML);
-    box.classList.remove("opacity-0");
-    box.classList.add("opacity-1");
-    box.offsetHeight;
-    box.style.opacity = "1";
-    box.style.transform = "translateY(0)";
-}*/
 
-/*function animateBox(rowIndex, childIndex) {
-
-    let parent = document.getElementById("answerRowIndex" + rowIndex);
-    if (!parent) {
-        console.error("Parent element not found");
-        return;
-    }
-
-    let boxes = parent.children;
-    if (boxes.length <= 0)
-    {
-        console.error("Parent does not have children");
-        return;
-    }
-
-    boxes[childIndex].classList.remove("opacity-0");
-    boxes[childIndex].classList.add("opacity-1");
-    /*box.offsetHeight;
-    box.style.opacity = "1";*/
-    /*box.style.transform = "translateY(0)";
-}*/
-
-function AnimateResults() {
+function AnimateResults()
+{
     if (answerRowIndex === null) {
         console.error("answer-rowIndex was not updated");
         return;
@@ -424,54 +398,37 @@ function AnimateResults() {
 
     for (let i = 0; i < boxes.length; i++)
     {
+        if (correctGuessNum === guessNum && i === boxes.length-1)
+        {
+            animateBox(`Row${answerRowIndex}-${i}`,i*400, true);
+            continue;
+        }
         animateBox(`Row${answerRowIndex}-${i}`,i*400);
-        /*AddAction(animateBox, i*1000,`Row${answerRowIndex}-${i}`);*/
-        /*boxes[i].classList.add('animate__bounce', 'animate__delay-'+i+'s');
-
-        boxes[i].addEventListener('animationend', () => {
-            boxes[i].classList.remove('animate__bounce');
-        });*/
-
     }
+}
 
 
-    //add animations
-    /*boxes[0].classList.add('animate__bounce');
-    boxes[0].addEventListener('animationend', () => {
-        boxes[0].classList.remove('animate__bounce');
-    });
+function FinishGame()
+{
+    //disable making more guesses
+    //show finish game element
+}
 
-    for (let i = 1; i < boxes.length; i++)
+function AddOnClickForReturnButtons()
+{
+    let ReturnButtons = document.querySelectorAll(".return-button");
+
+    ReturnButtons.forEach(element =>
     {
-        boxes[i].classList.add('animate__bounce', 'animate__delay-'+i+'s');
-
-        boxes[i].addEventListener('animationend', () => {
-            boxes[i].classList.remove('animate__bounce');
-        });
-
-    }*/
-    
-    /*set timeout
-    for (let i = 0; i < boxes.length; i++) {
-        let box = boxes[i];
-        box.style.opacity = "0"; // Capture the current box reference
-        animateBox(box,i*400);
-    }*/
-
-    /*console.log("done"  +  answerRowIndex);*/
-    /*setTimeout(() => { console.log(answerRowIndex + "1");},1000)
-    setTimeout(() => { console.log(answerRowIndex + "2");},2000)
-    setTimeout(() => { console.log(answerRowIndex + "3");},3000)
-    setTimeout(() => { console.log(answerRowIndex + "4");},4000)
-    setTimeout(() => { console.log(answerRowIndex + "5");},5000)
-    setTimeout(() => { console.log(answerRowIndex + "6");},6000)
-    setTimeout(() => { console.log(answerRowIndex + "7");},7000)*/
-
-    }
-
-
-
-
+        if (element.hasAttribute('data-closeId'))
+        {
+            element.onclick = () =>
+            {
+                HideElementByID(element.getAttribute('data-closeId'));
+            };
+        }
+    });
+}
 $(document).ready(async function () {
 
     ArrayOfPlayers = await loadAndParseCsv("../csv/PremierLeague_2022_2023_Players.csv")
@@ -484,6 +441,8 @@ $(document).ready(async function () {
 
     let submitButton = document.getElementById("submit-btn")
     if (submitButton != null ) submitButton.onclick = MakeGuess;
+
+    AddOnClickForReturnButtons()
 
     //wait for a response from the user
 
