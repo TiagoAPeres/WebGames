@@ -21,11 +21,35 @@
 
 </head>
 <body>
-<div class="container">
+<div class="main-container">
 
     <div class="center-text big-text" style="margin: 5rem 0;">Adivinha o jogador</div>
 
-    <div class="search-bar-section " style="margin-bottom: 5rem;">
+    <div id="tips-game-description" class="color-indicator-container">
+        <div style="padding: 10px"> adivinha um jogador da league x </div>
+        <div class="indications-row">
+            <div id="tip-0" class="indication tooltip-container">
+                <div id="tip-img-0" class="indication-img green-background"></div>
+                <div id="tip-text-0"> Correto</div>
+                <div id="tip-tooltip-0" class="tooltip-hidden">Nome do jogador</div>
+            </div>
+
+            <div id="tip-1" class="indication tooltip-container">
+                <div id="tip-img-1" class="indication-img orange-background"></div>
+                <div id="tip-text-1">Parcial</div>
+                <div id="tip-tooltip-1" class="tooltip-hidden">Nome do jogador</div>
+            </div>
+
+            <div id="tip-2" class="indication tooltip-container">
+                <div  id="tip-img-2" class="indication-img red-background"></div>
+                <div id="tip-text-2">Incorreto</div>
+                <div id="tip-tooltip-2" class="tooltip-hidden">Nome do jogador</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="search-bar-section" id="search-bar-section" style="margin-bottom: 5rem;">
         <div class="search-box selected selectable">
 
             <div class="row">
@@ -37,6 +61,7 @@
 
         </div>
     </div>
+
     <div class="container" style="gap: 10px;" >
         <div class="rows-key-row">
             <div class="rows-key-rectangle tooltip-container">
@@ -85,11 +110,11 @@
                 </div>
 
                 <div class="indication" >
-                    <div class="indication-img red-background arrow-up-background"></div>
+                    <div class="indication-img red-background small-arrow-up-background"></div>
                     <div>Maior</div>
                 </div>
                 <div class="indication" >
-                    <div class="indication-img red-background arrow-down-background"></div>
+                    <div class="indication-img red-background small-arrow-down-background"></div>
                     <div>Menor</div>
                 </div>
 
@@ -97,6 +122,16 @@
             </div>
         </div>
     </div>
+
+    <div id="result-section" class="result-section ">
+        <div id="result-section-title" class="result-section-title padding-10">Title</div>
+        <div id="result-section-guess" class="result-section-guess">correct guess</div>
+        <div id="result-section-n-tries" class="padding-10">Nº of tries</div>
+        <div id="result-section-timer-until-next-player" class="padding-10">Next player</div>
+        <div id="result-section-links-title" class="padding-10">Wanna play</div>
+        <div id="result-section-link-to-other-games" class="padding-10">Link to Other Games</div>
+    </div>
+    <a href="https://www.flaticon.com/free-icons/formation" title="formation icons">Formation icons created by andinur - Flaticon</a>
 </div>
 </body>
 

@@ -1,16 +1,33 @@
 import {GetARemovedWordsIndex, RemovedWords, SetUpAutoComplete} from "../Utilities/autocomplete.js";
 import {loadAndParseCsv, ReturnRandomRow, ReturnRow} from "../Utilities/queryCsv.js";
-import {ClearInputBox, HideElementByID} from "../Utilities/Elements.js";
+import {ClearInputBox, HideElementByID, ShowAndFocusElement} from "../Utilities/Elements.js";
+import {GetRandomElement, timeUntilNextDay} from "../Utilities/Util.js";
+import { TipManager , Tip } from "../Footdle/FootdleClasses.js";
 
 let mysteryPlayer = null
 let ArrayOfPlayers = null
-//let ListOfChosenPlayers = null
 let RemovedWordsIndex = null
 let inputPlayers = []
 let answerRowIndex = null
 
 let guessNum = -1;
 let correctGuessNum = null
+
+const victoryMessages = [
+    "GOOOLOOO! Acertaste em cheio no craque!",
+    "Finta perfeita! Passaste por todos e marcaste o golo da vitória!",
+    "Confirmado pelo VAR: És um verdadeiro mestre do futebol!",
+    "Tens olho de águia! Acertaste no jogador sem falhar!",
+    "Que jogada de génio! Mandaste a bola mesmo à gaveta!",
+    "Bola de Ouro para ti! És o rei dos palpites!",
+    "Acertaste com classe! Verdadeiro futebol de encantar!",
+    "Passaste todos e fuzilaste a baliza com este palpite!",
+    "Nem o Mourinho faria melhor! Mestre da tática!"
+];
+
+let tipManager = new TipManager();
+
+
 
 /* Enum for types of overlap between information.
 * @readonly
@@ -41,7 +58,7 @@ class ComparisonResults
         this.name = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
         this.nation = this.CompareStrings(mysteryPlayer.nation, inputPlayer.nation);
         this.positions = this.CompareArrayOfStrings(mysteryPlayer.positions, inputPlayer.positions);
-        this.squad = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.squad = this.CompareStrings(mysteryPlayer.squad, inputPlayer.squad);
         this.age = this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
         this.goals = this.CompareNumbers(mysteryPlayer.goals, inputPlayer.goals);
 
@@ -55,62 +72,7 @@ class ComparisonResults
         this.ClassAge = this.AddClassNames(this.age);
         this.ClassGoals = this.AddClassNames(this.goals);
 
-        /*if (this.nation === true)
-            {this.ClassNation = "green-background"}
-        else
-            {this.ClassNation = "red-background"}
 
-        switch (this.positions)
-        {
-            case "full":
-                this.ClassPositions = "green-background"
-                break;
-            case "some":
-                this.ClassPositions = "orange-background"
-                break;
-            case "none":
-                this.ClassPositions = "red-background"
-                break;
-        }
-
-        if (this.squad === true)
-            {this.ClassSquads = "green-background"}
-        else
-            {this.ClassSquads = "red-background"}
-
-        switch (this.age)
-        {
-            case "equal":
-                this.ClassAge = "green-background"
-                break;
-            case "bigger":
-                this.ClassAge = "red-background arrow-up-background"
-                break;
-            case "smaller":
-                this.ClassAge = "red-background arrow-down-background"
-                break;
-        }
-
-        switch (this.goals)
-        {
-            case "equal":
-                this.ClassGoals = "green-background"
-                break;
-            case "bigger":
-                this.ClassGoals = "red-background arrow-up-background"
-                break;
-            case "smaller":
-                this.ClassGoals = "red-background arrow-down-background"
-                break;
-        }*/
-
-        //return an object with the classes for the divs
-        //this.name = //NOTHING
-        //this.nation = //green red
-        //this.positions = //green yellow red
-        //this.squad = //green red
-        //this.age = //green red -- arrow
-        //this.goals = //green red -- arrow
     }
 
 
@@ -176,13 +138,28 @@ class ComparisonResults
         let currentResult = false;
         let overlap = "none"
 
-        thisArray.forEach((thisElement) =>
+        let smallerArray = [];
+        let biggerArray = []
+
+        if (thisArray.length > theirArray.length)
+        {
+            smallerArray = theirArray;
+            biggerArray = thisArray;
+        }
+        else
+        {
+            smallerArray = thisArray;
+            biggerArray = theirArray;
+        }
+
+
+        biggerArray.forEach((thisElement) =>
         {
             if (thisElement == null) return;
 
             currentResult = false;
 
-            theirArray.forEach((theirElement) =>
+            smallerArray.forEach((theirElement) =>
             {
                 if (theirElement == null) return;
 
@@ -288,9 +265,7 @@ export function GetRandomPlayer()
 
 export function SelectNewChosenPlayer()
 {
-    //todo revert
-    //mysteryPlayer = GetRandomPlayer();
-    mysteryPlayer = GetPlayer("Cristiano Ronaldo");
+    mysteryPlayer = GetRandomPlayer();
 }
 
 export function GetPlayerFromPlayerObject(PlayerRow)
@@ -326,6 +301,7 @@ export function MakeGuess()
 
 function CheckResults(results)
 {
+    tipManager.CheckResults(results);
     if (results.name === RelationTypes.Full)
     {
         correctGuessNum = guessNum;
@@ -348,16 +324,16 @@ function MakeHtmlResults(inputPlayer,results)
     let i = 1;
     let answers = document.getElementById("answers");
 
-    let allClasses = "answer-rectangle opacity-0"
+    let allClasses = "answer-rectangle-container opacity-0"
 
     answers.innerHTML += `
         <div id="answerRowIndex${answerRowIndex}" class="answer-row">
-            <div id="Row${answerRowIndex}-0" class="${allClasses}  ${results.ClassName}">${inputPlayer.name}</div>
-            <div id="Row${answerRowIndex}-1" class="${allClasses}  ${results.ClassNation}">${inputPlayer.nation}</div>
-            <div id="Row${answerRowIndex}-2" class="${allClasses}  ${results.ClassPositions}">${posisitonsString}</div>
-            <div id="Row${answerRowIndex}-3" class="${allClasses}  ${results.ClassSquads}">${inputPlayer.squad}</div>
-            <div id="Row${answerRowIndex}-4" class="${allClasses}  ${results.ClassAge}">${inputPlayer.age}</div>
-            <div id="Row${answerRowIndex}-5" class="${allClasses}  ${results.ClassGoals}">${inputPlayer.goals}</div>
+            <div id="Row${answerRowIndex}-0" class="${allClasses}  ${results.ClassName}"> <div class="answer-rectangle">${inputPlayer.name}</div></div>
+            <div id="Row${answerRowIndex}-1" class="${allClasses}  ${results.ClassNation}"> <div class="answer-rectangle">${inputPlayer.nation}</div></div>
+            <div id="Row${answerRowIndex}-2" class="${allClasses}  ${results.ClassPositions}"> <div class="answer-rectangle">${posisitonsString}</div></div>
+            <div id="Row${answerRowIndex}-3" class="${allClasses}  ${results.ClassSquads}"><div class="answer-rectangle">${inputPlayer.squad}</div></div>
+            <div id="Row${answerRowIndex}-4" class="${allClasses}  ${results.ClassAge}"><div class="answer-rectangle">${inputPlayer.age}</div></div>
+            <div id="Row${answerRowIndex}-5" class="${allClasses}  ${results.ClassGoals}"> <div class="answer-rectangle">${inputPlayer.goals}</div></div>
         </div>
     `;
 
@@ -411,7 +387,32 @@ function AnimateResults()
 function FinishGame()
 {
     //disable making more guesses
+    HideElementByID("search-bar-section")
+    let Result = document.getElementById("result-section")
+    SetUpResultElement().then(() => ShowAndFocusElement(Result))
     //show finish game element
+}
+
+async function SetUpResultElement()
+{
+    document.getElementById("result-section-title").innerHTML = GetRandomElement(victoryMessages);
+    document.getElementById("result-section-guess").innerHTML = `adivinhas-te corretamente ${mysteryPlayer.name}`;
+    document.getElementById("result-section-n-tries").innerHTML = `Nº tentativas: ${answerRowIndex+1}`;
+    StartUpdatingTimer(30000);
+}
+
+
+function StartUpdatingTimer(interval)
+{
+    UpdateTimer();
+    setInterval(UpdateTimer, interval);
+}
+
+function UpdateTimer()
+{
+    let div = document.getElementById("result-section-timer-until-next-player");
+    let { hours, minutes } = timeUntilNextDay();
+    div.innerText = `Faltam ${hours} horas e ${minutes} minutos até ao próximo jogador.`;
 }
 
 function AddOnClickForReturnButtons()
@@ -432,6 +433,10 @@ function AddOnClickForReturnButtons()
 $(document).ready(async function () {
 
     ArrayOfPlayers = await loadAndParseCsv("../csv/PremierLeague_2022_2023_Players.csv")
+
+    tipManager.CreateTip(2)
+    tipManager.CreateTip(3)
+    tipManager.CreateTip(6)
 
     await SettingUpPage();
 

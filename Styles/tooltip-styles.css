@@ -1,5 +1,5 @@
 .tooltip-container {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .tooltip {
@@ -18,4 +18,13 @@
 .tooltip-container:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.tooltip-hidden
+{
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
 }

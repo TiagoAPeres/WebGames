@@ -43,3 +43,8 @@
     opacity: 1;
     position: relative;
 }
+
+.padding-10
+{
+    padding: 10px;
+}
