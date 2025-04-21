@@ -1,5 +1,6 @@
 .tooltip-container {
     /*cursor: pointer;*/
+    width: 30%;
 }
 
 .tooltip {
@@ -28,3 +29,4 @@
     position: absolute;
     pointer-events: none;
 }
+

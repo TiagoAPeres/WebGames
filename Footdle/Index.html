@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../Styles/tooltip-styles.css">
     <link rel="stylesheet" href="../Styles/footdle-color-indicator-styles.css">
     <link rel="stylesheet" href="../Styles/recurring-styles.css">
+    <link rel="stylesheet" href="../Styles/tips-styles.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -23,27 +24,27 @@
 <body>
 <div class="main-container">
 
-    <div class="center-text big-text" style="margin: 5rem 0;">Adivinha o jogador</div>
+    <div class="center-text big-text" style="margin: 5rem 0;">Footdle</div>
 
-    <div id="tips-game-description" class="color-indicator-container">
+    <div id="tips-game-description" class="color-indicator-container" style="width: 350px;">
         <div style="padding: 10px"> adivinha um jogador da league x </div>
         <div class="indications-row">
             <div id="tip-0" class="indication tooltip-container">
-                <div id="tip-img-0" class="indication-img green-background"></div>
-                <div id="tip-text-0"> Correto</div>
-                <div id="tip-tooltip-0" class="tooltip-hidden">Nome do jogador</div>
+                <img id="tip-img-0" class="indication-img" src="../Footdle/tip-hidden.png" alt="question mark in a circle">
+                <div id="tip-text-0" class="tips-text" > </div>
+                <div id="tip-tooltip-0" class="tooltip-hidden"></div>
             </div>
 
             <div id="tip-1" class="indication tooltip-container">
-                <div id="tip-img-1" class="indication-img orange-background"></div>
-                <div id="tip-text-1">Parcial</div>
-                <div id="tip-tooltip-1" class="tooltip-hidden">Nome do jogador</div>
+                <img id="tip-img-1" class="indication-img" src="../Footdle/tip-hidden.png" alt="question mark in a circle">
+                <div id="tip-text-1" class="tips-text" ></div>
+                <div id="tip-tooltip-1" class="tooltip-hidden"></div>
             </div>
 
             <div id="tip-2" class="indication tooltip-container">
-                <div  id="tip-img-2" class="indication-img red-background"></div>
-                <div id="tip-text-2">Incorreto</div>
-                <div id="tip-tooltip-2" class="tooltip-hidden">Nome do jogador</div>
+                <img id="tip-img-2" class="indication-img" src="../Footdle/tip-hidden.png" alt="question mark in a circle">
+                <div id="tip-text-2" class="tips-text" ></div>
+                <div id="tip-tooltip-2" class="tooltip-hidden"></div>
             </div>
 
         </div>
@@ -53,7 +54,7 @@
         <div class="search-box selected selectable">
 
             <div class="row">
-                <input type="text" id="input-box" placeholder="Soccer Club" autocomplete="off">
+                <input type="text" id="input-box" placeholder="Jogador" autocomplete="off">
                 <button><i id="submit-btn" class="fa-solid fa-arrow-right"></i></button>
             </div>
 
@@ -92,7 +93,7 @@
         <div class="container-reversed" style="gap: 10px;" id="answers"></div>
         <div id="color-indicator" class="color-indicator-container">
             <div  class="return-button interactable" data-closeId="color-indicator">x</div>
-            <div style="padding: 10px"> Color indications </div>
+            <div style="padding: 10px"> Indicações de Cores </div>
             <div class="indications-row">
                 <div class="indication">
                     <div class="indication-img green-background"></div>
@@ -123,13 +124,13 @@
         </div>
     </div>
 
-    <div id="result-section" class="result-section ">
+    <div id="result-section" class="result-section hidden">
         <div id="result-section-title" class="result-section-title padding-10">Title</div>
         <div id="result-section-guess" class="result-section-guess">correct guess</div>
         <div id="result-section-n-tries" class="padding-10">Nº of tries</div>
         <div id="result-section-timer-until-next-player" class="padding-10">Next player</div>
-        <div id="result-section-links-title" class="padding-10">Wanna play</div>
-        <div id="result-section-link-to-other-games" class="padding-10">Link to Other Games</div>
+        <!--<div id="result-section-links-title" class="padding-10">Wanna play</div>-->
+        <div id="result-section-link-to-other-games" class="interactable padding-10">Voltar aos outros jogos</div>
     </div>
     <a href="https://www.flaticon.com/free-icons/formation" title="formation icons">Formation icons created by andinur - Flaticon</a>
 </div>

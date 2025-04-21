@@ -4,7 +4,7 @@ import {ClearInputBox, HideElementByID, ShowAndFocusElement} from "../Utilities/
 import {GetRandomElement, timeUntilNextDay} from "../Utilities/Util.js";
 import { TipManager , Tip } from "../Footdle/FootdleClasses.js";
 
-let mysteryPlayer = null
+export let mysteryPlayer = null
 let ArrayOfPlayers = null
 let RemovedWordsIndex = null
 let inputPlayers = []
@@ -12,6 +12,8 @@ let answerRowIndex = null
 
 let guessNum = -1;
 let correctGuessNum = null
+
+export let dayTimerStarted = new Date();
 
 const victoryMessages = [
     "GOOOLOOO! Acertaste em cheio no craque!",
@@ -25,7 +27,7 @@ const victoryMessages = [
     "Nem o Mourinho faria melhor! Mestre da tática!"
 ];
 
-let tipManager = new TipManager();
+export let tipManager = null;
 
 
 
@@ -33,7 +35,7 @@ let tipManager = new TipManager();
 * @readonly
 * @enum {{id: number}}
 */
-const RelationTypes  = Object.freeze({
+export const RelationTypes  = Object.freeze({
     // String Overlap
     Full: 1,
     Some: 2,
@@ -55,24 +57,28 @@ class ComparisonResults
             return null;
         }
 
-        this.name = this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
-        this.nation = this.CompareStrings(mysteryPlayer.nation, inputPlayer.nation);
-        this.positions = this.CompareArrayOfStrings(mysteryPlayer.positions, inputPlayer.positions);
-        this.squad = this.CompareStrings(mysteryPlayer.squad, inputPlayer.squad);
-        this.age = this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
-        this.goals = this.CompareNumbers(mysteryPlayer.goals, inputPlayer.goals);
-
-
+        this.name =       this.CompareStrings(mysteryPlayer.name, inputPlayer.name);
+        this.nation =     this.CompareStrings(mysteryPlayer.nation, inputPlayer.nation);
+        this.positions =  this.CompareArrayOfStrings(mysteryPlayer.positions, inputPlayer.positions);
+        this.squad =      this.CompareStrings(mysteryPlayer.squad, inputPlayer.squad);
+        this.age =        this.CompareNumbers(mysteryPlayer.age, inputPlayer.age);
+        this.goals =      this.CompareNumbers(mysteryPlayer.goals, inputPlayer.goals);
 
         this.ClassName = ""
-
-        this.ClassNation = this.AddClassNames(this.nation);
+        this.ClassNation =    this.AddClassNames(this.nation);
         this.ClassPositions = this.AddClassNames(this.positions);
-        this.ClassSquads = this.AddClassNames(this.squad);
-        this.ClassAge = this.AddClassNames(this.age);
-        this.ClassGoals = this.AddClassNames(this.goals);
+        this.ClassSquads =    this.AddClassNames(this.squad);
+        this.ClassAge =       this.AddClassNames(this.age);
+        this.ClassGoals =     this.AddClassNames(this.goals);
 
-
+        this.characteristics =
+        [
+            {key :"position", RelationTypes:this.positions },
+            {key :"squad"   , RelationTypes:this.squad    },
+            {key :"nation"  , RelationTypes:this.nation   },
+            {key :"age"     , RelationTypes: this.age      },
+            {key :"goals"   , RelationTypes:this.goals     },
+        ]
     }
 
 
@@ -129,7 +135,6 @@ class ComparisonResults
         {
             return RelationTypes.None;
         }
-        //return thisString === theirString;
     }
 
     CompareArrayOfStrings(thisArray, theirArray)
@@ -138,18 +143,13 @@ class ComparisonResults
         let currentResult = false;
         let overlap = "none"
 
-        let smallerArray = [];
-        let biggerArray = []
+        let smallerArray = thisArray;
+        let biggerArray = theirArray
 
         if (thisArray.length > theirArray.length)
         {
             smallerArray = theirArray;
             biggerArray = thisArray;
-        }
-        else
-        {
-            smallerArray = thisArray;
-            biggerArray = theirArray;
         }
 
 
@@ -180,17 +180,14 @@ class ComparisonResults
         if (allTrue)
         {
             overlap = RelationTypes.Full;
-            //overlap =  "full";
         }
         else if (allFalse)
         {
             overlap = RelationTypes.None;
-            //overlap = "none";
         }
         else
         {
             overlap = RelationTypes.Some;
-            //overlap = "some";
         }
 
         return overlap;
@@ -319,6 +316,8 @@ function MakeHtmlResults(inputPlayer,results)
         answerRowIndex++;
     }
 
+    console.log(inputPlayer);
+
     let posisitonsString = inputPlayer.positions.map(position => position).join(" , ");
 
     let i = 1;
@@ -404,6 +403,7 @@ async function SetUpResultElement()
 
 function StartUpdatingTimer(interval)
 {
+    dayTimerStarted = new Date();
     UpdateTimer();
     setInterval(UpdateTimer, interval);
 }
@@ -411,7 +411,22 @@ function StartUpdatingTimer(interval)
 function UpdateTimer()
 {
     let div = document.getElementById("result-section-timer-until-next-player");
-    let { hours, minutes } = timeUntilNextDay();
+    let hours, minutes;
+
+    let tomorrow = new Date(dayTimerStarted);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (tomorrow.toDateString() === new Date().toDateString())
+    {
+        hours = 0;
+        minutes = 0;
+    }
+    else
+    {
+        ({ hours, minutes } = timeUntilNextDay());
+        hours = Math.max(hours, 0);
+        minutes = Math.max(minutes, 0);
+    }
     div.innerText = `Faltam ${hours} horas e ${minutes} minutos até ao próximo jogador.`;
 }
 
@@ -434,20 +449,26 @@ $(document).ready(async function () {
 
     ArrayOfPlayers = await loadAndParseCsv("../csv/PremierLeague_2022_2023_Players.csv")
 
-    tipManager.CreateTip(2)
-    tipManager.CreateTip(3)
-    tipManager.CreateTip(6)
-
     await SettingUpPage();
 
     await SelectNewChosenPlayer()
 
     console.log(mysteryPlayer);
 
+    tipManager = new TipManager(mysteryPlayer);
+    tipManager.CreateTip(2)
+    tipManager.CreateTip(4)
+    tipManager.CreateTip(6)
+
+
     let submitButton = document.getElementById("submit-btn")
     if (submitButton != null ) submitButton.onclick = MakeGuess;
 
     AddOnClickForReturnButtons()
+
+    document.getElementById('result-section-link-to-other-games').addEventListener('click', function() {
+        window.location.href = 'https://tiagoaperes.github.io/WebGames/';
+    });
 
     //wait for a response from the user
 
